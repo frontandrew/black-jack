@@ -1,5 +1,10 @@
-import { Box } from '@mui/material'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { useEffect } from 'react'
+import { ThemeProvider } from '@mui/material'
+
+import { LandingPage, LoginPage } from '../pages'
+import { theme } from '../shared/theme'
+
 import './style.css'
 
 export function App() {
@@ -13,5 +18,14 @@ export function App() {
 
     fetchServerData()
   }, [])
-  return <Box className="app">Вот тут будет жить ваше приложение :)</Box>
+  return (
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="sign-in" element={<LoginPage />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
+  )
 }

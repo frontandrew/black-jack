@@ -3,8 +3,8 @@ import './style.css'
 
 export const LoginPage = () => {
   return (
-    <Box className="Login-page">
-      <Typography variant="h1">Login Page</Typography>
+    <Box className="login-page">
+      <Typography variant="h3">Login Page</Typography>
     </Box>
   )
 }
