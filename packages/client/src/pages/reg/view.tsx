@@ -1,28 +1,27 @@
 import { Box, Button, Grid, Typography } from '@mui/material'
+import './style.css'
 import { useNavigate } from 'react-router'
 
-import './style.css'
-
-export const LoginPage = () => {
+export const RegPage = () => {
   const navigate = useNavigate()
 
   return (
-    <Box className="login-page">
-      <Typography variant="h3">Login Page</Typography>
+    <Box className="reg-page">
+      <Typography variant="h3">Registration Page</Typography>
       <Grid direction="column" display="flex" gap="1em">
         <Button
           variant="contained"
           onClick={() => {
-            navigate('/sign-in')
+            navigate('/sign-up')
           }}>
-          SIGN IN
+          sign up
         </Button>
         <Button
           variant="text"
           onClick={() => {
-            navigate('/sign-up')
+            navigate('/sign-in')
           }}>
-          sign up
+          SIGN IN
         </Button>
       </Grid>
     </Box>

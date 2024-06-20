@@ -1,0 +1,1 @@
+export { LeaderPage } from './view'
