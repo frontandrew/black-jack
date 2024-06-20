@@ -1,7 +1,8 @@
+import { Box } from '@mui/material'
 import { useEffect } from 'react'
-import './App.css'
+import './style.css'
 
-function App() {
+export function App() {
   useEffect(() => {
     const fetchServerData = async () => {
       const url = `http://localhost:${__SERVER_PORT__}`
@@ -12,7 +13,5 @@ function App() {
 
     fetchServerData()
   }, [])
-  return <div className="App">Вот тут будет жить ваше приложение :)</div>
+  return <Box className="app">Вот тут будет жить ваше приложение :)</Box>
 }
-
-export default App
