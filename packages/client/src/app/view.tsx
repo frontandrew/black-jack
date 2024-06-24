@@ -1,4 +1,10 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import {
+  BrowserRouter,
+  Route,
+  RouterProvider,
+  Routes,
+  createBrowserRouter,
+} from 'react-router-dom'
 import { useEffect } from 'react'
 import { ThemeProvider } from '@mui/material'
 
@@ -18,6 +24,59 @@ import { theme } from '../shared/theme'
 
 import './style.css'
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <LandingPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: 'sign-in',
+    element: <LoginPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: 'sign-up',
+    element: <RegPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: 'settings',
+    element: <SettingsPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: 'start',
+    element: <StartPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: 'game',
+    element: <GamePage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: 'finish',
+    element: <FinishPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: 'leaderboard',
+    element: <LeaderPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: 'forum',
+    element: <ForumPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: 'forum/:forumId',
+    element: <ForumPage />,
+    errorElement: <ErrorPage />,
+  },
+])
+
 export function App() {
   useEffect(() => {
     const fetchServerData = async () => {
@@ -31,21 +90,7 @@ export function App() {
   }, [])
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="sign-in" element={<LoginPage />} />
-          <Route path="sign-up" element={<RegPage />} />
-          <Route path="settings" element={<SettingsPage />} />
-          <Route path="start" element={<StartPage />} />
-          <Route path="game" element={<GamePage />} />
-          <Route path="finish" element={<FinishPage />} />
-          <Route path="leaderboard" element={<LeaderPage />} />
-          <Route path="forum" element={<ForumPage />} />
-          <Route path="forum/:forumId" element={<ForumPage />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-      </BrowserRouter>
+      <RouterProvider router={router} />
     </ThemeProvider>
   )
 }
