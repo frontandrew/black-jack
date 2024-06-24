@@ -1,10 +1,4 @@
-import {
-  BrowserRouter,
-  Route,
-  RouterProvider,
-  Routes,
-  createBrowserRouter,
-} from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { useEffect } from 'react'
 import { ThemeProvider } from '@mui/material'
 
