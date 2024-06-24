@@ -1,23 +1,29 @@
 import { Box, Button, Typography } from '@mui/material'
-import { useNavigate } from 'react-router'
+import { isRouteErrorResponse, useNavigate, useRouteError } from 'react-router'
 
 import './style.css'
 
 export const ErrorPage = () => {
   const navigate = useNavigate()
+  const error = useRouteError()
 
-  return (
-    <Box className="error-page">
-      <Typography variant="h3">Oops!!</Typography>
-      <Typography variant="h5">Something gose wrong...</Typography>
-      <Typography variant="body2">Try to reload or comeback later.</Typography>
-      <Button
-        variant="contained"
-        onClick={() => {
-          navigate(-1)
-        }}>
-        BACK
-      </Button>
-    </Box>
-  )
+  if (isRouteErrorResponse(error)) {
+    return (
+      <Box className="error-page">
+        <Typography variant="h1">{error.status}</Typography>
+        <Typography variant="body2" mb={4}>
+          {error.message || 'Something goes wrong!'}
+        </Typography>
+        <Button
+          variant="contained"
+          onClick={() => {
+            navigate(-1)
+          }}>
+          BACK
+        </Button>
+      </Box>
+    )
+  }
+
+  throw error
 }
