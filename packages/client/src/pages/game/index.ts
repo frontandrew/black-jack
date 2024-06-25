@@ -1,1 +1,1 @@
-export { GamePage } from './view'
+export { GamePage } from './game'

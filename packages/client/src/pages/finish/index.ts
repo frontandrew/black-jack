@@ -1,1 +1,1 @@
-export { FinishPage } from './view'
+export { FinishPage } from './finish'

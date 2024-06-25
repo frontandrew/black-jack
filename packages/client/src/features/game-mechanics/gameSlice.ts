@@ -1,0 +1,109 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Card } from '../../shared/types'
+import {
+  createDeck,
+  shuffle,
+  calcHandValue,
+} from '../../shared/utils/cardUtils'
+
+interface GameState {
+  playerMoney: number
+  playerHand: Card[]
+  dealerHand: Card[]
+  deck: Card[]
+  gameStatus: 'init' | 'playing' | 'gameover'
+  playerBust: boolean
+  dealerBust: boolean
+  playerStand: boolean
+  gameResult: 'win' | 'lose' | 'tie' | null
+}
+
+const initialState: GameState = {
+  playerMoney: 100,
+  playerHand: [],
+  dealerHand: [],
+  deck: [],
+  gameStatus: 'init',
+  playerBust: false,
+  dealerBust: false,
+  playerStand: false,
+  gameResult: null,
+}
+
+const gameSlice = createSlice({
+  name: 'game',
+  initialState,
+  reducers: {
+    startGame(state) {
+      state.playerHand = []
+      state.dealerHand = []
+      state.deck = shuffle(createDeck())
+      state.playerBust = false
+      state.dealerBust = false
+      state.playerStand = false
+      state.gameStatus = 'playing'
+      state.gameResult = null
+      state.playerHand.push(state.deck.pop() as Card)
+      state.playerHand.push(state.deck.pop() as Card)
+      state.dealerHand.push(state.deck.pop() as Card)
+      state.dealerHand.push({ ...(state.deck.pop() as Card), hidden: true })
+    },
+    drawPlayerCard(state) {
+      if (!state.playerStand && state.gameStatus === 'playing') {
+        state.playerHand.push(state.deck.pop() as Card)
+        if (calcHandValue(state.playerHand) > 21) {
+          state.playerBust = true
+          state.gameStatus = 'gameover'
+          state.gameResult = 'lose'
+        }
+      }
+    },
+    revealDealerCard(state) {
+      const hiddenCard = state.dealerHand.find(card => card.hidden)
+      if (hiddenCard) {
+        hiddenCard.hidden = false
+      }
+    },
+    drawDealerCard(state) {
+      while (calcHandValue(state.dealerHand) < 17) {
+        state.dealerHand.push(state.deck.pop() as Card)
+      }
+      if (calcHandValue(state.dealerHand) > 21) {
+        state.dealerBust = true
+        state.gameResult = 'win'
+      } else if (
+        calcHandValue(state.dealerHand) > calcHandValue(state.playerHand)
+      ) {
+        state.gameResult = 'lose'
+      } else if (
+        calcHandValue(state.dealerHand) < calcHandValue(state.playerHand)
+      ) {
+        state.gameResult = 'win'
+      } else {
+        state.gameResult = 'tie'
+      }
+      state.gameStatus = 'gameover'
+    },
+    playerStand(state) {
+      if (state.gameStatus === 'playing') {
+        state.playerStand = true
+        gameSlice.caseReducers.revealDealerCard(state)
+        gameSlice.caseReducers.drawDealerCard(state)
+      }
+    },
+    updatePlayerMoney(state, action: PayloadAction<number>) {
+      state.playerMoney += action.payload
+    },
+  },
+})
+
+export const {
+  startGame,
+  drawPlayerCard,
+  revealDealerCard,
+  drawDealerCard,
+  playerStand,
+  updatePlayerMoney,
+} = gameSlice.actions
+
+export default gameSlice.reducer
