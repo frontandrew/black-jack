@@ -1,3 +1,8 @@
+/**
+ * Файл содержит логику Redux для управления состоянием игры
+ * startGame, drawPlayerCard, revealDealerCard, drawDealerCard, playerStand, updatePlayerMoney, и resetGameMessage - действия для управления игрой
+ */
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Card } from '../../shared/types'
 import {
@@ -18,6 +23,7 @@ interface GameState {
   playerMoney: number
 }
 
+// Начальное состояние игры
 const initialState: GameState = {
   playerHand: [],
   dealerHand: [],
@@ -34,6 +40,7 @@ const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
+    // Начало новой игры, создание и перемешивание колоды, а также инициализируя руки дилера и игрока
     startGame(state) {
       state.playerHand = []
       state.dealerHand = []
@@ -48,7 +55,7 @@ const gameSlice = createSlice({
       state.dealerHand.push(state.deck.pop() as Card)
       state.dealerHand.push({ ...(state.deck.pop() as Card), hidden: true })
       // Blackjack! Если у игрока сразу после раздачи набралось 21 очко, то такая ситуация и называется блек-джек.
-      // Игроку сразу выплачивается выигрыш 3 к 2
+      // Игроку сразу выплачивается выигрыш 3 к 2 (ToDo)
       if (
         state.playerHand.length === 2 &&
         calcHandValue(state.playerHand) === 21
@@ -57,6 +64,7 @@ const gameSlice = createSlice({
         state.gameResult = 'win'
       }
     },
+    // Добавление карты игроку
     drawPlayerCard(state) {
       if (!state.playerStand && state.gameStatus === 'playing') {
         state.playerHand.push(state.deck.pop() as Card)
@@ -67,12 +75,14 @@ const gameSlice = createSlice({
         }
       }
     },
+    // Открытие закрытой карты дилера
     revealDealerCard(state) {
       const hiddenCard = state.dealerHand.find(card => card.hidden)
       if (hiddenCard) {
         hiddenCard.hidden = false
       }
     },
+    // Добавление карты дилеру до выполнения условия (пока < 17 очков у дилера)
     drawDealerCard(state) {
       while (calcHandValue(state.dealerHand) < 17) {
         state.dealerHand.push(state.deck.pop() as Card)
@@ -93,6 +103,7 @@ const gameSlice = createSlice({
       }
       state.gameStatus = 'gameover'
     },
+    // Завершение хода игрока
     playerStand(state) {
       if (state.gameStatus === 'playing') {
         state.playerStand = true
@@ -100,9 +111,11 @@ const gameSlice = createSlice({
         gameSlice.caseReducers.drawDealerCard(state)
       }
     },
+    // Обновление денег игрока в зависимости от результата раздачи
     updatePlayerMoney(state, action: PayloadAction<number>) {
       state.playerMoney += action.payload
     },
+    // Сброс сообщения о состоянии игры (выиграл или проиграл)
     resetGameMessage(state) {
       state.gameStatus = 'init'
     },

@@ -1,3 +1,10 @@
+/**
+ * Компонент управляет логикой игры, отображает canvas и элементы управления
+ * useEffect используется для запуска новой игры при монтировании компонента и для обработки состояния завершения раздачи (не игры)
+ * handleHit и handleStand управляют действиями игрока
+ * handleNewBet запускает новую раздачу после завершения текущей
+ */
+
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../app/store'
@@ -21,10 +28,12 @@ export const GamePage: React.FC = () => {
   const game = useSelector((state: RootState) => state.game)
   const [showResult, setShowResult] = useState(false)
 
+  // Запуск новой игры при монтировании компонента
   useEffect(() => {
     dispatch(startGame())
   }, [dispatch])
 
+  // Обработка состояние завершения раздачи
   useEffect(() => {
     if (game.gameStatus === 'gameover') {
       setShowResult(true)
@@ -38,12 +47,14 @@ export const GamePage: React.FC = () => {
     }
   }, [game.gameStatus, game.gameResult, game.playerMoney, dispatch, navigate])
 
+  // Обработка действия "Hit" игрока
   const handleHit = () => {
     if (game.gameStatus === 'playing' && calcHandValue(game.playerHand) < 21) {
       dispatch(drawPlayerCard())
     }
   }
 
+  // Обработка действие "Stand" игрока
   const handleStand = () => {
     // debugger
     if (game.gameStatus === 'playing') {
@@ -51,6 +62,7 @@ export const GamePage: React.FC = () => {
     }
   }
 
+  // Обработка новой ставки
   const handleNewBet = () => {
     setShowResult(false)
     dispatch(resetGameMessage())

@@ -1,3 +1,7 @@
+/**
+ * Компонент предоставляет кнопки управления для действий onHit "Взять еще карту" и onStand "Остановиться".
+ */
+
 import React from 'react'
 import { Button } from '@mui/material'
 
