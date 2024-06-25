@@ -6,3 +6,6 @@
     align-items: center;
     justify-content: center;
 }
+.game-page__message {
+    text-align: center;
+}

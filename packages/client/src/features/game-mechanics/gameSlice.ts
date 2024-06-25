@@ -7,7 +7,6 @@ import {
 } from '../../shared/utils/cardUtils'
 
 interface GameState {
-  playerMoney: number
   playerHand: Card[]
   dealerHand: Card[]
   deck: Card[]
@@ -16,10 +15,10 @@ interface GameState {
   dealerBust: boolean
   playerStand: boolean
   gameResult: 'win' | 'lose' | 'tie' | null
+  playerMoney: number
 }
 
 const initialState: GameState = {
-  playerMoney: 100,
   playerHand: [],
   dealerHand: [],
   deck: [],
@@ -28,6 +27,7 @@ const initialState: GameState = {
   dealerBust: false,
   playerStand: false,
   gameResult: null,
+  playerMoney: 100,
 }
 
 const gameSlice = createSlice({
@@ -47,6 +47,15 @@ const gameSlice = createSlice({
       state.playerHand.push(state.deck.pop() as Card)
       state.dealerHand.push(state.deck.pop() as Card)
       state.dealerHand.push({ ...(state.deck.pop() as Card), hidden: true })
+      // Blackjack! Если у игрока сразу после раздачи набралось 21 очко, то такая ситуация и называется блек-джек.
+      // Игроку сразу выплачивается выигрыш 3 к 2
+      if (
+        state.playerHand.length === 2 &&
+        calcHandValue(state.playerHand) === 21
+      ) {
+        state.gameStatus = 'gameover'
+        state.gameResult = 'win'
+      }
     },
     drawPlayerCard(state) {
       if (!state.playerStand && state.gameStatus === 'playing') {
@@ -94,6 +103,9 @@ const gameSlice = createSlice({
     updatePlayerMoney(state, action: PayloadAction<number>) {
       state.playerMoney += action.payload
     },
+    resetGameMessage(state) {
+      state.gameStatus = 'init'
+    },
   },
 })
 
@@ -104,6 +116,7 @@ export const {
   drawDealerCard,
   playerStand,
   updatePlayerMoney,
+  resetGameMessage,
 } = gameSlice.actions
 
 export default gameSlice.reducer
