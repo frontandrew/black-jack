@@ -17,7 +17,7 @@ export const ErrorPage = () => {
       <Button
         variant="contained"
         onClick={() => {
-          navigate(-1)
+          navigate(-2)
         }}>
         BACK
       </Button>
