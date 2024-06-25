@@ -2,9 +2,30 @@ import { Box, Button, Grid, TextField, Typography } from '@mui/material'
 import { useNavigate } from 'react-router'
 
 import './style.css'
+import { useState } from 'react'
+import { validators } from '../../shared/validation'
+
+type HandlerForms = (value: Record<string, string>) => void
+
+const handlerForms: HandlerForms = value => {
+  const loginErrors = validators.login(value.login)
+  const passwordErrors = validators.password(value.password)
+
+  if (loginErrors.length > 0) {
+    alert(`Login:\n ${loginErrors.join('\n')}`)
+  }
+
+  if (passwordErrors.length > 0) {
+    alert(`Password:\n ${passwordErrors.join('\n')}`)
+  }
+
+  console.log(value)
+}
 
 export const LoginPage = () => {
   const navigate = useNavigate()
+  const [value, setValue] = useState('')
+  const [password, setPassword] = useState('')
 
   return (
     <Box className="login-page">
@@ -13,12 +34,25 @@ export const LoginPage = () => {
           <Typography variant="h3" align="center">
             Login
           </Typography>
-          <TextField label="Login" type="text" size="small" />
-          <TextField label="Password" type="password" size="small" />
+          <TextField
+            label="Login"
+            type="text"
+            size="small"
+            onChange={e => setValue(e.target.value)}
+          />
+          <TextField
+            label="Password"
+            type="password"
+            size="small"
+            onChange={e => setPassword(e.target.value)}
+          />
           <Button
             variant="contained"
             onClick={() => {
-              navigate('/sign-in')
+              handlerForms({
+                login: value,
+                password: password,
+              })
             }}>
             SIGN IN
           </Button>
