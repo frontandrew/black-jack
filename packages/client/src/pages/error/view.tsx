@@ -5,7 +5,7 @@ import './style.css'
 
 export const ErrorPage = () => {
   const navigate = useNavigate()
-  const error: unknown = useRouteError()
+  const error: any | null = useRouteError()
 
   return (
     <Box className="error-page">
