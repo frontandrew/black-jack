@@ -4,6 +4,10 @@ export function password(value: string): string[] {
   const MIN_LENGTH = 8
   const MAX_LENGTH = 40
 
+  if (value === undefined) {
+    return []
+  }
+
   if (value.length < MIN_LENGTH) {
     errors.push(` Minimum length is ${MIN_LENGTH} characters.`)
   }

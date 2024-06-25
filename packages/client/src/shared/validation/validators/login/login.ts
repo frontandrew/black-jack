@@ -4,6 +4,10 @@ export function login(value: string): string[] {
   const MIN_LENGTH = 3
   const MAX_LENGTH = 20
 
+  if (value === undefined) {
+    return []
+  }
+
   if (value.length < MIN_LENGTH) {
     errors.push(` Minimum length is ${MIN_LENGTH} characters.`)
   }

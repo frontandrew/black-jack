@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField, Typography } from '@mui/material'
+import { Box, Button, Grid, Input, TextField, Typography } from '@mui/material'
 import { useNavigate } from 'react-router'
 
 import './style.css'
@@ -7,25 +7,40 @@ import { validators } from '../../shared/validation'
 
 type HandlerForms = (value: Record<string, string>) => void
 
-const handlerForms: HandlerForms = value => {
-  const loginErrors = validators.login(value.login)
-  const passwordErrors = validators.password(value.password)
-
-  if (loginErrors.length > 0) {
-    alert(`Login:\n ${loginErrors.join('\n')}`)
-  }
-
-  if (passwordErrors.length > 0) {
-    alert(`Password:\n ${passwordErrors.join('\n')}`)
-  }
-
-  console.log(value)
-}
-
 export const LoginPage = () => {
   const navigate = useNavigate()
   const [value, setValue] = useState('')
   const [password, setPassword] = useState('')
+
+  const [errorLogin, setErrorLogin] = useState(false)
+  const [errorPassword, setErrorPassword] = useState(false)
+
+  const handlerForms: HandlerForms = value => {
+    const loginErrors = validators.login(value.login)
+    const passwordErrors = validators.password(value.password)
+
+    if (loginErrors.length > 0) {
+      setErrorLogin(true)
+      alert(`Login:\n ${loginErrors.join('\n')}`)
+    }
+
+    if (passwordErrors.length > 0) {
+      setErrorPassword(true)
+      alert(`Password:\n ${passwordErrors.join('\n')}`)
+    }
+
+    if (passwordErrors.length === 0) {
+      setErrorPassword(false)
+    }
+
+    if (loginErrors.length === 0) {
+      setErrorLogin(false)
+    }
+
+    if (passwordErrors.length === 0 && loginErrors.length === 0) {
+      console.log(value)
+    }
+  }
 
   return (
     <Box className="login-page">
@@ -35,16 +50,30 @@ export const LoginPage = () => {
             Login
           </Typography>
           <TextField
+            error={errorLogin}
             label="Login"
             type="text"
             size="small"
             onChange={e => setValue(e.target.value)}
+            inputProps={{
+              onBlur: () => {
+                handlerForms({ login: value })
+              },
+            }}
           />
           <TextField
-            label="Password"
+            error={errorPassword}
+            label="password"
             type="password"
             size="small"
-            onChange={e => setPassword(e.target.value)}
+            onChange={e => {
+              setPassword(e.target.value)
+            }}
+            inputProps={{
+              onBlur: () => {
+                handlerForms({ password: password })
+              },
+            }}
           />
           <Button
             variant="contained"
