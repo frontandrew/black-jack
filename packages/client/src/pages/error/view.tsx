@@ -5,7 +5,7 @@ import './style.css'
 
 export const ErrorPage = () => {
   const navigate = useNavigate()
-  const error: unknown = useRouteError()
+  const error: any = useRouteError()
 
   return (
     <Box className="error-page">
@@ -17,7 +17,7 @@ export const ErrorPage = () => {
       <Button
         variant="contained"
         onClick={() => {
-          navigate(-1)
+          navigate(-2)
         }}>
         BACK
       </Button>
