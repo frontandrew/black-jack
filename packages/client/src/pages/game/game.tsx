@@ -30,8 +30,7 @@ export const GamePage: React.FC = () => {
 
   // Запуск новой игры при монтировании компонента
   useEffect(() => {
-    // dispatch(startGame())
-    console.log(game)
+    // console.log(game)
   }, [dispatch])
 
   // Обработка состояние завершения раздачи
@@ -104,7 +103,7 @@ export const GamePage: React.FC = () => {
 
         {game.playerMoney <= 0 && game.gameStatus === 'init' && (
           <Button variant="contained" onClick={() => navigate('/finish')}>
-            Вы проиграли
+            У вас закончились деньги :(
           </Button>
         )}
       </div>

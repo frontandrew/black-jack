@@ -55,14 +55,12 @@ const gameSlice = createSlice({
       state.dealerHand.push(state.deck.pop() as Card)
       state.dealerHand.push({ ...(state.deck.pop() as Card), hidden: true })
 
-      // Blackjack! Если у игрока сразу после раздачи набралось 21 очко, то такая ситуация называется блек-джек.
+      // Сразу после раздачи проверяем на blackjack
+      // Если у игрока сразу после раздачи набралось 21 очко, то такая ситуация называется блек-джек
       // Игроку сразу выплачивается выигрыш 3 к 2 (ToDo)
-      // Ставка не выплачивает, если дилер тоже не набрал 21
-      // Сразу после раздачи проверяем на blackjack и запускаем набор карт дилером
+      // Ставка не выплачивает, если дилер тоже набрал 21
       if (calcHandValue(state.playerHand) === 21) {
-        state.playerStand = true
-        gameSlice.caseReducers.revealDealerCard(state)
-        gameSlice.caseReducers.drawDealerCard(state)
+        gameSlice.caseReducers.playerStand(state)
       }
     },
     // Добавление карты игроку
@@ -70,11 +68,9 @@ const gameSlice = createSlice({
       if (!state.playerStand && state.gameStatus === 'playing') {
         state.playerHand.push(state.deck.pop() as Card)
 
-        // Останавливаем набор карт для игрока, если он уже набрал 21 и запускаем набор карт дилером
+        // Останавливаем ход игрока, если он уже набрал 21 и запускаем набор карт дилером
         if (calcHandValue(state.playerHand) === 21) {
-          state.playerStand = true
-          gameSlice.caseReducers.revealDealerCard(state)
-          gameSlice.caseReducers.drawDealerCard(state)
+          gameSlice.caseReducers.playerStand(state)
         }
 
         if (calcHandValue(state.playerHand) > 21) {
@@ -91,11 +87,22 @@ const gameSlice = createSlice({
         hiddenCard.hidden = false
       }
     },
-    // Добавление карты дилеру до выполнения условия (пока < 17 очков у дилера)
     drawDealerCard(state) {
-      while (calcHandValue(state.dealerHand) < 17) {
-        state.dealerHand.push(state.deck.pop() as Card)
+      // Добавление карты дилеру (пока < 17 очков у дилера), если у игрока перебор
+      if (state.playerBust === true) {
+        while (calcHandValue(state.dealerHand) < 17) {
+          state.dealerHand.push(state.deck.pop() as Card)
+        }
       }
+      // Попытка собрать дилером 21, если игрок собрал 21
+      if (state.playerStand === true) {
+        while (
+          calcHandValue(state.dealerHand) < calcHandValue(state.playerHand)
+        ) {
+          state.dealerHand.push(state.deck.pop() as Card)
+        }
+      }
+      // Определение победителя
       if (calcHandValue(state.dealerHand) > 21) {
         state.dealerBust = true
         state.gameResult = 'win'
