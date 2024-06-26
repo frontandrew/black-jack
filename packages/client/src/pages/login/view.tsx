@@ -44,7 +44,11 @@ export const LoginPage = () => {
 
   return (
     <Box className="login-page">
-      <form>
+      <form
+        onSubmit={e => {
+          e.preventDefault() // Предотвращаем перезагрузку страницы
+          handlerForms({ login: value, password: password })
+        }}>
         <Grid direction="column" display="flex" gap="1em">
           <Typography variant="h3" align="center">
             Login
@@ -75,14 +79,7 @@ export const LoginPage = () => {
               },
             }}
           />
-          <Button
-            variant="contained"
-            onClick={() => {
-              handlerForms({
-                login: value,
-                password: password,
-              })
-            }}>
+          <Button type="submit" variant="contained">
             SIGN IN
           </Button>
           <Button
