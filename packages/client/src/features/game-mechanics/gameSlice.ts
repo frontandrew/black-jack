@@ -51,10 +51,9 @@ const gameSlice = createSlice({
       state.gameStatus = 'playing'
       state.gameResult = null
       state.playerHand.push(state.deck.pop() as Card)
-      state.playerHand.push(state.deck.pop() as Card)
       state.dealerHand.push(state.deck.pop() as Card)
+      state.playerHand.push(state.deck.pop() as Card)
       state.dealerHand.push({ ...(state.deck.pop() as Card), hidden: true })
-
       // Сразу после раздачи проверяем на blackjack
       // Если у игрока сразу после раздачи набралось 21 очко, то такая ситуация называется блек-джек
       // Игроку сразу выплачивается выигрыш 3 к 2 (ToDo)

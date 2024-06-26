@@ -40,7 +40,12 @@ const CanvasGame: React.FC = () => {
       ctx.fillStyle = 'white'
       ctx.fillRect(x, y, 50, 70)
       ctx.strokeRect(x, y, 50, 70)
-      ctx.fillStyle = 'black'
+      if (card.suit === '♥️' || card.suit === '♦️') {
+        ctx.fillStyle = 'red'
+      }
+      if (card.suit === '♠️' || card.suit === '♣️') {
+        ctx.fillStyle = 'black'
+      }
       ctx.font = '20px Arial'
       ctx.fillText(`${card.value}${card.suit}`, x + 5, y + 45)
     }
@@ -72,12 +77,12 @@ const CanvasGame: React.FC = () => {
     )
 
     // Рисование значений очков
+    ctx.fillStyle = 'black'
     ctx.font = '20px Arial'
     ctx.fillText('Очки дилера: ' + dealerHandValue, 100, 80)
     ctx.fillText('Очки игрока: ' + playerHandValue, 100, 380)
 
     // Рисование денег игрока
-    ctx.fillStyle = 'black'
     ctx.font = '30px Arial'
     ctx.fillText('Деньги игрока: $' + playerMoney, 10, 580)
   }
