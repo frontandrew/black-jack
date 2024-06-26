@@ -13,7 +13,7 @@ import {
   playerStand,
   startGame,
   updatePlayerMoney,
-  resetGameMessage,
+  resetGame,
 } from '../../features/game-mechanics/gameSlice'
 import CanvasGame from '../../features/game-mechanics/canvasGame'
 import GameControls from '../../features/game-mechanics/gameControls'
@@ -30,20 +30,21 @@ export const GamePage: React.FC = () => {
 
   // Запуск новой игры при монтировании компонента
   useEffect(() => {
-    dispatch(startGame())
+    // dispatch(startGame())
+    console.log(game)
   }, [dispatch])
 
   // Обработка состояние завершения раздачи
   useEffect(() => {
     if (game.gameStatus === 'gameover') {
       setShowResult(true)
-      if (game.gameResult === 'win') {
+      if (game.gameResult == 'win') {
+        dispatch(updatePlayerMoney(20))
+      }
+      if (game.gameResult == 'tie') {
         dispatch(updatePlayerMoney(10))
       }
-      if (game.gameResult === 'lose') {
-        dispatch(updatePlayerMoney(-10))
-      }
-      dispatch(resetGameMessage())
+      dispatch(resetGame())
     }
   }, [game.gameStatus, game.gameResult, game.playerMoney, dispatch, navigate])
 
@@ -65,8 +66,9 @@ export const GamePage: React.FC = () => {
   // Обработка новой ставки
   const handleNewBet = () => {
     setShowResult(false)
-    dispatch(resetGameMessage())
+    dispatch(resetGame())
     dispatch(startGame())
+    dispatch(updatePlayerMoney(-10))
   }
 
   return (
@@ -74,21 +76,38 @@ export const GamePage: React.FC = () => {
       {showResult && (
         <div className="game-page__message">
           <Typography variant="h5">
-            {game.gameResult === 'win' ? 'Вы выиграли!' : 'Вы проиграли!'}
+            {game.gameResult === 'win' && 'Вы выиграли!'}
+            {game.gameResult === 'lose' && 'Вы проиграли!'}
+            {game.gameResult === 'tie' && 'Ничья!'}
           </Typography>
-          {game.playerMoney > 0 ? (
-            <Button variant="contained" onClick={handleNewBet}>
-              Сделать ставку
-            </Button>
-          ) : (
-            <Button variant="contained" onClick={() => navigate('/finish')}>
-              Вы проиграли
-            </Button>
-          )}
         </div>
       )}
       <CanvasGame />
-      {!showResult && <GameControls onHit={handleHit} onStand={handleStand} />}
+
+      <div className="game-page__controls">
+        {game.playerMoney > 0 && game.gameStatus === 'init' && (
+          <Button variant="contained" onClick={handleNewBet}>
+            Сделать ставку
+          </Button>
+        )}
+
+        {game.gameStatus === 'playing' && (
+          <>
+            <Button variant="contained" onClick={handleHit}>
+              Взять еще карту
+            </Button>
+            <Button variant="contained" onClick={handleStand}>
+              Остановиться
+            </Button>
+          </>
+        )}
+
+        {game.playerMoney <= 0 && game.gameStatus === 'init' && (
+          <Button variant="contained" onClick={() => navigate('/finish')}>
+            Вы проиграли
+          </Button>
+        )}
+      </div>
     </div>
   )
 }

@@ -111,13 +111,19 @@ const gameSlice = createSlice({
         gameSlice.caseReducers.drawDealerCard(state)
       }
     },
-    // Обновление денег игрока в зависимости от результата раздачи
     updatePlayerMoney(state, action: PayloadAction<number>) {
       state.playerMoney += action.payload
     },
-    // Сброс сообщения о состоянии игры (выиграл или проиграл)
-    resetGameMessage(state) {
+    resetGame(state) {
       state.gameStatus = 'init'
+    },
+    newGame(state) {
+      state.gameResult = null
+      state.gameStatus = 'init'
+      state.playerMoney = initialState.playerMoney
+      state.deck = []
+      state.playerHand = []
+      state.dealerHand = []
     },
   },
 })
@@ -129,7 +135,8 @@ export const {
   drawDealerCard,
   playerStand,
   updatePlayerMoney,
-  resetGameMessage,
+  resetGame,
+  newGame,
 } = gameSlice.actions
 
 export default gameSlice.reducer
