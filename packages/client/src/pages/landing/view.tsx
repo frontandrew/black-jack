@@ -12,7 +12,8 @@ export const LandingPage = () => {
       <Button
         variant="contained"
         onClick={() => {
-          navigate('/sign-in')
+          // navigate('/sign-in')
+          throw new Error('ooops')
         }}>
         SIGN IN
       </Button>
