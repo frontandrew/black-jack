@@ -1,38 +1,32 @@
 /**
  * Файл содержит логику Redux для управления состоянием игры
- * startGame, drawPlayerCard, revealDealerCard, drawDealerCard, playerStand, updatePlayerMoney, и resetGameMessage - действия для управления игрой
+ *
+ * startGame - начало новой игры, создание и перемешивание колоды, а также инициализируя руки дилера и игрока
+ * drawPlayerCard - добавление карты игроку (ход игрока)
+ * revealDealerCard - открытие закрытой карты дилера
+ * drawDealerCard - добавление карты дилеру (ход дилера)
+ * playerStand - stand игрока (завершение хода игрока)
+ * updatePlayerMoney - обновление баланса игрока
+ * resetGame - сброс раздачи (начать новую раздачу)
+ * newGame - новая игра (обнуление GameState)
+ *
+ * ToDo реализовать механику ставки любого номинала (не только 10$)
  */
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Card } from '../../shared/types'
-import {
-  createDeck,
-  shuffle,
-  calcHandValue,
-} from '../../shared/utils/cardUtils'
+import { Card } from '../../../shared/types'
+import { createDeck, shuffle, calcHand } from '../../../shared/utils/cardUtils'
+import { GameState } from '../types/gameSlice.types'
 
-interface GameState {
-  playerHand: Card[]
-  dealerHand: Card[]
-  deck: Card[]
-  gameStatus: 'init' | 'playing' | 'gameover'
-  playerBust: boolean
-  dealerBust: boolean
-  playerStand: boolean
-  gameResult: 'win' | 'lose' | 'tie' | null
-  playerMoney: number
-}
-
-// Начальное состояние игры
 const initialState: GameState = {
   playerHand: [],
   dealerHand: [],
   deck: [],
-  gameStatus: 'init',
+  status: 'init',
   playerBust: false,
   dealerBust: false,
   playerStand: false,
-  gameResult: null,
+  result: null,
   playerMoney: 100,
 }
 
@@ -40,7 +34,6 @@ const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
-    // Начало новой игры, создание и перемешивание колоды, а также инициализируя руки дилера и игрока
     startGame(state) {
       state.playerHand = []
       state.dealerHand = []
@@ -48,8 +41,8 @@ const gameSlice = createSlice({
       state.playerBust = false
       state.dealerBust = false
       state.playerStand = false
-      state.gameStatus = 'playing'
-      state.gameResult = null
+      state.status = 'playing'
+      state.result = null
       state.playerHand.push(state.deck.pop() as Card)
       state.dealerHand.push({ ...(state.deck.pop() as Card), hidden: true })
       state.playerHand.push(state.deck.pop() as Card)
@@ -58,28 +51,25 @@ const gameSlice = createSlice({
       // Если у игрока сразу после раздачи набралось 21 очко, то такая ситуация называется блек-джек
       // Игроку сразу выплачивается выигрыш 3 к 2 (ToDo)
       // Ставка не выплачивает, если дилер тоже набрал 21
-      if (calcHandValue(state.playerHand) === 21) {
+      if (calcHand(state.playerHand) === 21) {
         gameSlice.caseReducers.playerStand(state)
       }
     },
-    // Добавление карты игроку
     drawPlayerCard(state) {
-      if (!state.playerStand && state.gameStatus === 'playing') {
+      if (!state.playerStand && state.status === 'playing') {
         state.playerHand.push(state.deck.pop() as Card)
-
         // Останавливаем ход игрока, если он уже набрал 21 и запускаем набор карт дилером
-        if (calcHandValue(state.playerHand) === 21) {
+        if (calcHand(state.playerHand) === 21) {
           gameSlice.caseReducers.playerStand(state)
         }
-
-        if (calcHandValue(state.playerHand) > 21) {
+        // Перебор у игрока
+        if (calcHand(state.playerHand) > 21) {
           state.playerBust = true
-          state.gameStatus = 'gameover'
-          state.gameResult = 'lose'
+          state.status = 'gameover'
+          state.result = 'lose'
         }
       }
     },
-    // Открытие закрытой карты дилера
     revealDealerCard(state) {
       const hiddenCard = state.dealerHand.find(card => card.hidden)
       if (hiddenCard) {
@@ -87,40 +77,34 @@ const gameSlice = createSlice({
       }
     },
     drawDealerCard(state) {
-      // Добавление карты дилеру, если у игрока перебор (минимум 16 очков у дилера)
-      if (state.playerBust === true) {
-        while (calcHandValue(state.dealerHand) < 17) {
+      // Добавление карты дилеру (минимум 16 очков у дилера)
+      // В некоторых правилах дилер должен собрать больше 16 очков, если только двумя картами собрал меньше 16 очков
+      if (state.status === 'playing') {
+        while (calcHand(state.dealerHand) < 17) {
           state.dealerHand.push(state.deck.pop() as Card)
         }
       }
-      // Попытка собрать дилером 21, если игрок собрал 21
+      // Попытка собрать дилером больше игрока, если игрок завершил ход
       if (state.playerStand === true) {
-        while (
-          calcHandValue(state.dealerHand) < calcHandValue(state.playerHand)
-        ) {
+        while (calcHand(state.dealerHand) < calcHand(state.playerHand)) {
           state.dealerHand.push(state.deck.pop() as Card)
         }
       }
       // Определение победителя
-      if (calcHandValue(state.dealerHand) > 21) {
+      if (calcHand(state.dealerHand) > 21) {
         state.dealerBust = true
-        state.gameResult = 'win'
-      } else if (
-        calcHandValue(state.dealerHand) > calcHandValue(state.playerHand)
-      ) {
-        state.gameResult = 'lose'
-      } else if (
-        calcHandValue(state.dealerHand) < calcHandValue(state.playerHand)
-      ) {
-        state.gameResult = 'win'
+        state.result = 'win'
+      } else if (calcHand(state.dealerHand) > calcHand(state.playerHand)) {
+        state.result = 'lose'
+      } else if (calcHand(state.dealerHand) < calcHand(state.playerHand)) {
+        state.result = 'win'
       } else {
-        state.gameResult = 'tie'
+        state.result = 'tie'
       }
-      state.gameStatus = 'gameover'
+      state.status = 'gameover'
     },
-    // Завершение хода игрока
     playerStand(state) {
-      if (state.gameStatus === 'playing') {
+      if (state.status === 'playing') {
         state.playerStand = true
         gameSlice.caseReducers.revealDealerCard(state)
         gameSlice.caseReducers.drawDealerCard(state)
@@ -130,11 +114,11 @@ const gameSlice = createSlice({
       state.playerMoney += action.payload
     },
     resetGame(state) {
-      state.gameStatus = 'init'
+      state.status = 'init'
     },
     newGame(state) {
-      state.gameResult = null
-      state.gameStatus = 'init'
+      state.result = null
+      state.status = 'init'
       state.playerMoney = initialState.playerMoney
       state.deck = []
       state.playerHand = []

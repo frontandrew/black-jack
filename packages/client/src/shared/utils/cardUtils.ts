@@ -34,6 +34,7 @@ export function createDeck(): Card[] {
 /**
  * Алгоритм Фишера-Йетса (Fisher-Yates shuffle), известный как алгоритм Саттоло (Sattolo),
  * для эффективного перемешивания элементов массива
+ * @param {Card[]} deck - массив карт для перемешивания
  */
 export function shuffle(deck: Card[]): Card[] {
   for (let i = deck.length - 1; i > 0; i--) {
@@ -45,8 +46,9 @@ export function shuffle(deck: Card[]): Card[] {
 
 /**
  * Подсчет очков в руке
+ * @param {Card[]} hand - массив карт текущей руки
  */
-export function calcHandValue(hand: Card[]): number {
+export function calcHand(hand: Card[]): number {
   let value = 0
   let aceCount = 0
 

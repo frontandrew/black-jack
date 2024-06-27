@@ -1,7 +1,7 @@
-import { Box, Button, Typography } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { newGame, startGame } from '../../features/game-mechanics/gameSlice'
+import { useNavigate } from 'react-router-dom'
+import { newGame } from '../../../features/gameSlice/ui/gameSlice'
+import { Box, Button, Typography } from '@mui/material'
 import './start.css'
 
 export const StartPage: React.FC = () => {
@@ -14,7 +14,7 @@ export const StartPage: React.FC = () => {
   }
 
   return (
-    <Box className="start-page">
+    <Box className="start">
       <Typography variant="h3">Добро пожаловать в Blackjack</Typography>
       <Button variant="contained" onClick={handleStart}>
         Играть

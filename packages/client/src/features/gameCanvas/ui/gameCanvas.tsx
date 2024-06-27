@@ -1,16 +1,16 @@
 /**
- * Компонент отвечает за рисование игрового процесса на <canvas>
+ * Компонент для рисования игрового процесса на <canvas>
  * drawGame рисует текущие руки игрока и дилера, а также значения рук и деньги игрока
  * drawCard рисует карту в руке игрока и дилера (в том числе закрытую отдельным цветом)
  */
 
 import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../app/store'
-import { Card } from '../../shared/types'
-import { calcHandValue } from '../../shared/utils/cardUtils'
+import { RootState } from '../../../app/store'
+import { Card } from '../../../shared/types'
+import { calcHand } from '../../../shared/utils/cardUtils'
 
-const CanvasGame: React.FC = () => {
+const GameCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const game = useSelector((state: RootState) => state.game)
 
@@ -46,12 +46,11 @@ const CanvasGame: React.FC = () => {
       if (card.suit === '♠️' || card.suit === '♣️') {
         ctx.fillStyle = 'black'
       }
-      ctx.font = '20px Arial'
+      ctx.font = '22px Arial'
       ctx.fillText(`${card.value}${card.suit}`, x + 5, y + 45)
     }
   }
 
-  // Функция рисования игры
   const drawGame = (
     ctx: CanvasRenderingContext2D,
     playerHand: Card[],
@@ -60,21 +59,17 @@ const CanvasGame: React.FC = () => {
   ) => {
     ctx.clearRect(0, 0, 800, 600)
 
-    // Рисование карт игрока
     playerHand.forEach((card, index) => {
       drawCard(ctx, card, 100 + index * 60, 400)
     })
 
-    // Рисование карт дилера
     dealerHand.forEach((card, index) => {
       drawCard(ctx, card, 100 + index * 60, 100)
     })
 
     // Вычисление значений рук
-    const playerHandValue = calcHandValue(playerHand)
-    const dealerHandValue = calcHandValue(
-      dealerHand.filter(card => !card.hidden)
-    )
+    const playerHandValue = calcHand(playerHand)
+    const dealerHandValue = calcHand(dealerHand.filter(card => !card.hidden))
 
     // Рисование значений очков
     ctx.fillStyle = 'black'
@@ -87,7 +82,7 @@ const CanvasGame: React.FC = () => {
     ctx.fillText('Деньги игрока: $' + playerMoney, 10, 580)
   }
 
-  return <canvas ref={canvasRef} width={800} height={600} />
+  return <canvas ref={canvasRef} width={600} height={600} />
 }
 
-export default CanvasGame
+export default GameCanvas

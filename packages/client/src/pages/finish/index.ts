@@ -1,1 +1,1 @@
-export { FinishPage } from './finish'
+export { FinishPage } from './ui/finish'
