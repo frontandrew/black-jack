@@ -60,11 +60,11 @@ const GameCanvas: React.FC = () => {
     ctx.clearRect(0, 0, 800, 600)
 
     playerHand.forEach((card, index) => {
-      drawCard(ctx, card, 100 + index * 60, 340)
+      drawCard(ctx, card, 100 + index * 60, 285)
     })
 
     dealerHand.forEach((card, index) => {
-      drawCard(ctx, card, 100 + index * 60, 80)
+      drawCard(ctx, card, 100 + index * 60, 75)
     })
 
     // Вычисление значений рук
@@ -74,15 +74,15 @@ const GameCanvas: React.FC = () => {
     // Рисование значений очков
     ctx.fillStyle = 'black'
     ctx.font = '20px Arial'
-    ctx.fillText('Очки игрока: ' + playerHandValue, 100, 320)
-    ctx.fillText('Очки дилера: ' + dealerHandValue, 100, 60)
+    ctx.fillText('Player : ' + playerHandValue, 100, 270)
+    ctx.fillText('Dealer: ' + dealerHandValue, 100, 60)
 
     // Рисование денег игрока
     ctx.font = '22px Arial'
-    ctx.fillText('Деньги игрока: $' + playerMoney, 150, 480)
+    ctx.fillText('Money: $' + playerMoney, 215, 420)
   }
 
-  return <canvas ref={canvasRef} width={555} height={555} />
+  return <canvas ref={canvasRef} width={550} height={450} />
 }
 
 export default GameCanvas

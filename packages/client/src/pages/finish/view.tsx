@@ -11,13 +11,13 @@ export const FinishPage: React.FC = () => {
 
   return (
     <Box className="finish">
-      <Typography variant="h3">Конец игры</Typography>
+      <Typography variant="h3">End Game</Typography>
       <Button
         variant="contained"
         onClick={handleRestart}
         size="large"
         sx={{ margin: 3 }}>
-        Играть снова
+        Play again
       </Button>
     </Box>
   )

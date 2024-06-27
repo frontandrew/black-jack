@@ -74,9 +74,9 @@ export const GamePage: React.FC = () => {
         {showResult && (
           <div className="game-page__message">
             <Typography variant="h5">
-              {game.result === 'win' && 'Вы выиграли!'}
-              {game.result === 'lose' && 'Вы проиграли!'}
-              {game.result === 'tie' && 'Ничья!'}
+              {game.result === 'win' && 'You win!'}
+              {game.result === 'lose' && 'You lose!'}
+              {game.result === 'tie' && 'Tie!'}
             </Typography>
           </div>
         )}
@@ -91,7 +91,7 @@ export const GamePage: React.FC = () => {
             onClick={handleBet}
             size="large"
             sx={{ margin: 1 }}>
-            Сделать ставку -10$
+            Bet 10$
           </Button>
         )}
 
@@ -102,14 +102,14 @@ export const GamePage: React.FC = () => {
               onClick={handleHit}
               size="large"
               sx={{ margin: 1 }}>
-              Взять еще карту
+              Hit
             </Button>
             <Button
               variant="contained"
               onClick={handleStand}
               size="large"
               sx={{ margin: 1 }}>
-              Остановиться
+              Stand
             </Button>
           </>
         )}
@@ -120,7 +120,7 @@ export const GamePage: React.FC = () => {
             onClick={() => navigate('/finish')}
             size="large"
             sx={{ margin: 1 }}>
-            У вас закончились деньги :(
+            You don't have money to bet
           </Button>
         )}
       </div>

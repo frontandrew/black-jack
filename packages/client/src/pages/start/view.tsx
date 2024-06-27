@@ -11,13 +11,13 @@ export const StartPage: React.FC = () => {
 
   return (
     <Box className="start">
-      <Typography variant="h3">Добро пожаловать в Blackjack</Typography>
+      <Typography variant="h3">Welcome to Blackjack</Typography>
       <Button
         variant="contained"
         onClick={handleStart}
         size="large"
         sx={{ margin: 3 }}>
-        Играть
+        Play
       </Button>
     </Box>
   )
