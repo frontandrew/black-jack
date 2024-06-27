@@ -1,4 +1,8 @@
-import { Card } from '../../../shared/types'
+export interface Card {
+  suit: string
+  value: string
+  hidden?: boolean
+}
 
 export interface GameState {
   playerHand: Card[]

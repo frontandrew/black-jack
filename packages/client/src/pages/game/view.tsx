@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect, useState } from 'react'
-import { RootState } from '../../../app/store'
+import { RootState } from '../../app/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -15,17 +15,22 @@ import {
   startGame,
   updatePlayerMoney,
   resetGame,
-} from '../../../features/gameSlice/ui/gameSlice'
-import CanvasGame from '../../../features/gameCanvas/ui/gameCanvas'
-import { calcHand } from '../../../shared/utils/cardUtils'
+  newGame,
+} from '../../features/game/model'
+import CanvasGame from '../../features/game/view'
+import { calcHand } from '../../features/game/utils'
 import { Button, Typography } from '@mui/material'
-import './game.css'
+import './style.css'
 
 export const GamePage: React.FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const game = useSelector((state: RootState) => state.game)
   const [showResult, setShowResult] = useState(false)
+
+  useEffect(() => {
+    dispatch(newGame())
+  }, [dispatch])
 
   // Обработка состояние завершения раздачи
   useEffect(() => {

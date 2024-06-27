@@ -6,9 +6,9 @@
 
 import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../../app/store'
-import { Card } from '../../../shared/types'
-import { calcHand } from '../../../shared/utils/cardUtils'
+import { RootState } from '../../app/store'
+import { Card } from './types'
+import { calcHand } from './utils'
 
 const GameCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -82,7 +82,7 @@ const GameCanvas: React.FC = () => {
     ctx.fillText('Деньги игрока: $' + playerMoney, 150, 480)
   }
 
-  return <canvas ref={canvasRef} width={500} height={500} />
+  return <canvas ref={canvasRef} width={555} height={555} />
 }
 
 export default GameCanvas

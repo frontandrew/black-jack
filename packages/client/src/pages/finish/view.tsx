@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { Box, Button, Typography } from '@mui/material'
-import './finish.css'
+import './style.css'
 
 export const FinishPage: React.FC = () => {
   const navigate = useNavigate()

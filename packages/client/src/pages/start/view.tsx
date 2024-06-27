@@ -1,15 +1,11 @@
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { newGame } from '../../../features/gameSlice/ui/gameSlice'
 import { Box, Button, Typography } from '@mui/material'
-import './start.css'
+import './style.css'
 
 export const StartPage: React.FC = () => {
-  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleStart = () => {
-    dispatch(newGame())
     navigate('/game')
   }
 
