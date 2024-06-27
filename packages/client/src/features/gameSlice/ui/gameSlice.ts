@@ -41,7 +41,6 @@ const gameSlice = createSlice({
     startGame(state) {
       state.playerHand = []
       state.dealerHand = []
-      state.deck = shuffle(createDeck())
       state.playerBust = false
       state.dealerBust = false
       state.playerStand = false
@@ -129,6 +128,7 @@ const gameSlice = createSlice({
       state.deck = []
       state.playerHand = []
       state.dealerHand = []
+      state.deck = shuffle(createDeck())
     },
   },
 })

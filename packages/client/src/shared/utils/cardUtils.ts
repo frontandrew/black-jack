@@ -22,11 +22,14 @@ export function createDeck(): Card[] {
   ]
   const deck: Card[] = []
 
-  suits.forEach(suit => {
-    values.forEach(value => {
-      deck.push({ suit, value })
+  // для каждой игры замешиваем 6 колод
+  for (let i = 0; i < 6; i++) {
+    suits.forEach(suit => {
+      values.forEach(value => {
+        deck.push({ suit, value })
+      })
     })
-  })
+  }
 
   return deck
 }
