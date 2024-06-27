@@ -11,6 +11,10 @@
  * newGame - новая игра (обнуление GameState)
  *
  * ToDo реализовать механику ставки любого номинала (не только 10$)
+ * ToDo сделать дилера умнее
+ * ToDo добавить несколько игроков (или несколько одновременных ставок на поле)
+ * ToDo возможность выхода со стола с выигрышем и сообщением с суммой выигрыша
+ * ToDo добавить переменную для вывода сообщения в игре "win, lose, tie, blackjack и др."
  */
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
@@ -85,12 +89,14 @@ const gameSlice = createSlice({
         }
       }
       // Попытка собрать дилером больше игрока, если игрок завершил ход
+      // ToDo научить дилера добирать карту, если исход игры ничья, причем у игрока мало очков,
+      // а у дилера "безопасная" рука, которая позволяет собрать больше очков и выиграть
       if (state.playerStand === true) {
         while (calcHand(state.dealerHand) < calcHand(state.playerHand)) {
           state.dealerHand.push(state.deck.pop() as Card)
         }
       }
-      // Определение победителя
+      // Определение результата игры
       if (calcHand(state.dealerHand) > 21) {
         state.dealerBust = true
         state.result = 'win'

@@ -56,7 +56,7 @@ export const GamePage: React.FC = () => {
   }
 
   // Обработка новой ставки
-  const handleNewBet = () => {
+  const handleBet = () => {
     setShowResult(false)
     dispatch(resetGame())
     dispatch(startGame())
@@ -81,24 +81,40 @@ export const GamePage: React.FC = () => {
 
       <div className="game__controls">
         {game.playerMoney > 0 && game.status === 'init' && (
-          <Button variant="contained" onClick={handleNewBet}>
-            Сделать ставку
+          <Button
+            variant="contained"
+            onClick={handleBet}
+            size="large"
+            sx={{ margin: 1 }}>
+            Сделать ставку -10$
           </Button>
         )}
 
         {game.status === 'playing' && (
           <>
-            <Button variant="contained" onClick={handleHit}>
+            <Button
+              variant="contained"
+              onClick={handleHit}
+              size="large"
+              sx={{ margin: 1 }}>
               Взять еще карту
             </Button>
-            <Button variant="contained" onClick={handleStand}>
+            <Button
+              variant="contained"
+              onClick={handleStand}
+              size="large"
+              sx={{ margin: 1 }}>
               Остановиться
             </Button>
           </>
         )}
 
         {game.playerMoney <= 0 && game.status === 'init' && (
-          <Button variant="contained" onClick={() => navigate('/finish')}>
+          <Button
+            variant="contained"
+            onClick={() => navigate('/finish')}
+            size="large"
+            sx={{ margin: 1 }}>
             У вас закончились деньги :(
           </Button>
         )}

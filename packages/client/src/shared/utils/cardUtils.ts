@@ -59,7 +59,7 @@ export function calcHand(hand: Card[]): number {
       value += 11
       aceCount++
     } else {
-      value += parseInt(card.value)
+      value += +card.value
     }
   }
 
