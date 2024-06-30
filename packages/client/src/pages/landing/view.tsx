@@ -1,17 +1,16 @@
 import { Button, Grid, Typography, useTheme } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
-import { LandingBanner, LandingGameFlow, LandingAbout } from './components'
+import {
+  LandingBanner,
+  LandingGameFlow,
+  LandingAbout,
+  LandingFooter,
+} from './components'
 
 export const LandingPage = () => {
   const navigate = useNavigate()
   const { spacing, palette } = useTheme()
-
-  const defaultBackgroundColor = palette.background.default
-  const contrastBackgroundColor = palette.getContrastText(
-    defaultBackgroundColor
-  )
-  const contrastTextColor = palette.getContrastText(contrastBackgroundColor)
 
   return (
     <Grid
@@ -21,8 +20,7 @@ export const LandingPage = () => {
       flexDirection={'column'}
       flexWrap={'nowrap'}
       width={'100%'}
-      height={'100%'}
-      bgcolor={defaultBackgroundColor}>
+      height={'100%'}>
       <Grid
         item
         component={'header'}
@@ -56,18 +54,7 @@ export const LandingPage = () => {
         <LandingBanner />
         <LandingAbout />
         <LandingGameFlow />
-
-        <Grid
-          item
-          component={'footer'}
-          border={1}
-          borderColor={palette.divider}
-          width={'100%'}
-          padding={spacing(2, 4)}
-          bgcolor={palette.grey[800]}
-          color={palette.getContrastText(palette.grey[800])}>
-          <Typography variant="body1">Copyright @2024</Typography>
-        </Grid>
+        <LandingFooter />
       </Grid>
     </Grid>
   )

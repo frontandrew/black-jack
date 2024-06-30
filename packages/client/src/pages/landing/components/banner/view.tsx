@@ -45,6 +45,7 @@ export const LandingBanner = () => {
             container
             display={'flex'}
             flexDirection={'column'}
+            // Костыль для отделения текста от фона
             sx={{ mixBlendMode: 'difference' }}>
             <Typography variant="h1" noWrap>
               Try your luck
