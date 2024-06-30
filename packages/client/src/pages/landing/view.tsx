@@ -1,9 +1,7 @@
 import { Button, Grid, Typography, useTheme } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
-import { LandingBanner } from './components'
-
-// import './style.css';
+import { LandingBanner, LandingGameFlow } from './components'
 
 export const LandingPage = () => {
   const navigate = useNavigate()
@@ -56,19 +54,9 @@ export const LandingPage = () => {
         </Button>
       </Grid>
 
-      <Grid
-        item
-        className={'landing-content'}
-        pt={spacing(1)}
-        overflow={'hidden auto'}>
+      <Grid item className={'landing-content'} overflow={'hidden auto'}>
         <LandingBanner />
-
-        <Grid className={'timeline'}>
-          <Grid
-            container
-            className={'timeline-container'}
-            width={'100%'}></Grid>
-        </Grid>
+        <LandingGameFlow />
 
         <Grid
           item
