@@ -1,7 +1,7 @@
 import { Button, Grid, Typography, useTheme } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
-import { LandingBanner, LandingGameFlow } from './components'
+import { LandingBanner, LandingGameFlow, LandingAbout } from './components'
 
 export const LandingPage = () => {
   const navigate = useNavigate()
@@ -25,7 +25,6 @@ export const LandingPage = () => {
       bgcolor={defaultBackgroundColor}>
       <Grid
         item
-        className={'landing-header'}
         component={'header'}
         display={'flex'}
         alignItems={'center'}
@@ -33,8 +32,7 @@ export const LandingPage = () => {
         gap={spacing(2)}
         padding={spacing(2)}
         borderBottom={1}
-        borderColor={palette.divider}
-        bgcolor={defaultBackgroundColor}>
+        borderColor={palette.divider}>
         <Typography variant="h4" flexGrow={1}>
           Black Jack
         </Typography>
@@ -54,8 +52,9 @@ export const LandingPage = () => {
         </Button>
       </Grid>
 
-      <Grid item className={'landing-content'} overflow={'hidden auto'}>
+      <Grid item overflow={'hidden auto'}>
         <LandingBanner />
+        <LandingAbout />
         <LandingGameFlow />
 
         <Grid
