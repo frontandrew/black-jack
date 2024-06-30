@@ -2,6 +2,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { useEffect } from 'react'
 import { ThemeProvider } from '@mui/material'
 
+import { theme } from '../shared/theme'
+
+import './style.css'
 import {
   ErrorPage,
   FinishPage,
@@ -14,9 +17,7 @@ import {
   SettingsPage,
   StartPage,
 } from '../pages'
-import { theme } from '../shared/theme'
-
-import './style.css'
+import { ErrorBoundary } from '../pages/error'
 
 export function App() {
   useEffect(() => {
@@ -31,7 +32,7 @@ export function App() {
   }, [])
   return (
     <ThemeProvider theme={theme}>
-      <ErrorPage>
+      <ErrorBoundary>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<LandingPage />} />
@@ -44,9 +45,10 @@ export function App() {
             <Route path="leaderboard" element={<LeaderPage />} />
             <Route path="forum" element={<ForumPage />} />
             <Route path="forum/:forumId" element={<ForumPage />} />
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
         </BrowserRouter>
-      </ErrorPage>
+      </ErrorBoundary>
     </ThemeProvider>
   )
 }

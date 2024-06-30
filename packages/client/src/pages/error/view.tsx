@@ -1,52 +1,70 @@
 import { Box, Button, Typography } from '@mui/material'
-import { useNavigate, useRouteError } from 'react-router'
+import { useNavigate } from 'react-router'
 
 import './style.css'
-import { Component, ErrorInfo } from 'react'
+import React, { ReactNode } from 'react'
 
-// export const ErrorPage = () => {
-//   const navigate = useNavigate()
+export const ErrorPage: React.FC = () => {
+  const navigate = useNavigate()
 
-//   return (
-//     <Box className="error-page">
-//       <Typography variant="h1">{routeError.status}</Typography>
-//       <Typography variant="h5">{routeError.statusText || error.message}</Typography>
-//       <Typography variant="body2" mb={4}>
-//         {error.data}
-//       </Typography>
-//       <Button
-//         variant="contained"
-//         onClick={() => {
-//           navigate(-2)
-//         }}>
-//         BACK
-//       </Button>
-//     </Box>
-//   )
-// }
+  return (
+    <Box className="error-page">
+      <Typography variant="h1">404</Typography>
+      <Typography variant="h5">Not Found</Typography>
+      <Button
+        variant="contained"
+        onClick={() => {
+          navigate(-1)
+        }}>
+        BACK
+      </Button>
+    </Box>
+  )
+}
 
-export class ErrorPage extends Component {
-  constructor() {
-    super()
+type Props = {
+  children: ReactNode
+}
+type State = {
+  hasError: boolean
+}
 
+export class ErrorBoundary extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props)
     this.state = {
       hasError: false,
-      error: null,
-      errorInfo: null,
     }
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    this.setState({
-      hasError: true,
-      error,
-      errorInfo,
-    })
+  static getDerivedStateFromError() {
+    return { hasError: true }
+  }
+
+  componentDidCatch(error: any, info: any) {
+    console.log(error, info)
+  }
+
+  navigate(to: number) {
+    const navigate = useNavigate()
+    navigate(to)
   }
 
   render() {
     if (this.state.hasError) {
-      return <p>Error Dima</p>
+      return (
+        <Box className="error-page">
+          <Typography variant="h1">Ops</Typography>
+          <Typography variant="h5">Somthing's</Typography>
+          <Button
+            variant="contained"
+            onClick={() => {
+              this.navigate(-2)
+            }}>
+            BACK
+          </Button>
+        </Box>
+      )
     }
 
     return this.props.children
