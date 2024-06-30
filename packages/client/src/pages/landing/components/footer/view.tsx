@@ -1,6 +1,8 @@
 import { Grid, Link, SvgIcon, Typography, useTheme } from '@mui/material'
 import { GitHub } from '@mui/icons-material'
 
+const currYear = new Date().getFullYear()
+
 export const LandingFooter = () => {
   const { spacing, palette } = useTheme()
 
@@ -25,7 +27,7 @@ export const LandingFooter = () => {
         // Костыль для непонятной высоты элемента <a>
         sx={{ '& > a': { height: '1.5em' } }}>
         <Typography variant="body1" flexGrow={1}>
-          Copyright {'\u00A9'} 2024
+          Copyright {'\u00A9'} {currYear}
         </Typography>
         <Link
           rel={'noreferer'}
