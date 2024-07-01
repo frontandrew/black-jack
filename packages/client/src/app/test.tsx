@@ -1,7 +1,7 @@
 import { App } from './view'
 import { render, screen } from '@testing-library/react'
 
-const appContent = 'Landing Page'
+const appContent = 'in world most popular card game'
 
 // @ts-ignore
 global.fetch = jest.fn(() =>
