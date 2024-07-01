@@ -1,9 +1,10 @@
+import React from 'react'
 import { Box, Button, Typography } from '@mui/material'
 import { useNavigate, useRouteError } from 'react-router'
 
 import './style.css'
 
-export const ErrorPage = () => {
+export const ErrorPage: React.FC = () => {
   const navigate = useNavigate()
   const error: any = useRouteError()
 
