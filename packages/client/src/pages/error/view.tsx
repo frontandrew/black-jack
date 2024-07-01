@@ -31,6 +31,7 @@ type Props = {
 }
 type State = {
   hasError: boolean
+  error: any
 }
 
 export class ErrorBoundary extends React.Component<Props, State> {
@@ -38,11 +39,15 @@ export class ErrorBoundary extends React.Component<Props, State> {
     super(props)
     this.state = {
       hasError: false,
+      error: null,
     }
   }
 
-  static getDerivedStateFromError() {
-    return { hasError: true }
+  static getDerivedStateFromError(error: any) {
+    return {
+      hasError: true,
+      error,
+    }
   }
 
   componentDidCatch(error: any, info: any) {
@@ -55,11 +60,13 @@ export class ErrorBoundary extends React.Component<Props, State> {
   }
 
   render() {
+    const { error } = this.state
+    console.log('render', error)
     if (this.state.hasError) {
       return (
         <Box className="error-page">
           <Typography variant="h1">Ops</Typography>
-          <Typography variant="h5">Somthing's</Typography>
+          <Typography variant="h5">{error.message}</Typography>
           <Button
             variant="contained"
             onClick={() => {
