@@ -17,6 +17,8 @@ import {
 import { theme } from '../shared/theme'
 
 import './style.css'
+import { Provider } from 'react-redux'
+import { store } from './store'
 
 export function App() {
   useEffect(() => {
@@ -30,22 +32,24 @@ export function App() {
     fetchServerData()
   }, [])
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="sign-in" element={<LoginPage />} />
-          <Route path="sign-up" element={<RegPage />} />
-          <Route path="settings" element={<SettingsPage />} />
-          <Route path="start" element={<StartPage />} />
-          <Route path="game" element={<GamePage />} />
-          <Route path="finish" element={<FinishPage />} />
-          <Route path="leaderboard" element={<LeaderPage />} />
-          <Route path="forum" element={<ForumPage />} />
-          <Route path="forum/:forumId" element={<ForumPage />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="sign-in" element={<LoginPage />} />
+            <Route path="sign-up" element={<RegPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+            <Route path="start" element={<StartPage />} />
+            <Route path="game" element={<GamePage />} />
+            <Route path="finish" element={<FinishPage />} />
+            <Route path="leaderboard" element={<LeaderPage />} />
+            <Route path="forum" element={<ForumPage />} />
+            <Route path="forum/:forumId" element={<ForumPage />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </Provider>
   )
 }
