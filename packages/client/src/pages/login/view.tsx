@@ -18,12 +18,6 @@ export const LoginPage = () => {
   const [halperLogin, setHalperLogin] = useState('')
   const [halperPassword, setHalperPassword] = useState('')
 
-  // const [test, setTest] = useState({
-  //   login: {
-
-  //   }
-  // })
-
   const handlerForms: HandlerForms = value => {
     const loginErrors = validators.login(value.login)
     const passwordErrors = validators.password(value.password)
@@ -70,7 +64,7 @@ export const LoginPage = () => {
             label="Login"
             type="text"
             size="small"
-            // helperText={test.login}
+            helperText={halperLogin}
             onChange={e => setValue(e.target.value)}
             inputProps={{
               onBlur: () => {
