@@ -15,25 +15,31 @@ export const LoginPage = () => {
   const [errorLogin, setErrorLogin] = useState(false)
   const [errorPassword, setErrorPassword] = useState(false)
 
+  const [halperLogin, setHalperLogin] = useState('')
+  const [halperPassword, setHalperPassword] = useState('')
+
   const handlerForms: HandlerForms = value => {
     const loginErrors = validators.login(value.login)
     const passwordErrors = validators.password(value.password)
 
     if (loginErrors.length > 0) {
       setErrorLogin(true)
-      alert(`Login:\n ${loginErrors.join('\n')}`)
+      console.log(loginErrors.join('\n'))
+      setHalperLogin(loginErrors[0])
     }
 
     if (passwordErrors.length > 0) {
       setErrorPassword(true)
-      alert(`Password:\n ${passwordErrors.join('\n')}`)
+      setHalperPassword(passwordErrors[0])
     }
 
     if (passwordErrors.length === 0) {
+      setHalperPassword('')
       setErrorPassword(false)
     }
 
     if (loginErrors.length === 0) {
+      setHalperLogin('')
       setErrorLogin(false)
     }
 
@@ -58,6 +64,7 @@ export const LoginPage = () => {
             label="Login"
             type="text"
             size="small"
+            helperText={halperLogin}
             onChange={e => setValue(e.target.value)}
             inputProps={{
               onBlur: () => {
@@ -70,6 +77,7 @@ export const LoginPage = () => {
             label="password"
             type="password"
             size="small"
+            helperText={halperPassword}
             onChange={e => {
               setPassword(e.target.value)
             }}
