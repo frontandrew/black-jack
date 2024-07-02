@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material'
+import { FC } from 'react'
 
 import {
   LandingAbout,
@@ -8,7 +9,7 @@ import {
   LandingHeader,
 } from './components'
 
-export const LandingPage = () => {
+export const LandingPage: FC = () => {
   return (
     <Grid
       container

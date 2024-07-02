@@ -1,4 +1,5 @@
 import { Grid, Typography, useTheme } from '@mui/material'
+import { FC } from 'react'
 
 import {
   EmojiEvents,
@@ -15,14 +16,15 @@ import {
   TimelineItem,
   TimelineSeparator,
 } from '@mui/lab'
+import { LandingSpacer } from '../spacer'
 
-export const LandingGameFlow = () => {
+export const LandingGameFlow: FC = () => {
   const { spacing } = useTheme()
-  const CustomTLC = () => <TimelineConnector style={{ height: 70 }} />
+  const CustomTLC: FC = () => <TimelineConnector style={{ height: 70 }} />
 
   return (
-    <Grid item>
-      <Grid container width={'100%'} pr={spacing(40)}>
+    <Grid container justifyContent={'center'}>
+      <LandingSpacer pr={spacing(40)}>
         <Timeline>
           <TimelineItem>
             <TimelineSeparator>
@@ -84,7 +86,7 @@ export const LandingGameFlow = () => {
             </TimelineContent>
           </TimelineItem>
         </Timeline>
-      </Grid>
+      </LandingSpacer>
     </Grid>
   )
 }

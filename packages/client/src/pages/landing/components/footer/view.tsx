@@ -1,9 +1,10 @@
 import { Grid, Link, SvgIcon, Typography, useTheme } from '@mui/material'
 import { GitHub } from '@mui/icons-material'
+import { FC } from 'react'
 
 const currYear = new Date().getFullYear()
 
-export const LandingFooter = () => {
+export const LandingFooter: FC = () => {
   const { spacing, palette } = useTheme()
 
   const backgroundColor = palette.grey[800]
@@ -14,7 +15,7 @@ export const LandingFooter = () => {
       item
       component={'footer'}
       width={'100%'}
-      padding={spacing(2)}
+      padding={spacing(4, 2)}
       borderTop={1}
       borderColor={palette.divider}
       bgcolor={backgroundColor}

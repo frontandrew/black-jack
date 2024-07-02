@@ -1,7 +1,8 @@
 import { Button, Grid, Typography, useTheme } from '@mui/material'
+import { FC } from 'react'
 import { useNavigate } from 'react-router'
 
-export const LandingHeader = () => {
+export const LandingHeader: FC = () => {
   const navigate = useNavigate()
   const { spacing, palette } = useTheme()
 
@@ -13,7 +14,7 @@ export const LandingHeader = () => {
       alignItems={'center'}
       width={'100%'}
       gap={spacing(2)}
-      padding={spacing(2)}
+      padding={spacing(4, 2)}
       borderBottom={1}
       borderColor={palette.divider}>
       <Typography variant="h4" flexGrow={1}>
