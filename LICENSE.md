@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2024 Cheaters team from praktikum.yandex
+Copyright (c) 2024 team Cheaters from praktikum.yandex
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
