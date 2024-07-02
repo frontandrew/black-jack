@@ -1,3 +1,5 @@
+[Назад](../README.md)
+
 # 🎲 Blackjack Game Documentation 🃏
 
 ## Содержание
@@ -35,3 +37,5 @@
    ```
    yarn run dev
    ```
+
+[Назад](../README.md)

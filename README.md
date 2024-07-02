@@ -7,9 +7,9 @@
 
 ## Описание проекта
 
-Добро пожаловать в игру Blackjack на JavaScript с использованием React и TypeScript! 
+Добро пожаловать в игру Blackjack на JavaScript с использованием React и TypeScript! Игра позволяет сыграть против дилера, используя базовые правила Blackjack.
 
-Игра позволяет сыграть против дилера, используя базовые правила Blackjack.
+[Документация](./docs/README.md)
 
 ![Blackjack](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Blackjack.svg/512px-Blackjack.svg.png)
 
@@ -24,6 +24,8 @@
 ## Скриншоты
 
 ToDo
+
+## Установка, настройка, запуск и тестирование проекта
 
 ### Запуск
 
@@ -44,7 +46,6 @@ ToDo
 
 И для клиента и для сервера
 ```yarn lerna add {your_dep}```
-
 
 Если вы хотите добавить dev зависимость, проделайте то же самое, но с флагом `dev`
 ```yarn lerna add {your_dep} --dev --scope server```
@@ -76,10 +77,6 @@ ToDo
 
 В проекте используется [lefthook](https://github.com/evilmartians/lefthook)
 Если очень-очень нужно пропустить проверки, используйте `--no-verify` (но не злоупотребляйте :)
-
-## Ой, ничего не работает :(
-
-Откройте issue, я приду :)
 
 ## Автодеплой статики на vercel
 
