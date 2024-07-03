@@ -50,7 +50,7 @@ export const RegPage = () => {
   return (
     <Box className="login-page">
       <Box
-        height={370}
+        height={570}
         width={300}
         p={2}
         sx={{
@@ -64,19 +64,64 @@ export const RegPage = () => {
             handlerForms({ login: value, password: password })
           }}>
           <Grid direction="column" display="flex" gap="0.5em">
-            <Typography
-              variant="h3"
-              align="center"
-              sx={{ marginBottom: '20px' }}>
-              Login
+            <Typography variant="h3" align="center">
+              Register
             </Typography>
+            <TextField
+              error={errorLogin}
+              label="Name"
+              type="text"
+              size="small"
+              sx={{
+                height: '55px',
+              }}
+              helperText={halperLogin}
+              onChange={e => setValue(e.target.value)}
+              inputProps={{
+                onBlur: () => {
+                  handlerForms({ login: value })
+                },
+              }}
+            />
+            <TextField
+              error={errorLogin}
+              label="Second Name"
+              type="text"
+              size="small"
+              sx={{
+                height: '55px',
+              }}
+              helperText={halperLogin}
+              onChange={e => setValue(e.target.value)}
+              inputProps={{
+                onBlur: () => {
+                  handlerForms({ login: value })
+                },
+              }}
+            />
             <TextField
               error={errorLogin}
               label="Login"
               type="text"
               size="small"
               sx={{
-                height: '70px',
+                height: '55px',
+              }}
+              helperText={halperLogin}
+              onChange={e => setValue(e.target.value)}
+              inputProps={{
+                onBlur: () => {
+                  handlerForms({ login: value })
+                },
+              }}
+            />
+            <TextField
+              error={errorLogin}
+              label="Email"
+              type="text"
+              size="small"
+              sx={{
+                height: '55px',
               }}
               helperText={halperLogin}
               onChange={e => setValue(e.target.value)}
@@ -92,7 +137,7 @@ export const RegPage = () => {
               type="password"
               size="small"
               sx={{
-                height: '70px',
+                height: '55px',
               }}
               helperText={halperPassword}
               onChange={e => {
@@ -104,15 +149,31 @@ export const RegPage = () => {
                 },
               }}
             />
+            <TextField
+              error={errorLogin}
+              label="Phone"
+              type="text"
+              size="small"
+              sx={{
+                height: '70px',
+              }}
+              helperText={halperLogin}
+              onChange={e => setValue(e.target.value)}
+              inputProps={{
+                onBlur: () => {
+                  handlerForms({ login: value })
+                },
+              }}
+            />
             <Button type="submit" variant="contained">
-              SIGN IN
+              SIGN UP
             </Button>
             <Button
               variant="text"
               onClick={() => {
-                navigate('/sign-up')
+                navigate('/sign-in')
               }}>
-              sign up
+              sign in
             </Button>
           </Grid>
         </form>

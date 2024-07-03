@@ -5,5 +5,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+}
+
+.clubs {
+    height: 0;
+    position: relative;
+    top: -82px;
+    left: -41.3px;
+
+    color: black;
+    font-size: 80px;
 }
