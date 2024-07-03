@@ -1,21 +1,25 @@
-import { Box, Button, Typography } from '@mui/material'
-
-import './style.css'
+import {
+  Grid,
+  TextField,
+  Typography,
+  useTheme,
+  FormControl,
+  useFormControl,
+  Button,
+} from '@mui/material'
+import { useField, useForm } from 'react-final-form-hooks'
 import { useNavigate } from 'react-router-dom'
 
-export const SettingsPage = () => {
-  const navigate = useNavigate()
+import type { FC } from 'react'
+import { FormUser } from './components'
+
+export const SettingsPage: FC = () => {
+  // const navigate = useNavigate()
+  const { palette, spacing } = useTheme()
 
   return (
-    <Box className="settings-page">
-      <Typography variant="h3">Settings(profile) Page</Typography>
-      <Button
-        variant="contained"
-        onClick={() => {
-          navigate('/sign-in')
-        }}>
-        SIGN IN
-      </Button>
-    </Box>
+    <Grid container width={'100%'} height={'100%'} gap={spacing(2)}>
+      <FormUser />
+    </Grid>
   )
 }
