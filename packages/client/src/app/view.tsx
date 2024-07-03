@@ -13,8 +13,8 @@ import {
   RegPage,
   SettingsPage,
   StartPage,
-} from '../pages'
-import { theme } from '../shared/theme'
+} from 'pages'
+import { theme } from 'theme'
 
 import './style.css'
 import { Provider } from 'react-redux'

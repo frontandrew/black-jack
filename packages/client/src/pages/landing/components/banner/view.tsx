@@ -2,7 +2,7 @@ import { Button, Grid, Typography, useTheme } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { FC } from 'react'
 
-import { LandBack } from '../../../../assets/imgs'
+import { LandBack } from 'images'
 
 import { LandingSpacer } from '../spacer'
 
