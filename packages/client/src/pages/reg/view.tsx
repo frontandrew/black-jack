@@ -57,7 +57,7 @@ export const RegPage = () => {
           border: '2px solid black',
           borderRadius: '10px',
         }}>
-        <div className="clubs">{String.fromCharCode(9827)}</div>
+        <div className="clubs">{String.fromCharCode(9824)}</div>
         <form
           onSubmit={e => {
             e.preventDefault() // Предотвращаем перезагрузку страницы
