@@ -50,55 +50,74 @@ export const LoginPage = () => {
 
   return (
     <Box className="login-page">
-      <form
-        onSubmit={e => {
-          e.preventDefault() // Предотвращаем перезагрузку страницы
-          handlerForms({ login: value, password: password })
+      <Box
+        height={370}
+        width={300}
+        p={2}
+        sx={{
+          border: '2px solid black',
+          borderRadius: '10px',
         }}>
-        <Grid direction="column" display="flex" gap="1em">
-          <Typography variant="h3" align="center">
-            Login
-          </Typography>
-          <TextField
-            error={errorLogin}
-            label="Login"
-            type="text"
-            size="small"
-            helperText={halperLogin}
-            onChange={e => setValue(e.target.value)}
-            inputProps={{
-              onBlur: () => {
-                handlerForms({ login: value })
-              },
-            }}
-          />
-          <TextField
-            error={errorPassword}
-            label="password"
-            type="password"
-            size="small"
-            helperText={halperPassword}
-            onChange={e => {
-              setPassword(e.target.value)
-            }}
-            inputProps={{
-              onBlur: () => {
-                handlerForms({ password: password })
-              },
-            }}
-          />
-          <Button type="submit" variant="contained">
-            SIGN IN
-          </Button>
-          <Button
-            variant="text"
-            onClick={() => {
-              navigate('/sign-up')
-            }}>
-            sign up
-          </Button>
-        </Grid>
-      </form>
+        <div className="clubs">{String.fromCharCode(9827)}</div>
+        <form
+          onSubmit={e => {
+            e.preventDefault() // Предотвращаем перезагрузку страницы
+            handlerForms({ login: value, password: password })
+          }}>
+          <Grid direction="column" display="flex" gap="0.5em">
+            <Typography
+              variant="h3"
+              align="center"
+              sx={{ marginBottom: '20px' }}>
+              Login
+            </Typography>
+            <TextField
+              error={errorLogin}
+              label="Login"
+              type="text"
+              size="small"
+              sx={{
+                height: '70px',
+              }}
+              helperText={halperLogin}
+              onChange={e => setValue(e.target.value)}
+              inputProps={{
+                onBlur: () => {
+                  handlerForms({ login: value })
+                },
+              }}
+            />
+            <TextField
+              error={errorPassword}
+              label="password"
+              type="password"
+              size="small"
+              sx={{
+                height: '70px',
+              }}
+              helperText={halperPassword}
+              onChange={e => {
+                setPassword(e.target.value)
+              }}
+              inputProps={{
+                onBlur: () => {
+                  handlerForms({ password: password })
+                },
+              }}
+            />
+            <Button type="submit" variant="contained">
+              SIGN IN
+            </Button>
+            <Button
+              variant="text"
+              onClick={() => {
+                navigate('/sign-up')
+              }}>
+              sign up
+            </Button>
+          </Grid>
+        </form>
+      </Box>
     </Box>
   )
 }

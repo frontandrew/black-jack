@@ -14,10 +14,8 @@ export const RegPage = () => {
   const [errorLogin, setErrorLogin] = useState(false)
   const [errorPassword, setErrorPassword] = useState(false)
 
-  const [froms, setForms] = useState({
-    value: '',
-    password: '',
-  })
+  const [halperLogin, setHalperLogin] = useState('')
+  const [halperPassword, setHalperPassword] = useState('')
 
   const handlerForms: HandlerForms = value => {
     const loginErrors = validators.login(value.login)
@@ -25,19 +23,22 @@ export const RegPage = () => {
 
     if (loginErrors.length > 0) {
       setErrorLogin(true)
-      alert(`Login:\n ${loginErrors.join('\n')}`)
+      console.log(loginErrors.join('\n'))
+      setHalperLogin(loginErrors[0])
     }
 
     if (passwordErrors.length > 0) {
       setErrorPassword(true)
-      alert(`Password:\n ${passwordErrors.join('\n')}`)
+      setHalperPassword(passwordErrors[0])
     }
 
     if (passwordErrors.length === 0) {
+      setHalperPassword('')
       setErrorPassword(false)
     }
 
     if (loginErrors.length === 0) {
+      setHalperLogin('')
       setErrorLogin(false)
     }
 
@@ -47,48 +48,75 @@ export const RegPage = () => {
   }
 
   return (
-    <Box className="reg-page">
-      <form
-        onSubmit={e => {
-          e.preventDefault()
-          handlerForms({ login: value, password: password })
+    <Box className="login-page">
+      <Box
+        height={370}
+        width={300}
+        p={2}
+        sx={{
+          border: '2px solid black',
+          borderRadius: '10px',
         }}>
-        <Grid direction="column" display="flex" gap="1em">
-          <Typography variant="h3" align="center">
-            Registration
-          </Typography>
-          <TextField label="Name" name="first_name" type="text" size="small" />
-          <TextField
-            label="Second Name"
-            name="second_name"
-            type="text"
-            size="small"
-          />
-          <TextField label="Login" name="login" type="text" size="small" />
-          <TextField label="Email" name="email" type="email" size="small" />
-          <TextField
-            label="Password"
-            name="password"
-            type="password"
-            size="small"
-          />
-          <TextField label="Phone" name="phone" type="phone" size="small" />
-          <Button
-            variant="contained"
-            onClick={() => {
-              navigate('/sign-up')
-            }}>
-            sign up
-          </Button>
-          <Button
-            variant="text"
-            onClick={() => {
-              navigate('/sign-in')
-            }}>
-            SIGN IN
-          </Button>
-        </Grid>
-      </form>
+        <div className="clubs">{String.fromCharCode(9827)}</div>
+        <form
+          onSubmit={e => {
+            e.preventDefault() // Предотвращаем перезагрузку страницы
+            handlerForms({ login: value, password: password })
+          }}>
+          <Grid direction="column" display="flex" gap="0.5em">
+            <Typography
+              variant="h3"
+              align="center"
+              sx={{ marginBottom: '20px' }}>
+              Login
+            </Typography>
+            <TextField
+              error={errorLogin}
+              label="Login"
+              type="text"
+              size="small"
+              sx={{
+                height: '70px',
+              }}
+              helperText={halperLogin}
+              onChange={e => setValue(e.target.value)}
+              inputProps={{
+                onBlur: () => {
+                  handlerForms({ login: value })
+                },
+              }}
+            />
+            <TextField
+              error={errorPassword}
+              label="password"
+              type="password"
+              size="small"
+              sx={{
+                height: '70px',
+              }}
+              helperText={halperPassword}
+              onChange={e => {
+                setPassword(e.target.value)
+              }}
+              inputProps={{
+                onBlur: () => {
+                  handlerForms({ password: password })
+                },
+              }}
+            />
+            <Button type="submit" variant="contained">
+              SIGN IN
+            </Button>
+            <Button
+              variant="text"
+              onClick={() => {
+                navigate('/sign-up')
+              }}>
+              sign up
+            </Button>
+          </Grid>
+        </form>
+      </Box>
     </Box>
   )
 }
