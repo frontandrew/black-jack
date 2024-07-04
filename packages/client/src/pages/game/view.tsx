@@ -16,9 +16,9 @@ import {
   updatePlayerMoney,
   resetGame,
   newGame,
-} from '../../features/game/model'
-import CanvasGame from '../../features/game/view'
-import { calcHand } from '../../features/game/utils'
+} from 'features/game/model'
+import CanvasGame from 'features/game/view'
+import { calcHand } from 'features/game/utils'
 import { Button, Typography } from '@mui/material'
 import './style.css'
 

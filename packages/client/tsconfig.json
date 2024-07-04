@@ -14,7 +14,17 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "sourceMap": true,
+    "baseUrl": "./src",
+    "paths": {
+      "images": ["./assets/imgs/index"],
+      "sounds": ["./assets/sounds/index"],
+      "features": ["./features/*"],
+      "pages": ["./pages/index"],
+      "components": ["./shared/components/index"],
+      "theme": ["./shared/theme/index"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
