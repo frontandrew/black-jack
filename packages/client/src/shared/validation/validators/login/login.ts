@@ -5,7 +5,7 @@ export function login(value: string): string[] {
   const MAX_LENGTH = 20
 
   if (value === undefined) {
-    return false
+    return []
   }
 
   if (value.length < MIN_LENGTH) {
