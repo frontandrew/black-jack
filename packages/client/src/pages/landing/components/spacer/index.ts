@@ -1,0 +1,1 @@
+export { LandingSpacer } from './view'
