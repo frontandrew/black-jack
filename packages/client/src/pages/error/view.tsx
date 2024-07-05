@@ -2,7 +2,7 @@ import { Box, Button, Typography } from '@mui/material'
 import { useNavigate, useRouteError } from 'react-router'
 
 import './style.css'
-import React, { ReactNode } from 'react'
+import React from 'react'
 
 export const ErrorPage: React.FC = () => {
   const navigate = useNavigate()
@@ -24,60 +24,4 @@ export const ErrorPage: React.FC = () => {
       </Button>
     </Box>
   )
-}
-
-type Props = {
-  children: ReactNode
-}
-type State = {
-  hasError: boolean
-  error: any
-}
-
-export class ErrorBoundary extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      hasError: false,
-      error: null,
-    }
-  }
-
-  static getDerivedStateFromError(error: any) {
-    return {
-      hasError: true,
-      error,
-    }
-  }
-
-  componentDidCatch(error: any, info: any) {
-    console.log(error, info)
-  }
-
-  navigate(to: number) {
-    const navigate = useNavigate()
-    navigate(to)
-  }
-
-  render() {
-    const { error } = this.state
-    console.log('render', error)
-    if (this.state.hasError) {
-      return (
-        <Box className="error-page">
-          <Typography variant="h1">Ops</Typography>
-          <Typography variant="h5">{error.message}</Typography>
-          <Button
-            variant="contained"
-            onClick={() => {
-              this.navigate(-2)
-            }}>
-            BACK
-          </Button>
-        </Box>
-      )
-    }
-
-    return this.props.children
-  }
 }
