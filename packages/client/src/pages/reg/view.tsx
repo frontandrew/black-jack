@@ -1,12 +1,12 @@
 import { Box, Button, Grid, TextField, Typography } from '@mui/material'
 import './style.css'
 import { useNavigate } from 'react-router'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { validators } from '../../shared/validation'
 
 type HandlerForms = (value: Record<string, string>) => void
 
-export const RegPage = () => {
+export const RegPage: React.FC = () => {
   const navigate = useNavigate()
   const [value, setValue] = useState('')
   const [password, setPassword] = useState('')

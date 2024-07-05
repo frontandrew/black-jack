@@ -1,21 +1,31 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Grid } from '@mui/material'
+import { FC } from 'react'
 
-import './style.css'
-import { useNavigate } from 'react-router-dom'
+import {
+  LandingAbout,
+  LandingBanner,
+  LandingFooter,
+  LandingGameFlow,
+  LandingHeader,
+} from './components'
 
-export const LandingPage = () => {
-  const navigate = useNavigate()
-
+export const LandingPage: FC = () => {
   return (
-    <Box className="landing-page">
-      <Typography variant="h3">Landing Page</Typography>
-      <Button
-        variant="contained"
-        onClick={() => {
-          navigate('/sign-in')
-        }}>
-        SIGN IN
-      </Button>
-    </Box>
+    <Grid
+      container
+      display={'flex'}
+      flexDirection={'column'}
+      flexWrap={'nowrap'}
+      width={'100%'}
+      height={'100%'}>
+      <LandingHeader />
+
+      <Grid item overflow={'hidden auto'}>
+        <LandingBanner />
+        <LandingAbout />
+        <LandingGameFlow />
+        <LandingFooter />
+      </Grid>
+    </Grid>
   )
 }
