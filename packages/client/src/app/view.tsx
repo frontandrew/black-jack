@@ -2,8 +2,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { useEffect } from 'react'
 import { ThemeProvider } from '@mui/material'
 
-import { theme } from '../shared/theme'
-
 import './style.css'
 import {
   ErrorPage,
@@ -17,7 +15,11 @@ import {
   SettingsPage,
   StartPage,
 } from '../pages'
-import { ErrorBoundary } from '../pages/error'
+import { theme } from '../shared/theme'
+
+import './style.css'
+import { Provider } from 'react-redux'
+import { store } from './store'
 
 export function App() {
   useEffect(() => {
@@ -31,8 +33,8 @@ export function App() {
     fetchServerData()
   }, [])
   return (
-    <ThemeProvider theme={theme}>
-      <ErrorBoundary>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<LandingPage />} />
@@ -48,7 +50,7 @@ export function App() {
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </BrowserRouter>
-      </ErrorBoundary>
-    </ThemeProvider>
+      </ThemeProvider>
+    </Provider>
   )
 }
