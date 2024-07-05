@@ -1,4 +1,4 @@
-export function login(value: string): string[] | boolean {
+export function login(value: string): string[] {
   const errors: string[] = []
 
   const MIN_LENGTH = 3
