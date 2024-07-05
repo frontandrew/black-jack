@@ -1,10 +1,10 @@
 import { useTheme, Button, Grid, Divider } from '@mui/material'
 import { useForm } from 'react-final-form-hooks'
 
+import { useState } from 'react'
 import type { FC } from 'react'
 
 import { FieldText } from 'components'
-
 import type { FormUserType } from './type'
 
 /* TODO: need to use UserType */
@@ -13,9 +13,9 @@ type UserType = object
 const user: UserType = {
   email: 'some@email.it',
   login: 'Somelogin',
-  first_name: 'First',
-  second_name: 'Last',
-  display_name: 'Nick',
+  first_name: 'Firstname',
+  second_name: 'Lastname',
+  display_name: 'Nickname',
   phone: '+45134543345',
 }
 
@@ -35,6 +35,8 @@ const validator = (val: string) => {
 
 export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
   const { spacing } = useTheme()
+  const [isEditMode, setEditMode] = useState(false)
+
   const { form, handleSubmit } = useForm(config)
   const state = () => form.getState()
 
@@ -45,7 +47,7 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
         component={'form'}
         width={'100%'}
         height={'min-content'}
-        gap={spacing(1)}
+        gap={spacing(2)}
         onSubmit={event => {
           handleSubmit(event)
           if (submit) submit()
@@ -54,6 +56,7 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
           form={form}
           name={'email'}
           label={'Email'}
+          disabled={!isEditMode}
           validator={validator}
           required
         />
@@ -62,6 +65,7 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
           name={'login'}
           label={'Login'}
           validator={validator}
+          disabled={!isEditMode}
           required
         />
         <FieldText
@@ -69,6 +73,7 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
           name={'first_name'}
           label={'First name'}
           validator={validator}
+          disabled={!isEditMode}
           required
         />
         <FieldText
@@ -76,6 +81,7 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
           name={'second_name'}
           label={'Last name'}
           validator={validator}
+          disabled={!isEditMode}
           required
         />
         <FieldText
@@ -83,6 +89,7 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
           name={'display_name'}
           label={'Nickname'}
           validator={validator}
+          disabled={!isEditMode}
           required
         />
         <FieldText
@@ -90,6 +97,7 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
           name={'phone'}
           label={'Phone'}
           validator={validator}
+          disabled={!isEditMode}
           required
         />
       </Grid>
@@ -99,20 +107,33 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
         justifyContent={'flex-end'}
         gap={spacing(2)}
         pt={spacing(3)}>
-        <Button
-          type={'submit'}
-          variant={'contained'}
-          disabled={state().hasValidationErrors}>
-          SUBMIT
-        </Button>
-        <Button
-          variant={'outlined'}
-          onClick={() => {
-            form.reset()
-            if (reset) reset()
-          }}>
-          CANCEL
-        </Button>
+        {isEditMode ? (
+          <>
+            <Button
+              type={'submit'}
+              variant={'contained'}
+              disabled={state().hasValidationErrors}>
+              SUBMIT
+            </Button>
+            <Button
+              variant={'text'}
+              onClick={() => {
+                form.reset()
+                setEditMode(!isEditMode)
+                if (reset) reset()
+              }}>
+              CANCEL
+            </Button>
+          </>
+        ) : (
+          <Button
+            variant={'outlined'}
+            onClick={() => {
+              setEditMode(!isEditMode)
+            }}>
+            EDIT INFORMATION
+          </Button>
+        )}
       </Grid>
     </Grid>
   )
