@@ -38,20 +38,17 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
   const [isEditMode, setEditMode] = useState(false)
 
   const { form, handleSubmit } = useForm(config)
-  const state = () => form.getState()
+  const { hasValidationErrors } = form.getState()
 
   return (
-    <Grid width={'100%'}>
-      <Grid
-        container
-        component={'form'}
-        width={'100%'}
-        height={'min-content'}
-        gap={spacing(2)}
-        onSubmit={event => {
-          handleSubmit(event)
-          if (submit) submit()
-        }}>
+    <Grid
+      width={'100%'}
+      component={'form'}
+      onSubmit={event => {
+        handleSubmit(event)
+        if (submit) submit()
+      }}>
+      <Grid container width={'100%'} height={'min-content'} gap={spacing(2)}>
         <FieldText
           form={form}
           name={'email'}
@@ -112,7 +109,7 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
             <Button
               type={'submit'}
               variant={'contained'}
-              disabled={state().hasValidationErrors}>
+              disabled={hasValidationErrors}>
               SUBMIT
             </Button>
             <Button
