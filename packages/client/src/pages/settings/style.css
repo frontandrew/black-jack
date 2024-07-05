@@ -1,0 +1,15 @@
+.settings-content {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 900px) {
+    .settings-content {
+        flex-direction: column;
+    }
+
+    .settings-user-card__actions {
+        align-self: flex-end;
+    }
+}

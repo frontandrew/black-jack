@@ -1,14 +1,16 @@
-import { useTheme, Button, Grid } from '@mui/material'
+import { useTheme, Button, Grid, Divider } from '@mui/material'
 import { useForm } from 'react-final-form-hooks'
 
 import type { FC } from 'react'
 
 import { FieldText } from 'components'
 
+import type { FormUserType } from './type'
+
 /* TODO: need to use UserType */
 type UserType = object
 
-const user: Array = {
+const user: UserType = {
   email: 'some@email.it',
   login: 'Somelogin',
   first_name: 'First',
@@ -31,69 +33,83 @@ const validator = (val: string) => {
   return val !== 'aaa' ? '' : 'Ivalid value'
 }
 
-export const FormUser: FC = () => {
+export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
   const { spacing } = useTheme()
   const { form, handleSubmit } = useForm(config)
+  const state = () => form.getState()
 
   return (
-    <Grid
-      component={'form'}
-      width={'100%'}
-      height={'min-content'}
-      onSubmit={handleSubmit}>
-      <FieldText
-        form={form}
-        name={'email'}
-        label={'Email'}
-        validator={validator}
-        required
-      />
-      <FieldText
-        form={form}
-        name={'login'}
-        label={'Login'}
-        validator={validator}
-        required
-      />
-      <FieldText
-        form={form}
-        name={'first_name'}
-        label={'First name'}
-        validator={validator}
-        required
-      />
-      <FieldText
-        form={form}
-        name={'second_name'}
-        label={'Last name'}
-        validator={validator}
-        required
-      />
-      <FieldText
-        form={form}
-        name={'display_name'}
-        label={'Nickname'}
-        validator={validator}
-        required
-      />
-      <FieldText
-        form={form}
-        name={'phone'}
-        label={'Phone'}
-        validator={validator}
-        required
-      />
-      <Grid container justifyContent={'flex-end'} gap={spacing(2)}>
+    <Grid width={'100%'}>
+      <Grid
+        container
+        component={'form'}
+        width={'100%'}
+        height={'min-content'}
+        gap={spacing(1)}
+        onSubmit={event => {
+          handleSubmit(event)
+          if (submit) submit()
+        }}>
+        <FieldText
+          form={form}
+          name={'email'}
+          label={'Email'}
+          validator={validator}
+          required
+        />
+        <FieldText
+          form={form}
+          name={'login'}
+          label={'Login'}
+          validator={validator}
+          required
+        />
+        <FieldText
+          form={form}
+          name={'first_name'}
+          label={'First name'}
+          validator={validator}
+          required
+        />
+        <FieldText
+          form={form}
+          name={'second_name'}
+          label={'Last name'}
+          validator={validator}
+          required
+        />
+        <FieldText
+          form={form}
+          name={'display_name'}
+          label={'Nickname'}
+          validator={validator}
+          required
+        />
+        <FieldText
+          form={form}
+          name={'phone'}
+          label={'Phone'}
+          validator={validator}
+          required
+        />
+      </Grid>
+      <Divider />
+      <Grid
+        container
+        justifyContent={'flex-end'}
+        gap={spacing(2)}
+        pt={spacing(3)}>
         <Button
           type={'submit'}
           variant={'contained'}
-          disabled={form.getState().hasValidationErrors}>
+          disabled={state().hasValidationErrors}>
           SUBMIT
         </Button>
         <Button
           variant={'outlined'}
           onClick={() => {
             form.reset()
+            if (reset) reset()
           }}>
           CANCEL
         </Button>

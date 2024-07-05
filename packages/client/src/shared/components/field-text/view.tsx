@@ -12,7 +12,8 @@ export const FieldText: FC<FieldTextProps> = props => {
   const fieldLabel = label ?? ''
   const fieldHelp = (meta.dirty && meta.error) ?? ''
   const fieldError = !!meta.error
-  const fieldHeight = validator ? '5em' : 'auto'
+  const heightBySize = rest.size === 'small' ? '4em' : '5em'
+  const fieldHeight = validator ? heightBySize : 'auto'
 
   console.log(
     `%c TextField[${name}]:`,
