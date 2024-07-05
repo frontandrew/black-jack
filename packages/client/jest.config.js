@@ -19,7 +19,7 @@ export default {
       '<rootDir>/src/features/game/utils',
     ],
     '^pages': '<rootDir>/src/pages',
-    '^components': '<rootDir>/src/components',
+    '^components': '<rootDir>/src/shared/components',
     '^theme': '<rootDir>/src/shared/theme',
   },
   globals: {
