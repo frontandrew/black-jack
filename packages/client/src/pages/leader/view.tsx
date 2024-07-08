@@ -1,9 +1,9 @@
-import { Button, Grid, Typography } from '@mui/material'
+import { Grid, useTheme } from '@mui/material'
 
-import { useNavigate } from 'react-router-dom'
+import { LeaderItem } from './components'
 
 export const LeaderPage = () => {
-  const navigate = useNavigate()
+  const { spacing } = useTheme()
 
   return (
     <Grid
@@ -12,22 +12,49 @@ export const LeaderPage = () => {
       height={'100%'}
       justifyContent={'center'}
       alignItems={'center'}>
+      {/* TODO: place for app header nav */}
       <Grid
         container
-        maxWidth={'1080px'}
-        overflow={'auto hidden'}
-        flexDirection={'column'}
+        width={'100%'}
+        height={'100%'}
         justifyContent={'center'}
+        overflow={'hidden auto'}
         alignItems={'center'}>
-        <Typography variant="h3">Leaderboard</Typography>
-        <Button
-          variant="contained"
-          onClick={() => {
-            navigate('/sign-in')
-          }}>
-          SIGN IN
-        </Button>
+        <Grid
+          container
+          padding={spacing(4, 0)}
+          maxWidth={'1080px'}
+          justifyContent={'center'}
+          alignItems={'center'}>
+          {renderLeaders()}
+        </Grid>
       </Grid>
     </Grid>
   )
+}
+
+const leaders = [
+  { id: 1, games: 145, cash: -1342 },
+  { id: 1, games: 145, cash: 3146 },
+  { id: 1, games: 0, cash: 3146 },
+  { id: 1, games: 145, cash: 3146 },
+  { id: 1, games: 145, cash: 3146 },
+  { id: 1, games: 145, cash: 3146 },
+  { id: 1, games: 145, cash: 3146 },
+  { id: 1, games: 145, cash: 3146 },
+  { id: 1, games: 145, cash: 3146 },
+  { id: 1, games: 145, cash: 3146 },
+  { id: 1, games: 145, cash: 3146 },
+  { id: 1, games: 145, cash: 3146 },
+  { id: 1, games: 145, cash: 3146 },
+  { id: 1, games: 145, cash: 3146 },
+  { id: 1, games: 145, cash: 3146 },
+]
+
+function renderLeaders() {
+  return leaders.map(lead => {
+    const { id, cash, games } = lead
+
+    if (id) return <LeaderItem {...lead} />
+  })
 }
