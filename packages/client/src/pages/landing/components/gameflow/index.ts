@@ -1,0 +1,1 @@
+export { LandingGameFlow } from './view'
