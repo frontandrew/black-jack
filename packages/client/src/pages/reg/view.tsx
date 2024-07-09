@@ -135,9 +135,9 @@ export const RegPage: FC = () => {
           <Grid
             direction="column"
             display="flex"
-            gap="1.7em"
+            gap="1em"
             padding={spacing(2, 6)}>
-            <Typography variant="h3" align="center">
+            <Typography variant="h3" align="center" margin={spacing(0.5)}>
               Register
             </Typography>
 
@@ -146,6 +146,9 @@ export const RegPage: FC = () => {
               label="Name"
               type="text"
               size="small"
+              sx={{
+                height: '50px',
+              }}
               helperText={halperName}
               onChange={e => setName(e.target.value)}
               inputProps={{
@@ -160,6 +163,9 @@ export const RegPage: FC = () => {
               label="Second Name"
               type="text"
               size="small"
+              sx={{
+                height: '50px',
+              }}
               helperText={halperSecond}
               onChange={e => setSecond(e.target.value)}
               inputProps={{
@@ -175,6 +181,9 @@ export const RegPage: FC = () => {
               label="Login"
               type="text"
               size="small"
+              sx={{
+                height: '50px',
+              }}
               helperText={halperLogin}
               onChange={e => setLogin(e.target.value)}
               inputProps={{
@@ -189,6 +198,9 @@ export const RegPage: FC = () => {
               label="Email"
               type="text"
               size="small"
+              sx={{
+                height: '50px',
+              }}
               helperText={halperEmail}
               onChange={e => setEmail(e.target.value)}
               inputProps={{
@@ -204,6 +216,9 @@ export const RegPage: FC = () => {
               label="password"
               type="password"
               size="small"
+              sx={{
+                height: '50px',
+              }}
               helperText={halperPassword}
               onChange={e => {
                 setPassword(e.target.value)
@@ -220,6 +235,9 @@ export const RegPage: FC = () => {
               label="Phone"
               type="text"
               size="small"
+              sx={{
+                height: '50px',
+              }}
               helperText={halperPhone}
               onChange={e => setPhone(e.target.value)}
               inputProps={{

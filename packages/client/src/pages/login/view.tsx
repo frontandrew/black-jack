@@ -67,9 +67,9 @@ export const LoginPage: FC = () => {
           <Grid
             direction="column"
             display="flex"
-            gap="2em"
+            gap="1em"
             padding={spacing(2, 6)}>
-            <Typography variant="h3" align="center" margin={spacing(2)}>
+            <Typography variant="h3" align="center" margin={spacing(0.5)}>
               Login
             </Typography>
 
@@ -79,6 +79,9 @@ export const LoginPage: FC = () => {
               label="Login"
               type="text"
               size="small"
+              sx={{
+                height: '50px',
+              }}
               helperText={halperLogin}
               onChange={e => setLogin(e.target.value)}
               inputProps={{
@@ -94,6 +97,9 @@ export const LoginPage: FC = () => {
               label="password"
               type="password"
               size="small"
+              sx={{
+                height: '50px',
+              }}
               helperText={halperPassword}
               onChange={e => {
                 setPassword(e.target.value)
