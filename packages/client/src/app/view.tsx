@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { ThemeProvider } from '@mui/material'
 
 import {
@@ -13,6 +13,8 @@ import {
   RegPage,
   SettingsPage,
   StartPage,
+  TopicPage,
+  AddTopicModal,
 } from 'pages'
 import { theme } from 'theme'
 
@@ -21,6 +23,8 @@ import { Provider } from 'react-redux'
 import { store } from './store'
 
 export function App() {
+  const [isModalOpen, setModalOpen] = useState<boolean>(false)
+
   useEffect(() => {
     const fetchServerData = async () => {
       const url = `http://localhost:${__SERVER_PORT__}`
@@ -29,8 +33,9 @@ export function App() {
       console.log(data)
     }
 
-    fetchServerData()
+    // fetchServerData()
   }, [])
+
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
@@ -44,10 +49,17 @@ export function App() {
             <Route path="game" element={<GamePage />} />
             <Route path="finish" element={<FinishPage />} />
             <Route path="leaderboard" element={<LeaderPage />} />
-            <Route path="forum" element={<ForumPage />} />
-            <Route path="forum/:forumId" element={<ForumPage />} />
+            <Route
+              path="forum"
+              element={<ForumPage onAddTopicClick={() => setModalOpen(true)} />}
+            />
+            <Route path="forum/:id" element={<TopicPage />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
+          <AddTopicModal
+            open={isModalOpen}
+            onClose={() => setModalOpen(false)}
+          />
         </BrowserRouter>
       </ThemeProvider>
     </Provider>
