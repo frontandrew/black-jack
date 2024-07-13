@@ -1,21 +1,39 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Divider, Grid, useMediaQuery, useTheme } from '@mui/material'
 
-import './style.css'
-import { useNavigate } from 'react-router-dom'
+import type { FC } from 'react'
 
-export const SettingsPage = () => {
-  const navigate = useNavigate()
+import { CardUser, FormUser } from './components'
+
+export const SettingsPage: FC = () => {
+  const { spacing } = useTheme()
+  const isLandscape = useMediaQuery('(min-width:900px)')
+
+  const contentDirection = isLandscape ? 'row' : 'column'
 
   return (
-    <Box className="settings-page">
-      <Typography variant="h3">Settings(profile) Page</Typography>
-      <Button
-        variant="contained"
-        onClick={() => {
-          navigate('/sign-in')
-        }}>
-        SIGN IN
-      </Button>
-    </Box>
+    <Grid
+      container
+      overflow={'hidden auto'}
+      justifyContent={'center'}
+      alignItems={'center'}
+      width={'100%'}
+      height={'100%'}>
+      <Box
+        maxWidth={1080}
+        display={'flex'}
+        boxSizing={'border-box'}
+        flexDirection={contentDirection}
+        padding={spacing(4)}>
+        <Grid item padding={spacing(4, 8)} minWidth={400}>
+          <CardUser />
+        </Grid>
+
+        <Divider orientation={'vertical'} flexItem />
+
+        <Grid item padding={spacing(4, 8)} minWidth={400}>
+          <FormUser />
+        </Grid>
+      </Box>
+    </Grid>
   )
 }
