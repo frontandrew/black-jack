@@ -9,9 +9,9 @@ export const TopicPage: FC = () => {
   const [comment, setComment] = useState<string>('')
   const { id } = useParams<{ id: string }>()
   const dispatch = useDispatch()
-  const topic = useSelector((state: RootState) =>
-    state.topics.topics.find(t => t.id === parseInt(id, 10))
-  )
+  const topic = useSelector((state: RootState) => {
+    if (id) return state.topics.topics.find(t => t.id === parseInt(id, 10))
+  })
   const navigate = useNavigate()
 
   if (!topic)
