@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../app/store'
 import {
@@ -11,13 +11,11 @@ import {
   Box,
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { AddTopicModal } from 'pages'
 
-interface ForumPageProps {
-  onAddTopicClick: () => void
-}
-
-export const ForumPage: FC<ForumPageProps> = ({ onAddTopicClick }) => {
+export const ForumPage: FC = () => {
   const navigate = useNavigate()
+  const [isModalOpen, setModalOpen] = useState<boolean>(false)
   const topics = useSelector((state: RootState) => state.topics.topics)
 
   return (
@@ -25,7 +23,10 @@ export const ForumPage: FC<ForumPageProps> = ({ onAddTopicClick }) => {
       <Box>
         <div className="flex justify-between">
           <Typography variant="h4">Blackjack Forum</Typography>
-          <Button onClick={onAddTopicClick} variant="contained" color="primary">
+          <Button
+            onClick={() => setModalOpen(true)}
+            variant="contained"
+            color="primary">
             Add New Topic
           </Button>
         </div>
@@ -43,6 +44,7 @@ export const ForumPage: FC<ForumPageProps> = ({ onAddTopicClick }) => {
           ))}
         </List>
       </Box>
+      <AddTopicModal open={isModalOpen} onClose={() => setModalOpen(false)} />
     </Container>
   )
 }

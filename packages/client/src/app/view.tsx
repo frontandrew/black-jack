@@ -23,8 +23,6 @@ import { Provider } from 'react-redux'
 import { store } from './store'
 
 export function App() {
-  const [isModalOpen, setModalOpen] = useState<boolean>(false)
-
   useEffect(() => {
     const fetchServerData = async () => {
       const url = `http://localhost:${__SERVER_PORT__}`
@@ -33,7 +31,7 @@ export function App() {
       console.log(data)
     }
 
-    // fetchServerData()
+    fetchServerData()
   }, [])
 
   return (
@@ -49,17 +47,10 @@ export function App() {
             <Route path="game" element={<GamePage />} />
             <Route path="finish" element={<FinishPage />} />
             <Route path="leaderboard" element={<LeaderPage />} />
-            <Route
-              path="forum"
-              element={<ForumPage onAddTopicClick={() => setModalOpen(true)} />}
-            />
+            <Route path="forum" element={<ForumPage />} />
             <Route path="forum/:id" element={<TopicPage />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
-          <AddTopicModal
-            open={isModalOpen}
-            onClose={() => setModalOpen(false)}
-          />
         </BrowserRouter>
       </ThemeProvider>
     </Provider>
