@@ -1,10 +1,17 @@
-import { Button, Grid, Typography, useTheme } from '@mui/material'
-import { FC } from 'react'
+import { Fullscreen, FullscreenExit } from '@mui/icons-material'
+import { Button, Grid, ToggleButton, Typography, useTheme } from '@mui/material'
+import { FC, MouseEvent } from 'react'
 import { useNavigate } from 'react-router'
+import { useFullscreen } from 'utils'
 
 export const LandingHeader: FC = () => {
   const navigate = useNavigate()
   const { spacing, palette } = useTheme()
+
+  const [element, { toggle }] = useFullscreen()
+  const onChange = (event: MouseEvent<HTMLElement>) => {
+    toggle(document.body)
+  }
 
   return (
     <Grid
@@ -20,6 +27,9 @@ export const LandingHeader: FC = () => {
       <Typography variant="h4" flexGrow={1}>
         Black Jack
       </Typography>
+      <ToggleButton onChange={onChange} value={Boolean(element)}>
+        {!element ? <Fullscreen /> : <FullscreenExit />}
+      </ToggleButton>
       <Button
         variant={'text'}
         onClick={() => {
