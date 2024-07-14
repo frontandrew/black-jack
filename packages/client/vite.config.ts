@@ -22,6 +22,7 @@ export default defineConfig({
       pages: path.resolve('src/pages/index'),
       components: path.resolve('src/shared/components/index'),
       theme: path.resolve('src/shared/theme/index'),
+      utils: path.resolve('src/shared/utils/index'),
     },
   },
 })
