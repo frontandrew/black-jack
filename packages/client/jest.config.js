@@ -20,6 +20,7 @@ export default {
     ],
     '^pages': '<rootDir>/src/pages',
     '^components': '<rootDir>/src/shared/components',
+    '^consts': '<rootDir>/src/shared/consts',
     '^theme': '<rootDir>/src/shared/theme',
     '^utils': '<rootDir>/src/shared/utils',
   },
