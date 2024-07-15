@@ -20,6 +20,7 @@ export default defineConfig({
       sounds: path.resolve('src/assets/sounds/index'),
       features: path.resolve('src/features/'),
       pages: path.resolve('src/pages/index'),
+      consts: path.resolve('src/shared/consts/index'),
       components: path.resolve('src/shared/components/index'),
       theme: path.resolve('src/shared/theme/index'),
     },
