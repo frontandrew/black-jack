@@ -22,6 +22,7 @@ export default {
     '^components': '<rootDir>/src/shared/components',
     '^consts': '<rootDir>/src/shared/consts',
     '^theme': '<rootDir>/src/shared/theme',
+    '^transport': '<rootDir>/src/shared/transport',
     '^utils': '<rootDir>/src/shared/utils',
   },
   globals: {

@@ -1,64 +1,76 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HTTPInterface } from './type'
+import { queryStringify } from './tools'
+import { HTTPMethod, HTTPRequest, METHODS } from './type'
 
 // Implement the transport layer using the Fetch API
-export class HTTPTransport implements HTTPInterface {
-  get: <T>(url: string, body: any, headers?: HeadersInit) => Promise<T> = <T>(
-    url: string,
-    headers: HeadersInit = {}
-  ): Promise<T> => {
-    return this.fetchRequest<T>('GET', url, null, headers)
+export class HTTPTransport {
+  private host: string | null = null
+
+  constructor(host: string) {
+    this.host = host
   }
 
-  post: <T>(url: string, body: any, headers?: HeadersInit) => Promise<T> = <T>(
-    url: string,
-    body: any,
-    headers: HeadersInit = {}
-  ): Promise<T> => {
-    return this.fetchRequest<T>('POST', url, body, headers)
+  public get: HTTPMethod = (path, payload, headers) => {
+    return this.request(METHODS.GET, path, payload, headers)
+  }
+  public post: HTTPMethod = (path, payload, headers) => {
+    return this.request(METHODS.POST, path, payload, headers)
+  }
+  public put: HTTPMethod = (path, payload, headers) => {
+    return this.request(METHODS.PUT, path, payload, headers)
+  }
+  public delete: HTTPMethod = (path, payload, headers) => {
+    return this.request(METHODS.DELETE, path, payload, headers)
   }
 
-  put: <T>(url: string, body: any, headers?: HeadersInit) => Promise<T> = <T>(
-    url: string,
-    body: any,
-    headers: HeadersInit = {}
-  ): Promise<T> => {
-    return this.fetchRequest<T>('PUT', url, body, headers)
-  }
+  private request: HTTPRequest = async (
+    method,
+    path,
+    payload = null,
+    headers = {}
+  ) => {
+    const isJSONPayload = headers['Content-Type'].includes('application/json')
+    const isGetRequest = method === METHODS.GET
 
-  delete: <T>(url: string, body: any, headers?: HeadersInit) => Promise<T> = <
-    T
-  >(
-    url: string,
-    headers: HeadersInit = {}
-  ): Promise<T> => {
-    return this.fetchRequest<T>('DELETE', url, null, headers)
-  }
+    let url = `${this.host}/${path}`
+    const payloadAsBody = isJSONPayload ? JSON.stringify(payload) : payload
 
-  private fetchRequest = async <T>(
-    method: string,
-    url: string,
-    body: any = null,
-    headers: HeadersInit = {}
-  ): Promise<T> => {
-    const response = await fetch(url, {
-      method: method,
-      headers: {
-        'Content-Type': 'application/json',
-        ...headers,
-      },
-      body: body ? JSON.stringify(body) : null,
-    })
-    return this.handleResponse<T>(response)
-  }
-
-  private handleResponse = async <T>(response: Response): Promise<T> => {
-    if (!response.ok) {
-      const errorMessage = await response.text()
-      throw new Error(`Error ${response.status}: ${errorMessage}`)
+    if (!isJSONPayload && isGetRequest && payload) {
+      const params = queryStringify(payload)
+      url = `${url}?${params}`
     }
-    return response.json() as Promise<T>
+
+    const heads = new Headers()
+
+    Object.entries(headers).forEach(([key, value]) => {
+      heads.append(key, value)
+    })
+
+    return await fetch(url, {
+      credentials: 'include',
+      body: payloadAsBody as BodyInit,
+      headers: heads,
+      method,
+    }).then(response => {
+      if (!response.ok) {
+        const errorMessage = response.text()
+        throw new Error(`Error ${response.status}: ${errorMessage}`)
+      }
+      return response.json()
+    })
+    //   .catch((error) => {
+    //     throw new Error(`HTTP Request Error: ${error.reasone}`)
+    //   // return this.handleResponse<R>(response)
+    // }
   }
+
+  // private handleResponse = async <R>(response: Response): Promise<R> => {
+  //   if (!response.ok) {
+  //     const errorMessage = await response.text()
+  //     throw new Error(`Error ${response.status}: ${errorMessage}`)
+  //   }
+  //   return response.json() as Promise<R>
+  // }
 }
 
 // Example usage:

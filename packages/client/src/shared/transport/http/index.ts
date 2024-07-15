@@ -1,2 +1,2 @@
-export * from './transport'
+export { HTTPTransport } from './transport'
 export * from './type'

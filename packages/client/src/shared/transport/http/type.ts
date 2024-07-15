@@ -6,9 +6,20 @@ export enum METHODS {
   DELETE = 'DELETE',
 }
 
-export interface HTTPInterface {
-  get<T>(url: string, headers?: HeadersInit): Promise<T>
-  post<T>(url: string, body: any, headers?: HeadersInit): Promise<T>
-  put<T>(url: string, body: any, headers?: HeadersInit): Promise<T>
-  delete<T>(url: string, headers?: HeadersInit): Promise<T>
+export interface HTTPOptions<P> {
+  headers?: Record<string, string>
+  payload?: P
 }
+
+export type HTTPMethod = <P, R>(
+  path: string,
+  payload?: P,
+  headers?: Record<string, string>
+) => Promise<R>
+
+export type HTTPRequest = <P, R>(
+  method: METHODS,
+  path: string,
+  payload?: P | null,
+  headers?: Record<string, string>
+) => Promise<R>
