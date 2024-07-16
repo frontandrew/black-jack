@@ -1,6 +1,6 @@
 import React, { useState, FC } from 'react'
 import { useDispatch } from 'react-redux'
-import { Modal, Box, TextField, Button } from '@mui/material'
+import { Modal, Box, TextField, Button, Typography } from '@mui/material'
 import { addTopic } from '../../../features/forum/model'
 
 interface AddTopicModalProps {
@@ -22,16 +22,19 @@ export const AddTopicModal: FC<AddTopicModalProps> = ({ open, onClose }) => {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Box sx={{ ...modalStyle }}>
+      <Box sx={modalStyle}>
+        <Typography variant="h5" sx={{ fontWeight: 700 }}>
+          Add new topic
+        </Typography>
         <TextField
-          label="Title"
+          label="Topic title"
           value={title}
           onChange={e => setTitle(e.target.value)}
           fullWidth
           margin="normal"
         />
         <TextField
-          label="Content"
+          label="Topic content"
           value={content}
           onChange={e => setContent(e.target.value)}
           fullWidth
@@ -39,8 +42,12 @@ export const AddTopicModal: FC<AddTopicModalProps> = ({ open, onClose }) => {
           multiline
           rows={4}
         />
-        <Button onClick={handleAdd} variant="contained" color="primary">
-          Add Topic
+        <Button
+          onClick={handleAdd}
+          variant="contained"
+          color="primary"
+          sx={{ mt: 2, minWidth: '100%' }}>
+          Create Topic
         </Button>
       </Box>
     </Modal>
@@ -54,7 +61,7 @@ const modalStyle = {
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  borderRadius: '8px',
   boxShadow: 24,
   p: 4,
 }

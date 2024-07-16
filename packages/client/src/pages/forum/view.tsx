@@ -12,6 +12,7 @@ import {
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { AddTopicModal } from 'pages'
+import { LandingHeader } from '../landing/components'
 
 export const ForumPage: FC = () => {
   const navigate = useNavigate()
@@ -19,32 +20,46 @@ export const ForumPage: FC = () => {
   const topics = useSelector((state: RootState) => state.topics.topics)
 
   return (
-    <Container maxWidth="md" className="mt-5">
-      <Box>
-        <div className="flex justify-between">
-          <Typography variant="h4">Blackjack Forum</Typography>
-          <Button
-            onClick={() => setModalOpen(true)}
-            variant="contained"
-            color="primary">
-            Add New Topic
-          </Button>
-        </div>
-        <List>
-          {topics.length === 0 && (
-            <div className="mt-4">No topic has been created on the forum</div>
-          )}
-          {topics.map(topic => (
-            <ListItem
-              button
-              key={topic.id}
-              onClick={() => navigate(`/forum/${topic.id}`)}>
-              <ListItemText primary={topic.title} />
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-      <AddTopicModal open={isModalOpen} onClose={() => setModalOpen(false)} />
-    </Container>
+    <>
+      <LandingHeader />
+      <Container maxWidth="md" sx={{ my: 5 }}>
+        <Box>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              mb: 3,
+            }}>
+            {topics.length === 0 ? (
+              <Typography variant="h5">No topic has been created</Typography>
+            ) : (
+              <Typography variant="h5" sx={{ fontWeight: 700 }}>
+                Topics:
+              </Typography>
+            )}
+            <Button
+              onClick={() => setModalOpen(true)}
+              variant="contained"
+              color="primary"
+              sx={{ minWidth: '180px', height: 'fit-content' }}>
+              New Topic
+            </Button>
+          </Box>
+          <List sx={{ p: 0 }}>
+            {topics.map(topic => (
+              <ListItem
+                button
+                key={topic.id}
+                onClick={() => navigate(`/forum/${topic.id}`)}
+                sx={{ minHeight: '58px', py: 1, my: 2, border: '1px dashed' }}>
+                <ListItemText primary={topic.title} />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+        <AddTopicModal open={isModalOpen} onClose={() => setModalOpen(false)} />
+      </Container>
+    </>
   )
 }

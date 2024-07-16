@@ -1,16 +1,59 @@
-import { Fullscreen, FullscreenExit } from '@mui/icons-material'
-import { Button, Grid, ToggleButton, Typography, useTheme } from '@mui/material'
-import { FC, MouseEvent } from 'react'
-import { useNavigate } from 'react-router'
-import { useFullscreen } from 'utils'
+import { Button, Grid, Typography, useTheme, Link } from '@mui/material'
+import { FC } from 'react'
+import { useLocation, useNavigate } from 'react-router'
 
 export const LandingHeader: FC = () => {
   const navigate = useNavigate()
   const { spacing, palette } = useTheme()
 
-  const [element, { toggle }] = useFullscreen()
-  const onChange = (event: MouseEvent<HTMLElement>) => {
-    toggle(document.body)
+  const headerContent = () => {
+    const location = useLocation()
+    const isForumPage = (path: string) => {
+      return /^\/forum\/\d+$/.test(path)
+    }
+
+    if (location.pathname === '/') {
+      return (
+        <>
+          <Typography variant="h4" flexGrow={1}>
+            <Link href="/" sx={{ color: 'black', textDecoration: 'unset' }}>
+              ♠️ Black Jack ♥️
+            </Link>
+          </Typography>
+          <Button
+            variant={'text'}
+            onClick={() => {
+              navigate('/forum')
+            }}>
+            FORUM
+          </Button>
+        </>
+      )
+    } else if (
+      location.pathname === '/forum' ||
+      isForumPage(location.pathname)
+    ) {
+      return (
+        <>
+          <Typography variant="h4" flexGrow={1}>
+            <Link
+              href="/forum"
+              sx={{ color: 'black', textDecoration: 'unset' }}>
+              ♦️ Black Jack Forum ♣️
+            </Link>
+          </Typography>
+          <Button
+            variant={'text'}
+            onClick={() => {
+              navigate('/')
+            }}>
+            HOME
+          </Button>
+        </>
+      )
+    } else {
+      ;<span>Page not found</span>
+    }
   }
 
   return (
@@ -24,12 +67,7 @@ export const LandingHeader: FC = () => {
       padding={spacing(4, 2)}
       borderBottom={1}
       borderColor={palette.divider}>
-      <Typography variant="h4" flexGrow={1}>
-        Black Jack
-      </Typography>
-      <ToggleButton onChange={onChange} value={Boolean(element)}>
-        {!element ? <Fullscreen /> : <FullscreenExit />}
-      </ToggleButton>
+      {headerContent()}
       <Button
         variant={'text'}
         onClick={() => {

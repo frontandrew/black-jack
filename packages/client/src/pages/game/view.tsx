@@ -5,7 +5,7 @@
  * handleNewBet запускает новую раздачу после завершения текущей
  */
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, MouseEvent } from 'react'
 import { RootState } from '../../app/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -19,7 +19,9 @@ import {
 } from 'features/game/model'
 import CanvasGame from 'features/game/view'
 import { calcHand } from 'features/game/utils'
-import { Button, Typography } from '@mui/material'
+import { Button, Typography, ToggleButton } from '@mui/material'
+import { useFullscreen } from 'utils'
+import { Fullscreen, FullscreenExit } from '@mui/icons-material'
 import './style.css'
 
 export const GamePage: React.FC = () => {
@@ -27,6 +29,7 @@ export const GamePage: React.FC = () => {
   const navigate = useNavigate()
   const game = useSelector((state: RootState) => state.game)
   const [showResult, setShowResult] = useState(false)
+  const [fullscreenElem, { toggle }] = useFullscreen()
 
   useEffect(() => {
     dispatch(newGame())
@@ -67,6 +70,8 @@ export const GamePage: React.FC = () => {
     dispatch(startGame())
     dispatch(updatePlayerMoney(-10))
   }
+
+  const onFullscreenChange = () => toggle(document.body)
 
   return (
     <div className="game">
@@ -124,6 +129,12 @@ export const GamePage: React.FC = () => {
           </Button>
         )}
       </div>
+      <ToggleButton
+        onChange={onFullscreenChange}
+        value={Boolean(fullscreenElem)}
+        sx={{ marginTop: 1, marginBottom: 1 }}>
+        {!fullscreenElem ? <Fullscreen /> : <FullscreenExit />}
+      </ToggleButton>
     </div>
   )
 }

@@ -1,9 +1,10 @@
-import React, { useState, FC } from 'react'
+import { useState, FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../app/store'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Box, TextField, Button, Typography, Container } from '@mui/material'
 import { addComment } from '../../../features/forum/model'
+import { LandingHeader } from '../../landing/components'
 
 export const TopicPage: FC = () => {
   const [comment, setComment] = useState<string>('')
@@ -16,18 +17,26 @@ export const TopicPage: FC = () => {
 
   if (!topic)
     return (
-      <Container maxWidth="md" className="mt-5 text-center">
-        <Box>
-          <Typography variant="h4">Topic not found</Typography>
-          <Button
-            onClick={() => navigate('/forum')}
-            variant="contained"
-            color="primary"
-            className="mt-5">
-            Go to forum
-          </Button>
-        </Box>
-      </Container>
+      <>
+        <LandingHeader />
+        <Container maxWidth="md" sx={{ my: 5 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Typography variant="h5">Topic not found</Typography>
+            <Button
+              onClick={() => navigate('/forum')}
+              variant="contained"
+              color="primary"
+              sx={{ minWidth: '180px', height: 'fit-content' }}>
+              Back to forum
+            </Button>
+          </Box>
+        </Container>
+      </>
     )
 
   const handleAddComment = () => {
@@ -38,46 +47,64 @@ export const TopicPage: FC = () => {
   }
 
   return (
-    <Container maxWidth="md" className="mt-5">
-      <Box>
-        <div className="flex justify-between mb-5">
-          <Typography variant="h4">{topic.title}</Typography>
+    <>
+      <LandingHeader />
+      <Container maxWidth="md" sx={{ my: 5 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mb: 3,
+          }}>
+          <Typography variant="h5" sx={{ fontWeight: 700 }}>
+            {topic.title}
+          </Typography>
           <Button
             onClick={() => navigate('/forum')}
             variant="contained"
-            color="primary">
+            color="primary"
+            sx={{ minWidth: '180px', height: 'fit-content' }}>
             Back to forum
           </Button>
-        </div>
-        <Typography paragraph className="mt-5">
+        </Box>
+        <Typography sx={{ py: 2, pl: 2, mb: 5, border: '1px dashed' }}>
           {topic.content}
         </Typography>
-        <Box>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mb: 2,
+          }}>
           <TextField
             label="Add a comment"
             value={comment}
             onChange={e => setComment(e.target.value)}
+            size="small"
             fullWidth
-            margin="normal"
+            sx={{ mr: 1 }}
           />
           <Button
             onClick={handleAddComment}
             variant="contained"
-            color="primary">
+            color="primary"
+            sx={{ minWidth: '180px', height: 'fit-content' }}>
             Add Comment
           </Button>
         </Box>
         <Box>
           {topic.comments.length > 0 && (
-            <div className="mt-4">User comments:</div>
+            <Typography variant="h6">User comments:</Typography>
           )}
           {topic.comments.map((cmt, index) => (
-            <Typography key={cmt.id} className="mt-2 ml-4">
-              {++index}: {cmt.content}
+            <Typography key={cmt.id} sx={{ pt: 1, pl: 2 }}>
+              {index + 1}: {cmt.content}
             </Typography>
           ))}
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </>
   )
 }
