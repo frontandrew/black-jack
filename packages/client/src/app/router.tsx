@@ -10,6 +10,7 @@ import {
   RegPage,
   SettingsPage,
   StartPage,
+  TopicPage,
 } from '../pages'
 
 export const router = createBrowserRouter([
@@ -60,7 +61,7 @@ export const router = createBrowserRouter([
   },
   {
     path: 'forum/:forumId',
-    element: <ForumPage />,
+    element: <TopicPage />,
     errorElement: <ErrorPage />,
   },
 ])
