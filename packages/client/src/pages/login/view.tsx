@@ -5,8 +5,7 @@ import { FC } from 'react'
 import './style.css'
 import { FieldText } from 'components'
 import { useForm } from 'react-final-form-hooks'
-import { login } from '../../shared/validation/validators/login/login'
-import { password } from '../../shared/validation/validators/password/password'
+import { validators } from 'validators'
 
 type LoginType = object
 
@@ -45,7 +44,7 @@ export const LoginPage: FC = () => {
             form={form}
             name="login"
             label="Login"
-            validator={login}
+            validator={validators.login}
             required
           />
 
@@ -53,7 +52,7 @@ export const LoginPage: FC = () => {
             form={form}
             name="password"
             label="Password"
-            validator={password}
+            validator={validators.password}
             required
           />
 

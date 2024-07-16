@@ -28,9 +28,5 @@ export function login(value: string): string {
     errors.push('Cant contain spases.')
   }
 
-  if (errors.length > 0) {
-    return errors[0]
-  } else {
-    return ''
-  }
+  return errors[0]
 }

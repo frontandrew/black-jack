@@ -24,7 +24,9 @@
       "pages": ["./pages/index"],
       "components": ["./shared/components/index"],
       "theme": ["./shared/theme/index"],
-      "utils": ["./shared/utils/index"]
+      "utils": ["./shared/utils/index"],
+      "validators": ["./shared/validation/index"]
+
     }
   },
   "include": ["src"],

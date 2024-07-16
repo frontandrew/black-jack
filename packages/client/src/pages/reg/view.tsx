@@ -4,11 +4,7 @@ import { useNavigate } from 'react-router'
 import { FC } from 'react'
 import { FieldText } from 'components'
 import { useForm } from 'react-final-form-hooks'
-import { login } from '../../shared/validation/validators/login/login'
-import { password } from '../../shared/validation/validators/password/password'
-import { email } from '../../shared/validation/validators/email/email'
-import { name } from '../../shared/validation/validators/name/name'
-import { phone } from '../../shared/validation/validators/phone/phone'
+import { validators } from 'validators'
 
 type LoginType = object
 
@@ -46,7 +42,7 @@ export const RegPage: FC = () => {
             form={form}
             name="first_name"
             label="Name"
-            validator={name}
+            validator={validators.name}
             size="small"
             required
           />
@@ -55,7 +51,7 @@ export const RegPage: FC = () => {
             form={form}
             name={'second_name'}
             label={'Last name'}
-            validator={name}
+            validator={validators.name}
             size="small"
             required
           />
@@ -65,7 +61,7 @@ export const RegPage: FC = () => {
             name="login"
             label="Login"
             size="small"
-            validator={login}
+            validator={validators.login}
             required
           />
 
@@ -74,7 +70,7 @@ export const RegPage: FC = () => {
             name="email"
             label="Email"
             size="small"
-            validator={email}
+            validator={validators.email}
             required
           />
 
@@ -83,7 +79,7 @@ export const RegPage: FC = () => {
             name="password"
             label="Password"
             size="small"
-            validator={password}
+            validator={validators.password}
             required
           />
 
@@ -91,7 +87,7 @@ export const RegPage: FC = () => {
             form={form}
             name={'phone'}
             label={'Phone'}
-            validator={phone}
+            validator={validators.phone}
             size="small"
             required
           />

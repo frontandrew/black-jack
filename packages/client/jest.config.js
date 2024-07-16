@@ -22,6 +22,7 @@ export default {
     '^components': '<rootDir>/src/shared/components',
     '^theme': '<rootDir>/src/shared/theme',
     '^utils': '<rootDir>/src/shared/utils',
+    '^validators': '<rootDir>/src/shared/validation'
   },
   globals: {
     __SERVER_PORT__: process.env.SERVER_PORT,

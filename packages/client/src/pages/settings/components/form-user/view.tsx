@@ -6,10 +6,7 @@ import type { FC } from 'react'
 
 import { FieldText } from 'components'
 import type { FormUserType } from './type'
-import { login } from '../../../../shared/validation/validators/login/login'
-import { email } from '../../../../shared/validation/validators/email/email'
-import { name } from '../../../../shared/validation/validators/name/name'
-import { phone } from '../../../../shared/validation/validators/phone/phone'
+import { validators } from 'validators'
 
 /* TODO: need to use UserType */
 type UserType = object
@@ -52,14 +49,14 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
           name={'email'}
           label={'Email'}
           disabled={!isEditMode}
-          validator={email}
+          validator={validators.email}
           required
         />
         <FieldText
           form={form}
           name={'login'}
           label={'Login'}
-          validator={login}
+          validator={validators.login}
           disabled={!isEditMode}
           required
         />
@@ -67,7 +64,7 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
           form={form}
           name={'first_name'}
           label={'First name'}
-          validator={name}
+          validator={validators.name}
           disabled={!isEditMode}
           required
         />
@@ -75,7 +72,7 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
           form={form}
           name={'second_name'}
           label={'Last name'}
-          validator={name}
+          validator={validators.name}
           disabled={!isEditMode}
           required
         />
@@ -83,7 +80,7 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
           form={form}
           name={'display_name'}
           label={'Nickname'}
-          validator={login}
+          validator={validators.login}
           disabled={!isEditMode}
           required
         />
@@ -91,7 +88,7 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
           form={form}
           name={'phone'}
           label={'Phone'}
-          validator={phone}
+          validator={validators.phone}
           disabled={!isEditMode}
           required
         />
