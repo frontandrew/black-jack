@@ -9,48 +9,115 @@ import {
 } from '@mui/material'
 import './style.css'
 import { useNavigate } from 'react-router'
+import { FC } from 'react'
+import { FieldText } from 'components'
+import { useForm } from 'react-final-form-hooks'
+import { login } from '../../shared/validation/validators/login/login'
+import { password } from '../../shared/validation/validators/password/password'
+import { email } from '../../shared/validation/validators/email/email'
+import { name } from '../../shared/validation/validators/name/name'
+import { phone } from '../../shared/validation/validators/phone/phone'
 
-export const RegPage = () => {
+type LoginType = object
+
+const config = {
+  validateOnBlur: true,
+  onSubmit: (formValues: LoginType) => {
+    console.table(formValues)
+  },
+}
+
+export const RegPage: FC = () => {
   const { spacing } = useTheme()
   const navigate = useNavigate()
+
+  const { form, handleSubmit } = useForm(config)
+  const { hasValidationErrors } = form.getState()
 
   return (
     <Box className="login-page">
       <Paper elevation={3} square={false}>
-        <form>
-          <Grid
-            direction="column"
-            display="flex"
-            gap="1.7em"
-            padding={spacing(2, 6)}>
-            <Typography variant="h3" align="center">
-              Register
-            </Typography>
+        <Grid
+          direction="column"
+          display="flex"
+          gap="0.5em"
+          padding={spacing(2, 9)}
+          component={'form'}
+          onSubmit={event => {
+            handleSubmit(event)
+          }}>
+          <Typography variant="h3" align="center">
+            Register
+          </Typography>
 
-            <TextField label="Name" type="text" size="small" />
+          <FieldText
+            form={form}
+            name="first_name"
+            label="Name"
+            validator={name}
+            size="small"
+            required
+          />
 
-            <TextField label="Second Name" type="text" size="small" />
+          <FieldText
+            form={form}
+            name={'second_name'}
+            label={'Last name'}
+            validator={name}
+            size="small"
+            required
+          />
 
-            <TextField label="Login" type="text" size="small" />
+          <FieldText
+            form={form}
+            name="login"
+            label="Login"
+            size="small"
+            validator={login}
+            required
+          />
 
-            <TextField label="Email" type="text" size="small" />
+          <FieldText
+            form={form}
+            name="email"
+            label="Email"
+            size="small"
+            validator={email}
+            required
+          />
 
-            <TextField label="password" type="password" size="small" />
+          <FieldText
+            form={form}
+            name="password"
+            label="Password"
+            size="small"
+            validator={password}
+            required
+          />
 
-            <TextField label="Phone" type="text" size="small" />
+          <FieldText
+            form={form}
+            name={'phone'}
+            label={'Phone'}
+            validator={phone}
+            size="small"
+            required
+          />
 
-            <Button type="submit" variant="contained">
-              SIGN UP
-            </Button>
-            <Button
-              variant="text"
-              onClick={() => {
-                navigate('/sign-in')
-              }}>
-              sign in
-            </Button>
-          </Grid>
-        </form>
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={hasValidationErrors}>
+            SIGN UP
+          </Button>
+          <Button
+            variant="text"
+            onClick={() => {
+              navigate('/sign-in')
+            }}>
+            sign in
+          </Button>
+        </Grid>
       </Paper>
     </Box>
   )
