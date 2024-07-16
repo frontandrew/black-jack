@@ -64,10 +64,11 @@ export const LandingHeader: FC = () => {
       alignItems={'center'}
       width={'100%'}
       gap={spacing(2)}
-      padding={spacing(4, 2)}
+      padding={spacing(2, 5)}
       borderBottom={1}
       borderColor={palette.divider}>
       {headerContent()}
+
       <Button
         variant={'text'}
         onClick={() => {

@@ -1,9 +1,7 @@
 import { Button, Grid, Typography, useTheme } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { FC } from 'react'
-
 import { LandBack } from 'images'
-
 import { LandingSpacer } from '../spacer'
 
 export const LandingBanner: FC = () => {
@@ -17,12 +15,11 @@ export const LandingBanner: FC = () => {
   const contrastTextColor = palette.getContrastText(contrastBackgroundColor)
 
   return (
-    <Grid container padding={spacing(2)}>
+    <Grid container>
       <Grid
         container
         bgcolor={contrastBackgroundColor}
         color={contrastTextColor}
-        borderRadius={'60px'}
         justifyContent={'center'}
         overflow={'hidden'}
         width={'100%'}

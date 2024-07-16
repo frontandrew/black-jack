@@ -5,7 +5,7 @@
  * handleNewBet запускает новую раздачу после завершения текущей
  */
 
-import React, { useEffect, useState, MouseEvent } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RootState } from '../../app/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
