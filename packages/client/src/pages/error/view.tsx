@@ -19,7 +19,7 @@ export const ErrorPage: React.FC = () => {
       <Button
         variant="contained"
         onClick={() => {
-          navigate(-2)
+          navigate(-1)
         }}>
         BACK
       </Button>
