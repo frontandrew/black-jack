@@ -60,7 +60,7 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: 'forum/:forumId',
+    path: 'forum/:id',
     element: <TopicPage />,
     errorElement: <ErrorPage />,
   },
