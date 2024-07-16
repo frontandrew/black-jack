@@ -6,6 +6,9 @@ import './style.css'
 import { router } from './router'
 import { Provider } from 'react-redux'
 import { store } from './store'
+import { startSW } from '../shared/sw/index'
+
+startSW()
 
 export function App() {
   return (
