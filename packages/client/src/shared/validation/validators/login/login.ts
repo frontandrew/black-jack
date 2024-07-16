@@ -1,4 +1,4 @@
-export function login(value: string): string | undefined {
+export function login(value: string): string {
   const errors: string[] = []
 
   const MIN_LENGTH = 3
@@ -28,5 +28,9 @@ export function login(value: string): string | undefined {
     errors.push('Cant contain spases.')
   }
 
-  return errors[0]
+  if (errors.length > 0) {
+    return errors[0]
+  } else {
+    return ''
+  }
 }

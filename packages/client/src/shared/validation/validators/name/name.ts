@@ -1,4 +1,4 @@
-export function name(value: string): string | undefined {
+export function name(value: string): string {
   const errors: string[] = []
 
   const MIN_LENGTH = 1

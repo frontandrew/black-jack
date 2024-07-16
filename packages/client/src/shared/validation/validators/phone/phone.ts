@@ -1,4 +1,4 @@
-export function phone(value: string): string | undefined {
+export function phone(value: string): string {
   const errors: string[] = []
 
   const MIN_LENGTH = 10
