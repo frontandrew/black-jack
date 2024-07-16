@@ -19,9 +19,8 @@ import {
 } from 'features/game/model'
 import CanvasGame from 'features/game/view'
 import { calcHand } from 'features/game/utils'
-import { Button, Typography, ToggleButton } from '@mui/material'
-import { useFullscreen } from 'utils'
-import { Fullscreen, FullscreenExit } from '@mui/icons-material'
+import { Box, Button, Container, Typography } from '@mui/material'
+import { FullscreenButton } from 'features/fullscreen'
 import './style.css'
 
 export const GamePage: React.FC = () => {
@@ -29,7 +28,6 @@ export const GamePage: React.FC = () => {
   const navigate = useNavigate()
   const game = useSelector((state: RootState) => state.game)
   const [showResult, setShowResult] = useState(false)
-  const [fullscreenElem, { toggle }] = useFullscreen()
 
   useEffect(() => {
     dispatch(newGame())
@@ -70,8 +68,6 @@ export const GamePage: React.FC = () => {
     dispatch(startGame())
     dispatch(updatePlayerMoney(-10))
   }
-
-  const onFullscreenChange = () => toggle(document.body)
 
   return (
     <div className="game">
@@ -128,13 +124,9 @@ export const GamePage: React.FC = () => {
             You don't have money to bet
           </Button>
         )}
+
+        <FullscreenButton />
       </div>
-      <ToggleButton
-        onChange={onFullscreenChange}
-        value={Boolean(fullscreenElem)}
-        sx={{ marginTop: 1, marginBottom: 1 }}>
-        {!fullscreenElem ? <Fullscreen /> : <FullscreenExit />}
-      </ToggleButton>
     </div>
   )
 }

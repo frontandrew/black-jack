@@ -3,13 +3,10 @@ import { Box, Button, Typography, ToggleButton } from '@mui/material'
 import { useFullscreen } from 'utils'
 import { Fullscreen, FullscreenExit } from '@mui/icons-material'
 import './style.css'
+import { FullscreenButton } from 'features/fullscreen'
 
 export const StartPage: React.FC = () => {
   const navigate = useNavigate()
-  const [fullscreenElem, { toggle }] = useFullscreen()
-
-  const onFullscreenChange = () => toggle(document.body)
-
   const handleStart = () => navigate('/game')
 
   return (
@@ -22,12 +19,6 @@ export const StartPage: React.FC = () => {
         sx={{ marginTop: 1, marginBottom: 1 }}>
         Play
       </Button>
-      <ToggleButton
-        onChange={onFullscreenChange}
-        value={Boolean(fullscreenElem)}
-        sx={{ marginTop: 1, marginBottom: 1 }}>
-        {!fullscreenElem ? <Fullscreen /> : <FullscreenExit />}
-      </ToggleButton>
     </Box>
   )
 }
