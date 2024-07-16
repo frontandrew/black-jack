@@ -6,6 +6,10 @@ import type { FC } from 'react'
 
 import { FieldText } from 'components'
 import type { FormUserType } from './type'
+import { login } from '../../../../shared/validation/validators/login/login'
+import { email } from '../../../../shared/validation/validators/email/email'
+import { name } from '../../../../shared/validation/validators/name/name'
+import { phone } from '../../../../shared/validation/validators/phone/phone'
 
 /* TODO: need to use UserType */
 type UserType = object
@@ -25,12 +29,6 @@ const config = {
     console.table(formValues)
   },
   initialValues: user,
-}
-
-/* TODO: need to use shared/validator */
-const validator = (val: string) => {
-  console.log(`%c VALID[value: ${val}]:`, 'color: white; background-color: red')
-  return val !== 'aaa' ? '' : 'Ivalid value'
 }
 
 export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
@@ -54,14 +52,14 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
           name={'email'}
           label={'Email'}
           disabled={!isEditMode}
-          validator={validator}
+          validator={email}
           required
         />
         <FieldText
           form={form}
           name={'login'}
           label={'Login'}
-          validator={validator}
+          validator={login}
           disabled={!isEditMode}
           required
         />
@@ -69,7 +67,7 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
           form={form}
           name={'first_name'}
           label={'First name'}
-          validator={validator}
+          validator={name}
           disabled={!isEditMode}
           required
         />
@@ -77,7 +75,7 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
           form={form}
           name={'second_name'}
           label={'Last name'}
-          validator={validator}
+          validator={name}
           disabled={!isEditMode}
           required
         />
@@ -85,7 +83,7 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
           form={form}
           name={'display_name'}
           label={'Nickname'}
-          validator={validator}
+          validator={login}
           disabled={!isEditMode}
           required
         />
@@ -93,7 +91,7 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
           form={form}
           name={'phone'}
           label={'Phone'}
-          validator={validator}
+          validator={phone}
           disabled={!isEditMode}
           required
         />

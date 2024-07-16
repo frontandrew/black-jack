@@ -1,11 +1,11 @@
-export function phone(value: string): string[] {
+export function phone(value: string): string | undefined {
   const errors: string[] = []
 
   const MIN_LENGTH = 10
   const MAX_LENGTH = 15
 
   if (value === undefined) {
-    return []
+    return ''
   }
 
   if (value.length < MIN_LENGTH) {
@@ -20,5 +20,5 @@ export function phone(value: string): string[] {
     errors.push(`Enter the correct phone number`)
   }
 
-  return errors
+  return errors[0]
 }

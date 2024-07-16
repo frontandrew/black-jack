@@ -1,11 +1,11 @@
-export function password(value: string): string[] {
+export function password(value: string): string | undefined {
   const errors: string[] = []
 
   const MIN_LENGTH = 8
   const MAX_LENGTH = 40
 
   if (value === undefined) {
-    return []
+    return ''
   }
 
   if (value.length < MIN_LENGTH) {
@@ -24,5 +24,5 @@ export function password(value: string): string[] {
     errors.push(' Number.')
   }
 
-  return errors
+  return errors[0]
 }

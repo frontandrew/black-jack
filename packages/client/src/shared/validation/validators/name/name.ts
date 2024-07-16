@@ -1,11 +1,11 @@
-export function name(value: string): string[] {
+export function name(value: string): string | undefined {
   const errors: string[] = []
 
   const MIN_LENGTH = 1
   const MAX_LENGTH = 20
 
   if (value === undefined) {
-    return []
+    return ''
   }
 
   if (value.length < MIN_LENGTH) {
@@ -32,5 +32,5 @@ export function name(value: string): string[] {
     errors.push(`It can't contain numbers`)
   }
 
-  return errors
+  return errors[0]
 }

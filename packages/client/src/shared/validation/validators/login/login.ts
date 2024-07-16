@@ -1,11 +1,11 @@
-export function login(value: string): string[] {
+export function login(value: string): string | undefined {
   const errors: string[] = []
 
   const MIN_LENGTH = 3
   const MAX_LENGTH = 20
 
   if (value === undefined) {
-    return []
+    return ''
   }
 
   if (value.length < MIN_LENGTH) {
@@ -28,5 +28,5 @@ export function login(value: string): string[] {
     errors.push('Cant contain spases.')
   }
 
-  return errors
+  return errors[0]
 }
