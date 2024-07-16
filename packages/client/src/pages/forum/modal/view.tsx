@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react'
+import { useState, FC } from 'react'
 import { useDispatch } from 'react-redux'
 import { Modal, Box, TextField, Button, Typography } from '@mui/material'
 import { addTopic } from '../../../features/forum/model'
@@ -14,7 +14,7 @@ export const AddTopicModal: FC<AddTopicModalProps> = ({ open, onClose }) => {
   const dispatch = useDispatch()
 
   const handleAdd = () => {
-    dispatch(addTopic({ id: Date.now(), title, content, comments: [] }))
+    dispatch(addTopic(title, content))
     setTitle('')
     setContent('')
     onClose()

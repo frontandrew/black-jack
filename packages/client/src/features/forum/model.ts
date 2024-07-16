@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit'
 
 interface Comment {
   id: number
@@ -6,7 +6,7 @@ interface Comment {
 }
 
 interface Topic {
-  id: number
+  id: string
   title: string
   content: string
   comments: Comment[]
@@ -24,12 +24,17 @@ const topicsSlice = createSlice({
   name: 'topics',
   initialState,
   reducers: {
-    addTopic(state, action: PayloadAction<Topic>) {
-      state.topics.push(action.payload)
+    addTopic: {
+      reducer: (state, action: PayloadAction<Topic>) => {
+        state.topics.push(action.payload)
+      },
+      prepare: (title: string, content: string) => {
+        return { payload: { id: nanoid(), title, content, comments: [] } }
+      },
     },
     addComment(
       state,
-      action: PayloadAction<{ topicId: number; comment: Comment }>
+      action: PayloadAction<{ topicId: string; comment: Comment }>
     ) {
       const { topicId, comment } = action.payload
       const topic = state.topics.find(t => t.id === topicId)

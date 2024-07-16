@@ -1,9 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { Box, Button, Typography, ToggleButton } from '@mui/material'
-import { useFullscreen } from 'utils'
-import { Fullscreen, FullscreenExit } from '@mui/icons-material'
 import './style.css'
-import { FullscreenButton } from 'features/fullscreen'
 
 export const StartPage: React.FC = () => {
   const navigate = useNavigate()

@@ -11,7 +11,7 @@ export const TopicPage: FC = () => {
   const { id } = useParams<{ id: string }>()
   const dispatch = useDispatch()
   const topic = useSelector((state: RootState) => {
-    if (id) return state.topics.topics.find(t => t.id === parseInt(id, 10))
+    if (id) return state.topics.topics.find(t => t.id === id)
   })
   const navigate = useNavigate()
 
