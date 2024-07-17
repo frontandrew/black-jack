@@ -47,6 +47,7 @@ export const GamePage: React.FC = () => {
       if (game.result == 'tie') {
         dispatch(updatePlayerMoney(bet)) // Tie, bet is returned
       }
+      if (bet > game.playerMoney) setBet(maxbet)
       dispatch(resetGame())
     }
   }, [game.status, game.result, game.playerMoney, dispatch, navigate])
@@ -141,7 +142,6 @@ export const GamePage: React.FC = () => {
             Stand
           </Button>
         </Box>
-
         <Box
           sx={{
             display: 'flex',
@@ -149,17 +149,37 @@ export const GamePage: React.FC = () => {
             justifyContent: 'center',
             my: 1,
           }}>
-          {game.playerMoney <= 0 && game.status === 'init' && (
+          <Button
+            variant="contained"
+            onClick={() => navigate('/finish')}
+            size="large"
+            sx={{ m: 1 }}
+            disabled={
+              (game.status !== 'init' && game.playerMoney >= 0) ||
+              (game.status !== 'gameover' && game.playerMoney <= 0)
+            }>
+            Take the money and leave
+          </Button>
+          <FullscreenButton />
+        </Box>
+
+        {game.playerMoney <= 0 && game.status === 'init' && (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              my: 1,
+            }}>
             <Button
               variant="contained"
               onClick={() => navigate('/finish')}
               size="large"
               sx={{ m: 1 }}>
-              You have no money. Goodbye
+              You have lost all the money. Goodbye
             </Button>
-          )}
-          <FullscreenButton />
-        </Box>
+          </Box>
+        )}
       </div>
     </div>
   )
