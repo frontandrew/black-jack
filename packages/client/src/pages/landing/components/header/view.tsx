@@ -13,9 +13,9 @@ export const LandingHeader: FC = () => {
     if (location.pathname === '/') {
       return (
         <>
-          <Typography variant="h4" flexGrow={1} fontWeight={800}>
+          <Typography variant="h4" flexGrow={1}>
             <Link href="/" sx={{ color: 'black', textDecoration: 'unset' }}>
-              🃏 Black Jack
+              🃏 <b>Black Jack</b>
             </Link>
           </Typography>
           <Button
@@ -56,7 +56,7 @@ export const LandingHeader: FC = () => {
             <Link
               href="/forum"
               sx={{ color: 'black', textDecoration: 'unset' }}>
-              ♦️ Black Jack Forum ♣️
+              🃏 <b>Black Jack</b> / Forum
             </Link>
           </Typography>
           <Button
