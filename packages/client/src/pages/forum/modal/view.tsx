@@ -1,55 +1,74 @@
-import { useState, FC } from 'react'
 import { useDispatch } from 'react-redux'
-import { Modal, Box, TextField, Button, Typography } from '@mui/material'
+import { useForm } from 'react-final-form-hooks'
+import { Modal, Box, Button, Typography, Grid } from '@mui/material'
 import { addTopic } from '../../../features/forum/model'
+import { FieldText } from 'components'
 
 interface AddTopicModalProps {
   open: boolean
   onClose: () => void
 }
 
-export const AddTopicModal: FC<AddTopicModalProps> = ({ open, onClose }) => {
-  const [title, setTitle] = useState<string>('')
-  const [content, setContent] = useState<string>('')
-  const dispatch = useDispatch()
+type newTopicType = object
 
-  const handleAdd = () => {
-    dispatch(addTopic(title, content))
-    setTitle('')
-    setContent('')
-    onClose()
+const newTopic: newTopicType = {
+  title: '',
+  content: '',
+}
+
+export const AddTopicModal: React.FC<AddTopicModalProps> = ({
+  open,
+  onClose,
+}) => {
+  const dispatch = useDispatch()
+  const config = {
+    // validate: false,
+    onSubmit: (values: newTopicType) => {
+      //@ts-ignore
+      dispatch(addTopic(values.title, values.content))
+      form.reset()
+      onClose()
+    },
+    initialValues: newTopic,
   }
+  const { form, handleSubmit } = useForm(config)
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Box sx={modalStyle}>
-        <Typography variant="h5" sx={{ fontWeight: 700 }}>
-          Add new topic
-        </Typography>
-        <TextField
-          label="Topic title"
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Topic content"
-          value={content}
-          onChange={e => setContent(e.target.value)}
-          fullWidth
-          margin="normal"
-          multiline
-          rows={4}
-        />
-        <Button
-          onClick={handleAdd}
-          variant="contained"
-          color="primary"
-          sx={{ mt: 2, minWidth: '100%' }}>
-          Create Topic
-        </Button>
-      </Box>
+      <Grid
+        component={'form'}
+        onSubmit={event => {
+          handleSubmit(event)
+        }}>
+        <Box sx={modalStyle}>
+          <Typography variant="h5" sx={{ fontWeight: 700 }}>
+            Add new topic
+          </Typography>
+          <FieldText
+            form={form}
+            name={'title'}
+            label="Topic title"
+            fullWidth
+            margin="normal"
+          />
+          <FieldText
+            form={form}
+            name={'content'}
+            label="Topic content"
+            fullWidth
+            margin="normal"
+            multiline
+            rows={4}
+          />
+          <Button
+            type={'submit'}
+            variant="contained"
+            color="primary"
+            sx={{ mt: 2, minWidth: '100%' }}>
+            Create Topic
+          </Button>
+        </Box>
+      </Grid>
     </Modal>
   )
 }

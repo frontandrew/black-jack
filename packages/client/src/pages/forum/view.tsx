@@ -1,4 +1,5 @@
 import { FC, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../app/store'
 import {
@@ -10,13 +11,12 @@ import {
   Container,
   Box,
 } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
 import { AddTopicModal } from 'pages'
 import { LandingHeader } from '../landing/components'
 
 export const ForumPage: FC = () => {
   const navigate = useNavigate()
-  const [isModalOpen, setModalOpen] = useState<boolean>(false)
+  const [isModalOpen, setModalOpen] = useState(false)
   const topics = useSelector((state: RootState) => state.topics.topics)
 
   return (
