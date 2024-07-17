@@ -11,6 +11,3 @@ export const store = configureStore({
     topics: topicsReducer,
   },
 })
-
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch

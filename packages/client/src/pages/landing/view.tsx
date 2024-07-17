@@ -20,7 +20,11 @@ export const LandingPage: FC = () => {
       height={'100%'}>
       <LandingHeader />
 
-      <Grid item overflow={'hidden auto'}>
+      <Grid
+        container
+        overflow={'hidden auto'}
+        justifyContent={'space-between'}
+        flexGrow={1}>
         <LandingBanner />
         <LandingAbout />
         <LandingGameFlow />

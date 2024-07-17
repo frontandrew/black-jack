@@ -23,10 +23,12 @@ export default defineConfig({
       pages: path.resolve('src/pages/index'),
       consts: path.resolve('src/shared/consts/index'),
       components: path.resolve('src/shared/components/index'),
+      store: path.resolve('src/shared/store/index'),
       theme: path.resolve('src/shared/theme/index'),
       transport: path.resolve('src/shared/transport/index'),
       services: path.resolve('src/shared/services/index'),
       utils: path.resolve('src/shared/utils/index'),
+      validators: path.resolve('src/shared/validation/index'),
     },
   },
 })

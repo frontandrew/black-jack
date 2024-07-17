@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "webworker"],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": false,
@@ -25,12 +25,14 @@
       "features": ["./features/*"],
       "pages": ["./pages/index"],
       "components": ["./shared/components/index"],
+      "store": ["./shared/store/index"],
       "theme": ["./shared/theme/index"],
       "transport": ["./shared/transport/index"],
       "services": ["./shared/services/index"],
-      "utils": ["./shared/utils/index"]
+      "utils": ["./shared/utils/index"],
+      "validators": ["./shared/validation/index"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "public/sw.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

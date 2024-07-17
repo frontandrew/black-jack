@@ -7,14 +7,12 @@
  * drawDealerCard - добавление карты дилеру (ход дилера)
  * playerStand - stand игрока (завершение хода игрока)
  * updatePlayerMoney - обновление баланса игрока
+ * resultGame - определение результата игры
  * resetGame - сброс раздачи (начать новую раздачу)
  * newGame - новая игра (обнуление GameState)
  *
- * ToDo реализовать механику ставки любого номинала (не только 10$)
  * ToDo сделать дилера умнее
  * ToDo добавить несколько игроков (или несколько одновременных ставок на поле)
- * ToDo возможность выхода со стола с выигрышем и сообщением с суммой выигрыша
- * ToDo добавить переменную для вывода сообщения в игре "win, lose, tie, blackjack и др."
  */
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
@@ -31,6 +29,7 @@ const initialState: GameState = {
   playerStand: false,
   result: null,
   playerMoney: 100,
+  message: '',
 }
 
 const gameSlice = createSlice({
@@ -49,10 +48,8 @@ const gameSlice = createSlice({
       state.dealerHand.push({ ...(state.deck.pop() as Card), hidden: true })
       state.playerHand.push(state.deck.pop() as Card)
       state.dealerHand.push(state.deck.pop() as Card)
-      // Сразу после раздачи проверяем на blackjack
-      // Если у игрока сразу после раздачи набралось 21 очко, то такая ситуация называется блек-джек
-      // Игроку сразу выплачивается выигрыш 3 к 2 (ToDo)
-      // Ставка не выплачивает, если дилер тоже набрал 21
+      // Если у игрока сразу после раздачи набралось 21 очко, то это blackjack
+      // Игроку сразу выплачивается выигрыш 3 к 2. Ставка не выплачивает, если дилер тоже набрал 21
       if (calcHand(state.playerHand) === 21) {
         gameSlice.caseReducers.playerStand(state)
       }
@@ -64,11 +61,8 @@ const gameSlice = createSlice({
         if (calcHand(state.playerHand) === 21) {
           gameSlice.caseReducers.playerStand(state)
         }
-        // Перебор у игрока
         if (calcHand(state.playerHand) > 21) {
-          state.playerBust = true
-          state.status = 'gameover'
-          state.result = 'lose'
+          gameSlice.caseReducers.resultGame(state)
         }
       }
     },
@@ -94,18 +88,7 @@ const gameSlice = createSlice({
           state.dealerHand.push(state.deck.pop() as Card)
         }
       }
-      // Определение результата игры
-      if (calcHand(state.dealerHand) > 21) {
-        state.dealerBust = true
-        state.result = 'win'
-      } else if (calcHand(state.dealerHand) > calcHand(state.playerHand)) {
-        state.result = 'lose'
-      } else if (calcHand(state.dealerHand) < calcHand(state.playerHand)) {
-        state.result = 'win'
-      } else {
-        state.result = 'tie'
-      }
-      state.status = 'gameover'
+      gameSlice.caseReducers.resultGame(state)
     },
     playerStand(state) {
       if (state.status === 'playing') {
@@ -117,6 +100,33 @@ const gameSlice = createSlice({
     updatePlayerMoney(state, action: PayloadAction<number>) {
       state.playerMoney += action.payload
     },
+    resultGame(state) {
+      if (calcHand(state.dealerHand) > 21) {
+        state.dealerBust = true
+        state.result = 'win'
+        if (calcHand(state.playerHand) === 21) {
+          state.result = 'blackjack'
+          state.message = 'Black Jack! You win!'
+        } else state.message = 'You win!'
+      } else if (calcHand(state.playerHand) > 21) {
+        state.playerBust = true
+        state.result = 'lose'
+        state.message = 'You lose!'
+      } else if (calcHand(state.dealerHand) > calcHand(state.playerHand)) {
+        state.result = 'lose'
+        state.message = 'You lose!'
+      } else if (calcHand(state.dealerHand) < calcHand(state.playerHand)) {
+        state.result = 'win'
+        if (calcHand(state.playerHand) === 21) {
+          state.result = 'blackjack'
+          state.message = 'Black Jack! You win!'
+        } else state.message = 'You win!'
+      } else {
+        state.result = 'tie'
+        state.message = 'Tie!'
+      }
+      state.status = 'gameover'
+    },
     resetGame(state) {
       state.status = 'init'
     },
@@ -124,6 +134,7 @@ const gameSlice = createSlice({
       state.result = null
       state.status = 'init'
       state.playerMoney = initialState.playerMoney
+      state.message = ''
       state.deck = []
       state.playerHand = []
       state.dealerHand = []
@@ -139,6 +150,7 @@ export const {
   drawDealerCard,
   playerStand,
   updatePlayerMoney,
+  resultGame,
   resetGame,
   newGame,
 } = gameSlice.actions

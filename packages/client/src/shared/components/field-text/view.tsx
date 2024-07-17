@@ -1,11 +1,9 @@
-import { Grid, TextField } from '@mui/material'
+import React from 'react'
 import { useField } from 'react-final-form-hooks'
-
-import type { FC } from 'react'
-
+import { Grid, TextField } from '@mui/material'
 import { FieldTextProps } from './type'
 
-export const FieldText: FC<FieldTextProps> = props => {
+export const FieldText: React.FC<FieldTextProps> = props => {
   const { name, label, form, validator, ...rest } = props
   const { input, meta } = useField(name, form, validator)
 
@@ -15,17 +13,21 @@ export const FieldText: FC<FieldTextProps> = props => {
   const heightBySize = rest.size === 'small' ? '4em' : '5em'
   const fieldHeight = validator ? heightBySize : 'auto'
 
-  console.log(
-    `%c TextField[${name}]:`,
-    'color: white; background-color: green',
-    { form, input, meta }
-  )
-
   return (
     <Grid container flexDirection={'column'} height={fieldHeight}>
       <TextField
         error={fieldError}
-        helperText={fieldHelp}
+        helperText={
+          Array.isArray(fieldHelp) &&
+          fieldHelp?.map((elem: string, index: number) => {
+            return (
+              <React.Fragment key={elem + index}>
+                {index + 1}. {elem}
+                <br />
+              </React.Fragment>
+            )
+          })
+        }
         label={fieldLabel}
         {...{ ...rest, ...input }}
       />

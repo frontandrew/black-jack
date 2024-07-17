@@ -1,47 +1,80 @@
-import {
-  Box,
-  Button,
-  Grid,
-  Paper,
-  TextField,
-  Typography,
-  useTheme,
-} from '@mui/material'
+import React from 'react'
 import { useNavigate } from 'react-router'
-import { FC } from 'react'
-
+import { Box, Button, Grid, Paper, Typography, useTheme } from '@mui/material'
+import { useForm } from 'react-final-form-hooks'
+import { FieldText } from 'components'
+import { validators } from 'validators'
 import './style.css'
 
-export const LoginPage: FC = () => {
+type LoginType = object
+
+const config = {
+  validateOnBlur: true,
+  onSubmit: (formValues: LoginType) => {
+    console.table(formValues)
+  },
+}
+
+export const LoginPage: React.FC = () => {
   const { spacing } = useTheme()
   const navigate = useNavigate()
+
+  const { form, handleSubmit } = useForm(config)
+
+  const { hasValidationErrors } = form.getState()
 
   return (
     <Box className="login-page">
       <Paper elevation={3} square={false}>
-        <form>
-          <Grid
-            direction="column"
-            display="flex"
-            gap="2em"
-            padding={spacing(2, 6)}>
-            <Typography variant="h3" align="center" margin={spacing(2)}>
-              Login
-            </Typography>
-            <TextField label="Login" type="text" size="small" />
-            <TextField label="password" type="password" size="small" />
-            <Button type="submit" variant="contained">
-              SIGN IN
-            </Button>
-            <Button
-              variant="text"
-              onClick={() => {
-                navigate('/sign-up')
-              }}>
-              sign up
-            </Button>
-          </Grid>
-        </form>
+        <Grid
+          container
+          direction="column"
+          display="flex"
+          gap="2em"
+          padding={spacing(4, 4)}
+          component={'form'}
+          className="custom-text-error"
+          width={'400px'}
+          onSubmit={event => {
+            handleSubmit(event)
+          }}>
+          <Typography variant="h5" align="center" paddingBottom={3}>
+            Login
+          </Typography>
+
+          <FieldText
+            form={form}
+            name="login"
+            label="Login"
+            validator={validators.login}
+            size="small"
+            required
+          />
+
+          <FieldText
+            form={form}
+            name="password"
+            label="Password"
+            validator={validators.password}
+            size="small"
+            type="password"
+            required
+          />
+
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={hasValidationErrors}>
+            SIGN IN
+          </Button>
+          <Button
+            variant="text"
+            onClick={() => {
+              navigate('/sign-up')
+            }}>
+            sign up
+          </Button>
+        </Grid>
       </Paper>
     </Box>
   )

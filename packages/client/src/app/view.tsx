@@ -1,28 +1,42 @@
 import { useEffect } from 'react'
 import { RouterProvider } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { ThemeProvider } from '@mui/material'
-import { theme } from 'theme'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 
-import { userServ, getUser } from 'services'
+import { userServ } from 'services'
 
 import { router } from './router'
-import { RootState } from './store'
 import './style.css'
 
-export function App() {
-  // const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.user)
+const theme = createTheme()
 
+export function App() {
   useEffect(() => {
     userServ.getUser()
-    console.log('APP:', { user })
   }, [])
+
   return (
-    // <Provider store={store}>
     <ThemeProvider theme={theme}>
       <RouterProvider router={router} />
     </ThemeProvider>
-    // </Provider>
   )
+}
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    try {
+      await navigator.serviceWorker
+        .register('/sw.js')
+        .then(registration => {
+          console.log(
+            'ServiceWorker registration successful with scope: ',
+            registration.scope
+          )
+        })
+        .catch((error: string) => {
+          console.log('ServiceWorker registration failed: ', error)
+        })
+    } catch (error) {
+      console.log('ServiceWorker failed: ', error)
+    }
+  })
 }

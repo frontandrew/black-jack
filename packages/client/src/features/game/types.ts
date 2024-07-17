@@ -12,6 +12,7 @@ export interface GameState {
   playerBust: boolean
   dealerBust: boolean
   playerStand: boolean
-  result: 'win' | 'lose' | 'tie' | null
+  result: 'blackjack' | 'win' | 'lose' | 'tie' | null
   playerMoney: number
+  message: string
 }

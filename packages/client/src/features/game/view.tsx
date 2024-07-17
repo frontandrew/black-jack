@@ -6,7 +6,7 @@
 
 import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../app/store'
+import { RootState } from '../../shared/store/store'
 import { Card } from './types'
 import { calcHand } from './utils'
 
@@ -71,14 +71,20 @@ const GameCanvas: React.FC = () => {
     const playerHandValue = calcHand(playerHand)
     const dealerHandValue = calcHand(dealerHand.filter(card => !card.hidden))
 
-    // Рисование значений очков
     ctx.fillStyle = 'black'
-    ctx.font = '20px Arial'
-    ctx.fillText('Player : ' + playerHandValue, 100, 270)
-    ctx.fillText('Dealer: ' + dealerHandValue, 100, 60)
+    ctx.font = '22px Arial'
+
+    // Рисование значений очков
+    if (game.status === 'playing' || game.result !== null) {
+      ctx.fillText('Player : ' + playerHandValue, 100, 270)
+      ctx.fillText('Dealer: ' + dealerHandValue, 100, 60)
+    }
+
+    if (game.message !== '' && game.result !== null) {
+      ctx.fillText(game.message, 225, 210)
+    }
 
     // Рисование денег игрока
-    ctx.font = '22px Arial'
     ctx.fillText('Money: $' + playerMoney, 215, 420)
   }
 

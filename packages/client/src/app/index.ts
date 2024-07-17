@@ -1,2 +1,2 @@
 export { App } from './view'
-export { store } from './store'
+export { store } from 'store'
