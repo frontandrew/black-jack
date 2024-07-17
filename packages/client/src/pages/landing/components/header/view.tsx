@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router'
 export const LandingHeader: FC = () => {
   const navigate = useNavigate()
   const { spacing, palette } = useTheme()
+  const isAuth = true
 
   const headerContent = () => {
     const location = useLocation()
@@ -12,17 +13,39 @@ export const LandingHeader: FC = () => {
     if (location.pathname === '/') {
       return (
         <>
-          <Typography variant="h4" flexGrow={1}>
+          <Typography variant="h4" flexGrow={1} fontWeight={800}>
             <Link href="/" sx={{ color: 'black', textDecoration: 'unset' }}>
-              ♠️ Black Jack ♥️
+              🃏 Black Jack
             </Link>
           </Typography>
+          <Button
+            variant={'outlined'}
+            color={'error'}
+            onClick={() => {
+              navigate('/start')
+            }}>
+            PLAY
+          </Button>
           <Button
             variant={'text'}
             onClick={() => {
               navigate('/forum')
             }}>
             FORUM
+          </Button>
+          <Button
+            variant={'text'}
+            onClick={() => {
+              navigate('/leaderboard')
+            }}>
+            LEADERS
+          </Button>
+          <Button
+            variant={'text'}
+            onClick={() => {
+              navigate('/settings')
+            }}>
+            PROFILE
           </Button>
         </>
       )
