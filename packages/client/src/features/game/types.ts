@@ -14,4 +14,5 @@ export interface GameState {
   playerStand: boolean
   result: 'win' | 'lose' | 'tie' | null
   playerMoney: number
+  message: string
 }

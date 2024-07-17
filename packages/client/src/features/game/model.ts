@@ -7,6 +7,7 @@
  * drawDealerCard - добавление карты дилеру (ход дилера)
  * playerStand - stand игрока (завершение хода игрока)
  * updatePlayerMoney - обновление баланса игрока
+ * resultGame - подведение итогов игры
  * resetGame - сброс раздачи (начать новую раздачу)
  * newGame - новая игра (обнуление GameState)
  *
@@ -31,6 +32,7 @@ const initialState: GameState = {
   playerStand: false,
   result: null,
   playerMoney: 100,
+  message: '',
 }
 
 const gameSlice = createSlice({
@@ -64,11 +66,8 @@ const gameSlice = createSlice({
         if (calcHand(state.playerHand) === 21) {
           gameSlice.caseReducers.playerStand(state)
         }
-        // Перебор у игрока
         if (calcHand(state.playerHand) > 21) {
-          state.playerBust = true
-          state.status = 'gameover'
-          state.result = 'lose'
+          gameSlice.caseReducers.resultGame(state)
         }
       }
     },
@@ -94,18 +93,7 @@ const gameSlice = createSlice({
           state.dealerHand.push(state.deck.pop() as Card)
         }
       }
-      // Определение результата игры
-      if (calcHand(state.dealerHand) > 21) {
-        state.dealerBust = true
-        state.result = 'win'
-      } else if (calcHand(state.dealerHand) > calcHand(state.playerHand)) {
-        state.result = 'lose'
-      } else if (calcHand(state.dealerHand) < calcHand(state.playerHand)) {
-        state.result = 'win'
-      } else {
-        state.result = 'tie'
-      }
-      state.status = 'gameover'
+      gameSlice.caseReducers.resultGame(state)
     },
     playerStand(state) {
       if (state.status === 'playing') {
@@ -117,6 +105,28 @@ const gameSlice = createSlice({
     updatePlayerMoney(state, action: PayloadAction<number>) {
       state.playerMoney += action.payload
     },
+    resultGame(state) {
+      // Определение результата игры
+      if (calcHand(state.dealerHand) > 21) {
+        state.dealerBust = true
+        state.result = 'win'
+        state.message = 'You win!'
+      } else if (calcHand(state.playerHand) > 21) {
+        state.playerBust = true
+        state.result = 'lose'
+        state.message = 'You lose!'
+      } else if (calcHand(state.dealerHand) > calcHand(state.playerHand)) {
+        state.result = 'lose'
+        state.message = 'You lose!'
+      } else if (calcHand(state.dealerHand) < calcHand(state.playerHand)) {
+        state.result = 'win'
+        state.message = 'You win!'
+      } else {
+        state.result = 'tie'
+        state.message = 'Tie!'
+      }
+      state.status = 'gameover'
+    },
     resetGame(state) {
       state.status = 'init'
     },
@@ -124,6 +134,7 @@ const gameSlice = createSlice({
       state.result = null
       state.status = 'init'
       state.playerMoney = initialState.playerMoney
+      state.message = ''
       state.deck = []
       state.playerHand = []
       state.dealerHand = []

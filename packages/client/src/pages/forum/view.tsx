@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../app/store'
+import { RootState } from '../../shared/store/store'
 import {
   Typography,
   List,
