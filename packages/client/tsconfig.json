@@ -18,6 +18,7 @@
     "sourceMap": true,
     "baseUrl": "./src",
     "paths": {
+      "apis": ["./shared/apis/index"],
       "consts": ["./shared/consts/index"],
       "images": ["./assets/imgs/index"],
       "sounds": ["./assets/sounds/index"],
