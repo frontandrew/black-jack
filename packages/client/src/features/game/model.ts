@@ -11,6 +11,7 @@
  * resetGame - сброс раздачи (начать новую раздачу)
  * newGame - новая игра (обнуление GameState)
  *
+ * ToDo сделать дилера умнее
  * ToDo добавить несколько игроков (или несколько одновременных ставок на поле)
  */
 
@@ -149,6 +150,7 @@ export const {
   drawDealerCard,
   playerStand,
   updatePlayerMoney,
+  resultGame,
   resetGame,
   newGame,
 } = gameSlice.actions
