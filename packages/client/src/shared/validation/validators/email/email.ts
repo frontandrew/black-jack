@@ -1,4 +1,4 @@
-export function email(value: string): string | undefined {
+export function email(value: string): string {
   const errors: string[] = []
 
   if (value === undefined) {

@@ -1,4 +1,4 @@
-export function password(value: string): string | undefined {
+export function password(value: string): string {
   const errors: string[] = []
 
   const MIN_LENGTH = 8
