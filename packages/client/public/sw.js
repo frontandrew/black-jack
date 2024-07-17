@@ -1,30 +1,34 @@
 const CACHE_NAME = 'black-jack-v1'
 
-const URLS = ['/', '/index.tsx']
+const URLS = [
+  '/',
+  '/sign-in',
+  '/sign-up',
+  'settings',
+  'start',
+  'game',
+  'finish',
+  'leaderboard',
+]
 
 self.addEventListener('install', event => {
-  event.waitUntil(
-    caches
-      .open(CACHE_NAME)
-      .then(cache => {
-        console.log('Opened cache')
-        return cache.addAll(URLS)
-      })
-      .catch(err => {
-        console.log(err)
-        throw err
-      })
-  )
+  const addCache = async () => {
+    const cache = await caches.open(CACHE_NAME)
+    return cache.addAll(URLS)
+  }
+  event.waitUntil(addCache())
 })
 
-self.addEventListener('activate', function (event) {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.filter(name => true).map(name => caches.delete(name))
-      )
-    })
-  )
+self.addEventListener('activate', async event => {
+  const deleteCache = async () => {
+    const cacheNames = await caches.keys()
+    return Promise.all(
+      cacheNames
+        .filter(cacheName => cacheName !== cacheNames)
+        .map(cache => caches.delete(cache))
+    )
+  }
+  event.waitUntil(deleteCache())
 })
 
 self.addEventListener('fetch', event => {
@@ -46,7 +50,10 @@ self.addEventListener('fetch', event => {
         caches.open(CACHE_NAME).then(cache => {
           cache.put(event.request, responseToCache)
         })
-        return response
+
+        return response.catch(error => {
+          console.log(error)
+        })
       })
     })
   )
