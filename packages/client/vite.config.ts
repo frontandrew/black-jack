@@ -23,6 +23,7 @@ export default defineConfig({
       components: path.resolve('src/shared/components/index'),
       theme: path.resolve('src/shared/theme/index'),
       utils: path.resolve('src/shared/utils/index'),
+      validators: path.resolve('src/shared/validation/index'),
     },
   },
 })

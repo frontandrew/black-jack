@@ -30,7 +30,7 @@ export const SettingsPage: FC = () => {
 
         <Divider orientation={'vertical'} flexItem />
 
-        <Grid item padding={spacing(4, 8)} minWidth={400}>
+        <Grid item padding={spacing(4, 8)}>
           <FormUser />
         </Grid>
       </Box>

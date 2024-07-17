@@ -5,8 +5,8 @@
  * handleNewBet запускает новую раздачу после завершения текущей
  */
 
-import React, { useEffect, useState } from 'react'
-import { RootState } from '../../app/store'
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import { RootState } from '../../shared/store/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -19,7 +19,7 @@ import {
 } from 'features/game/model'
 import CanvasGame from 'features/game/view'
 import { calcHand } from 'features/game/utils'
-import { Box, Button, Container, Typography } from '@mui/material'
+import { Button, TextField, Box } from '@mui/material'
 import { FullscreenButton } from 'features/fullscreen'
 import './style.css'
 
@@ -27,7 +27,9 @@ export const GamePage: React.FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const game = useSelector((state: RootState) => state.game)
-  const [showResult, setShowResult] = useState(false)
+  const minbet = 1
+  const maxbet = game.playerMoney
+  const [bet, setBet] = useState(minbet)
 
   useEffect(() => {
     dispatch(newGame())
@@ -36,13 +38,16 @@ export const GamePage: React.FC = () => {
   // Обработка состояние завершения раздачи
   useEffect(() => {
     if (game.status === 'gameover') {
-      setShowResult(true)
+      if (game.result == 'blackjack') {
+        dispatch(updatePlayerMoney(bet * 2.5)) // Blackjack pays 3:2
+      }
       if (game.result == 'win') {
-        dispatch(updatePlayerMoney(20))
+        dispatch(updatePlayerMoney(bet * 2)) // Normal win, 1:1 payout
       }
       if (game.result == 'tie') {
-        dispatch(updatePlayerMoney(10))
+        dispatch(updatePlayerMoney(bet)) // Tie, bet is returned
       }
+      if (bet > game.playerMoney) setBet(maxbet)
       dispatch(resetGame())
     }
   }, [game.status, game.result, game.playerMoney, dispatch, navigate])
@@ -63,69 +68,118 @@ export const GamePage: React.FC = () => {
 
   // Обработка новой ставки
   const handleBet = () => {
-    setShowResult(false)
     dispatch(resetGame())
     dispatch(startGame())
-    dispatch(updatePlayerMoney(-10))
+    dispatch(updatePlayerMoney(-bet))
+  }
+
+  const getInputBet = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const inputValue = e.target.value
+    if (inputValue === '') {
+      setBet(minbet)
+      return
+    }
+
+    let value = parseInt(inputValue, 10)
+    if (isNaN(value)) return
+
+    value = Math.max(minbet, Math.min(maxbet, value))
+    setBet(value)
   }
 
   return (
     <div className="game">
-      <div className="game__message">
-        {showResult && (
-          <div className="game-page__message">
-            <Typography variant="h5">
-              {game.result === 'win' && 'You win!'}
-              {game.result === 'lose' && 'You lose!'}
-              {game.result === 'tie' && 'Tie!'}
-            </Typography>
-          </div>
-        )}
-      </div>
-
       <CanvasGame />
-
       <div className="game__controls">
-        {game.playerMoney > 0 && game.status === 'init' && (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            my: 1,
+          }}>
+          <TextField
+            name="bet"
+            label="$"
+            size="small"
+            value={bet}
+            type="number"
+            onChange={e => getInputBet(e)}
+            inputProps={{ minbet, maxbet }}
+            sx={{ m: 1, maxWidth: '80px' }}
+            disabled={
+              (game.status !== 'init' && game.playerMoney >= 0) ||
+              (game.status !== 'gameover' && game.playerMoney <= 0)
+            }
+          />
           <Button
             variant="contained"
             onClick={handleBet}
             size="large"
-            sx={{ margin: 1 }}>
-            Bet 10$
+            sx={{ m: 1 }}
+            disabled={
+              (game.status !== 'init' && game.playerMoney >= 0) ||
+              (game.status !== 'gameover' && game.playerMoney <= 0)
+            }>
+            Bet
           </Button>
-        )}
-
-        {game.status === 'playing' && (
-          <>
-            <Button
-              variant="contained"
-              onClick={handleHit}
-              size="large"
-              sx={{ margin: 1 }}>
-              Hit
-            </Button>
-            <Button
-              variant="contained"
-              onClick={handleStand}
-              size="large"
-              sx={{ margin: 1 }}>
-              Stand
-            </Button>
-          </>
-        )}
-
-        {game.playerMoney <= 0 && game.status === 'init' && (
+          <Button
+            variant="contained"
+            onClick={handleHit}
+            size="large"
+            sx={{ m: 1 }}
+            disabled={game.status !== 'playing' && game.playerMoney >= 0}>
+            Hit
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleStand}
+            size="large"
+            sx={{ m: 1 }}
+            disabled={game.status !== 'playing' && game.playerMoney >= 0}>
+            Stand
+          </Button>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            my: 1,
+          }}>
           <Button
             variant="contained"
             onClick={() => navigate('/finish')}
             size="large"
-            sx={{ margin: 1 }}>
-            You don't have money to bet
+            sx={{ m: 1 }}
+            disabled={
+              (game.status !== 'init' && game.playerMoney >= 0) ||
+              (game.status !== 'gameover' && game.playerMoney <= 0)
+            }>
+            Take the money and leave
           </Button>
-        )}
+          <FullscreenButton />
+        </Box>
 
-        <FullscreenButton />
+        {game.playerMoney <= 0 && game.status === 'init' && (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              my: 1,
+            }}>
+            <Button
+              variant="contained"
+              onClick={() => navigate('/finish')}
+              size="large"
+              sx={{ m: 1 }}>
+              You have lost all the money. Goodbye
+            </Button>
+          </Box>
+        )}
       </div>
     </div>
   )

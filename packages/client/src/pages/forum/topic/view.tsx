@@ -1,13 +1,13 @@
 import { useState, FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../../app/store'
+import { RootState } from '../../../shared/store/store'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Box, TextField, Button, Typography, Container } from '@mui/material'
 import { addComment } from '../../../features/forum/model'
 import { LandingHeader } from '../../landing/components'
 
 export const TopicPage: FC = () => {
-  const [comment, setComment] = useState<string>('')
+  const [comment, setComment] = useState('')
   const { id } = useParams<{ id: string }>()
   const dispatch = useDispatch()
   const topic = useSelector((state: RootState) => {

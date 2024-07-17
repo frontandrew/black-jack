@@ -8,9 +8,6 @@ export const LandingHeader: FC = () => {
 
   const headerContent = () => {
     const location = useLocation()
-    const isForumPage = (path: string) => {
-      return /^\/forum\/\d+$/.test(path)
-    }
 
     if (location.pathname === '/') {
       return (
@@ -29,10 +26,7 @@ export const LandingHeader: FC = () => {
           </Button>
         </>
       )
-    } else if (
-      location.pathname === '/forum' ||
-      isForumPage(location.pathname)
-    ) {
+    } else if (location.pathname !== '/') {
       return (
         <>
           <Typography variant="h4" flexGrow={1}>

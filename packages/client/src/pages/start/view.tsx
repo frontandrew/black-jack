@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { Box, Button, Typography, ToggleButton } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import './style.css'
 
 export const StartPage: React.FC = () => {

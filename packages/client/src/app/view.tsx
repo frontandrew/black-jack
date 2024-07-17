@@ -1,11 +1,11 @@
-import { RouterProvider } from 'react-router-dom'
-import { ThemeProvider } from '@mui/material'
-import { theme } from 'theme'
-
-import './style.css'
 import { router } from './router'
 import { Provider } from 'react-redux'
-import { store } from './store'
+import { RouterProvider } from 'react-router-dom'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { store } from '../shared/store/store'
+import './style.css'
+
+const theme = createTheme()
 
 export function App() {
   return (
@@ -16,3 +16,23 @@ export function App() {
     </Provider>
   )
 }
+
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', async () => {
+//     try {
+//       await navigator.serviceWorker
+//         .register('/sw.js')
+//         .then(registration => {
+//           console.log(
+//             'ServiceWorker registration successful with scope: ',
+//             registration.scope
+//           )
+//         })
+//         .catch((error: string) => {
+//           console.log('ServiceWorker registration failed: ', error)
+//         })
+//     } catch (error) {
+//       console.log('ServiceWorker failed: ', error)
+//     }
+//   })
+// }
