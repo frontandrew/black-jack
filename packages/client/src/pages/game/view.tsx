@@ -5,7 +5,7 @@
  * handleNewBet запускает новую раздачу после завершения текущей
  */
 
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { RootState } from '../../shared/store/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -27,7 +27,9 @@ export const GamePage: React.FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const game = useSelector((state: RootState) => state.game)
-  const [bet, setBet] = useState<number>()
+  const minbet = 1
+  const maxbet = game.playerMoney
+  const [bet, setBet] = useState(minbet)
 
   useEffect(() => {
     dispatch(newGame())
@@ -36,11 +38,14 @@ export const GamePage: React.FC = () => {
   // Обработка состояние завершения раздачи
   useEffect(() => {
     if (game.status === 'gameover') {
+      if (game.result == 'blackjack') {
+        dispatch(updatePlayerMoney(bet * 2.5)) // Blackjack pays 3:2
+      }
       if (game.result == 'win') {
-        dispatch(updatePlayerMoney(20))
+        dispatch(updatePlayerMoney(bet * 2)) // Normal win, 1:1 payout
       }
       if (game.result == 'tie') {
-        dispatch(updatePlayerMoney(10))
+        dispatch(updatePlayerMoney(bet)) // Tie, bet is returned
       }
       dispatch(resetGame())
     }
@@ -64,26 +69,44 @@ export const GamePage: React.FC = () => {
   const handleBet = () => {
     dispatch(resetGame())
     dispatch(startGame())
-    dispatch(updatePlayerMoney(-10))
+    dispatch(updatePlayerMoney(-bet))
+  }
+
+  const getInputBet = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const inputValue = e.target.value
+    if (inputValue === '') {
+      setBet(minbet)
+      return
+    }
+
+    let value = parseInt(inputValue, 10)
+    if (isNaN(value)) return
+
+    value = Math.max(minbet, Math.min(maxbet, value))
+    setBet(value)
   }
 
   return (
     <div className="game">
       <CanvasGame />
-
       <div className="game__controls">
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            my: 2,
+            my: 1,
           }}>
           <TextField
             name="bet"
             label="$"
             size="small"
             value={bet}
+            type="number"
+            onChange={e => getInputBet(e)}
+            inputProps={{ minbet, maxbet }}
             sx={{ m: 1, maxWidth: '80px' }}
             disabled={
               (game.status !== 'init' && game.playerMoney >= 0) ||
@@ -101,7 +124,6 @@ export const GamePage: React.FC = () => {
             }>
             Bet
           </Button>
-
           <Button
             variant="contained"
             onClick={handleHit}
@@ -125,7 +147,7 @@ export const GamePage: React.FC = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            my: 2,
+            my: 1,
           }}>
           {game.playerMoney <= 0 && game.status === 'init' && (
             <Button
@@ -133,10 +155,9 @@ export const GamePage: React.FC = () => {
               onClick={() => navigate('/finish')}
               size="large"
               sx={{ m: 1 }}>
-              You don't have money to bet
+              You have no money. Goodbye
             </Button>
           )}
-
           <FullscreenButton />
         </Box>
       </div>

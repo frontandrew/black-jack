@@ -7,15 +7,12 @@
  * drawDealerCard - добавление карты дилеру (ход дилера)
  * playerStand - stand игрока (завершение хода игрока)
  * updatePlayerMoney - обновление баланса игрока
- * resultGame - подведение итогов игры
+ * resultGame - определение результата игры
  * resetGame - сброс раздачи (начать новую раздачу)
  * newGame - новая игра (обнуление GameState)
  *
- * ToDo реализовать механику ставки любого номинала (не только 10$)
- * ToDo сделать дилера умнее
  * ToDo добавить несколько игроков (или несколько одновременных ставок на поле)
  * ToDo возможность выхода со стола с выигрышем и сообщением с суммой выигрыша
- * ToDo добавить переменную для вывода сообщения в игре "win, lose, tie, blackjack и др."
  */
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
@@ -51,10 +48,8 @@ const gameSlice = createSlice({
       state.dealerHand.push({ ...(state.deck.pop() as Card), hidden: true })
       state.playerHand.push(state.deck.pop() as Card)
       state.dealerHand.push(state.deck.pop() as Card)
-      // Сразу после раздачи проверяем на blackjack
-      // Если у игрока сразу после раздачи набралось 21 очко, то такая ситуация называется блек-джек
-      // Игроку сразу выплачивается выигрыш 3 к 2 (ToDo)
-      // Ставка не выплачивает, если дилер тоже набрал 21
+      // Если у игрока сразу после раздачи набралось 21 очко, то это blackjack
+      // Игроку сразу выплачивается выигрыш 3 к 2. Ставка не выплачивает, если дилер тоже набрал 21
       if (calcHand(state.playerHand) === 21) {
         gameSlice.caseReducers.playerStand(state)
       }
@@ -106,11 +101,13 @@ const gameSlice = createSlice({
       state.playerMoney += action.payload
     },
     resultGame(state) {
-      // Определение результата игры
       if (calcHand(state.dealerHand) > 21) {
         state.dealerBust = true
         state.result = 'win'
-        state.message = 'You win!'
+        if (calcHand(state.playerHand) === 21) {
+          state.result = 'blackjack'
+          state.message = 'Black Jack! You win!'
+        } else state.message = 'You win!'
       } else if (calcHand(state.playerHand) > 21) {
         state.playerBust = true
         state.result = 'lose'
@@ -120,7 +117,10 @@ const gameSlice = createSlice({
         state.message = 'You lose!'
       } else if (calcHand(state.dealerHand) < calcHand(state.playerHand)) {
         state.result = 'win'
-        state.message = 'You win!'
+        if (calcHand(state.playerHand) === 21) {
+          state.result = 'blackjack'
+          state.message = 'Black Jack! You win!'
+        } else state.message = 'You win!'
       } else {
         state.result = 'tie'
         state.message = 'Tie!'
