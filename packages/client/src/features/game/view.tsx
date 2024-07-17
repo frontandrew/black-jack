@@ -71,14 +71,16 @@ const GameCanvas: React.FC = () => {
     const playerHandValue = calcHand(playerHand)
     const dealerHandValue = calcHand(dealerHand.filter(card => !card.hidden))
 
-    // Рисование значений очков
     ctx.fillStyle = 'black'
-    ctx.font = '20px Arial'
-    ctx.fillText('Player : ' + playerHandValue, 100, 270)
-    ctx.fillText('Dealer: ' + dealerHandValue, 100, 60)
+    ctx.font = '22px Arial'
+
+    // Рисование значений очков
+    if (game.status === 'playing') {
+      ctx.fillText('Player : ' + playerHandValue, 100, 270)
+      ctx.fillText('Dealer: ' + dealerHandValue, 100, 60)
+    }
 
     // Рисование денег игрока
-    ctx.font = '22px Arial'
     ctx.fillText('Money: $' + playerMoney, 215, 420)
   }
 

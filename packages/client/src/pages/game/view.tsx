@@ -19,7 +19,7 @@ import {
 } from 'features/game/model'
 import CanvasGame from 'features/game/view'
 import { calcHand } from 'features/game/utils'
-import { Box, Button, Container, Typography } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import { FullscreenButton } from 'features/fullscreen'
 import './style.css'
 

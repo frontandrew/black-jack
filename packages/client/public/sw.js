@@ -4,11 +4,11 @@ const URLS = [
   '/',
   '/sign-in',
   '/sign-up',
-  'settings',
-  'start',
-  'game',
-  'finish',
-  'leaderboard',
+  '/settings',
+  '/start',
+  '/game',
+  '/finish',
+  '/leaderboard',
 ]
 
 self.addEventListener('install', event => {
@@ -19,7 +19,7 @@ self.addEventListener('install', event => {
   event.waitUntil(addCache())
 })
 
-self.addEventListener('activate', async event => {
+self.addEventListener('activate', event => {
   const deleteCache = async () => {
     const cacheNames = await caches.keys()
     return Promise.all(
@@ -31,34 +31,30 @@ self.addEventListener('activate', async event => {
   event.waitUntil(deleteCache())
 })
 
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      if (response) response
+self.addEventListener('fetch', async event => {
+  if (event.request.method !== 'GET') return;
 
-      const fetchRequest = event.request.clone()
+  caches.match(event.request).then(response => {
+    if (response) response
 
-      return fetch(fetchRequest)
-        .then(response => {
-          if (
-            !response ||
-            response.status !== 200 ||
-            response.type !== 'basic'
-          ) {
-            return response
-          }
+    const fetchRequest = event.request.clone()
 
-          const responseToCache = response.clone()
-
-          caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, responseToCache)
-          })
-
+    return fetch(fetchRequest)
+      .then(response => {
+        if (!response || response.status !== 200 || response.type !== 'basic') {
           return response
+        }
+
+        const responseToCache = response.clone()
+
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, responseToCache)
         })
-        .catch(error => {
-          console.log(error)
-        })
-    })
-  )
+
+        return response
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  })
 })
