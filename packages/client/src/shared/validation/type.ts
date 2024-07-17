@@ -1,1 +1,1 @@
-export type Validators = Record<string, (value: string) => string>
+export type Validators = Record<string, (value: string) => string[]>

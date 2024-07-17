@@ -1,8 +1,7 @@
 import { useTheme, Button, Grid, Divider } from '@mui/material'
 import { useForm } from 'react-final-form-hooks'
 
-import { useState } from 'react'
-import type { FC } from 'react'
+import React, { useState } from 'react'
 
 import { FieldText } from 'components'
 import type { FormUserType } from './type'
@@ -28,7 +27,7 @@ const config = {
   initialValues: user,
 }
 
-export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
+export const FormUser: React.FC<FormUserType> = ({ submit, reset }) => {
   const { spacing } = useTheme()
   const [isEditMode, setEditMode] = useState(false)
 
@@ -37,8 +36,9 @@ export const FormUser: FC<FormUserType> = ({ submit, reset }) => {
 
   return (
     <Grid
-      width={'100%'}
+      width={'400px'}
       component={'form'}
+      className="custom-text-error"
       onSubmit={event => {
         handleSubmit(event)
         if (submit) submit()

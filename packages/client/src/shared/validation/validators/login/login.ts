@@ -1,32 +1,36 @@
-export function login(value: string): string {
+export function login(value: string): string | string[] {
   const errors: string[] = []
 
   const MIN_LENGTH = 3
   const MAX_LENGTH = 20
 
-  if (value === undefined) {
+  if (value === undefined || value === null) {
     return ''
   }
 
-  if (value.length < MIN_LENGTH) {
-    errors.push(` Minimum length is ${MIN_LENGTH} characters.`)
+  if (value?.length < MIN_LENGTH) {
+    errors.push(`Minimum length is ${MIN_LENGTH} characters`)
   }
 
-  if (value.length > MAX_LENGTH) {
-    errors.push(` Maximum length is ${MAX_LENGTH} characters.`)
+  if (value?.length > MAX_LENGTH) {
+    errors.push(`Maximum length is ${MAX_LENGTH} characters`)
   }
 
   if (!/^[a-zA-Z0-9_-]+$/.test(value)) {
-    errors.push('Cant contain spetial simbols.')
+    errors.push("Can't contain spetial simbols")
   }
 
   if (/^[0-9]+$/.test(value)) {
-    errors.push('Cant contain only numbers.')
+    errors.push("Can't contain only numbers")
   }
 
   if (/\s/.test(value)) {
-    errors.push('Cant contain spases.')
+    errors.push("Can't contain spases")
   }
 
-  return errors[0]
+  if (errors.length === 0) {
+    return ''
+  }
+
+  return errors
 }

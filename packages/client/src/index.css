@@ -4,3 +4,11 @@
 
     overflow: hidden;
 }
+
+.custom-text-error p.Mui-error {
+    width: 100%;
+    position: absolute;
+    right: -405px;
+    top: 0;
+    margin: 0;
+}

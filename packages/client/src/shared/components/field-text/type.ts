@@ -5,5 +5,5 @@ export type FieldTextProps = {
   form: FormApi
   name: string
   label?: string
-  validator?: (value: string) => string
+  validator?: (value: string) => string[]
 } & TextFieldProps

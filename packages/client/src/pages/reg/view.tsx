@@ -1,10 +1,10 @@
-import { Box, Button, Grid, Paper, Typography, useTheme } from '@mui/material'
-import './style.css'
+import React from 'react'
 import { useNavigate } from 'react-router'
-import { FC } from 'react'
-import { FieldText } from 'components'
+import { Box, Button, Grid, Paper, Typography, useTheme } from '@mui/material'
 import { useForm } from 'react-final-form-hooks'
+import { FieldText } from 'components'
 import { validators } from 'validators'
+import './style.css'
 
 type LoginType = object
 
@@ -15,7 +15,7 @@ const config = {
   },
 }
 
-export const RegPage: FC = () => {
+export const RegPage: React.FC = () => {
   const { spacing } = useTheme()
   const navigate = useNavigate()
 
@@ -26,15 +26,14 @@ export const RegPage: FC = () => {
     <Box className="login-page">
       <Paper elevation={3} square={false}>
         <Grid
-          direction="column"
-          display="flex"
-          gap="0.5em"
-          padding={spacing(2, 9)}
+          padding={spacing(4, 4)}
           component={'form'}
+          className="custom-text-error"
+          width={'400px'}
           onSubmit={event => {
             handleSubmit(event)
           }}>
-          <Typography variant="h3" align="center">
+          <Typography variant="h5" align="center" paddingBottom={3}>
             Register
           </Typography>
 
@@ -80,6 +79,7 @@ export const RegPage: FC = () => {
             label="Password"
             size="small"
             validator={validators.password}
+            type="password"
             required
           />
 
@@ -95,11 +95,14 @@ export const RegPage: FC = () => {
           <Button
             type="submit"
             variant="contained"
+            fullWidth
             disabled={hasValidationErrors}>
             SIGN UP
           </Button>
           <Button
             variant="text"
+            sx={{ marginTop: 2 }}
+            fullWidth
             onClick={() => {
               navigate('/sign-in')
             }}>

@@ -1,11 +1,10 @@
-import { Box, Button, Grid, Paper, Typography, useTheme } from '@mui/material'
+import React from 'react'
 import { useNavigate } from 'react-router'
-import { FC } from 'react'
-
-import './style.css'
-import { FieldText } from 'components'
+import { Box, Button, Grid, Paper, Typography, useTheme } from '@mui/material'
 import { useForm } from 'react-final-form-hooks'
+import { FieldText } from 'components'
 import { validators } from 'validators'
+import './style.css'
 
 type LoginType = object
 
@@ -16,11 +15,12 @@ const config = {
   },
 }
 
-export const LoginPage: FC = () => {
+export const LoginPage: React.FC = () => {
   const { spacing } = useTheme()
   const navigate = useNavigate()
 
   const { form, handleSubmit } = useForm(config)
+
   const { hasValidationErrors } = form.getState()
 
   return (
@@ -31,12 +31,14 @@ export const LoginPage: FC = () => {
           direction="column"
           display="flex"
           gap="2em"
-          padding={spacing(2, 6)}
+          padding={spacing(4, 4)}
           component={'form'}
+          className="custom-text-error"
+          width={'400px'}
           onSubmit={event => {
             handleSubmit(event)
           }}>
-          <Typography variant="h3" align="center" margin={spacing(2)}>
+          <Typography variant="h5" align="center" paddingBottom={3}>
             Login
           </Typography>
 
@@ -45,6 +47,7 @@ export const LoginPage: FC = () => {
             name="login"
             label="Login"
             validator={validators.login}
+            size="small"
             required
           />
 
@@ -53,6 +56,8 @@ export const LoginPage: FC = () => {
             name="password"
             label="Password"
             validator={validators.password}
+            size="small"
+            type="password"
             required
           />
 
