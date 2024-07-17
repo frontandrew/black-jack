@@ -2,20 +2,24 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { UserAPI } from 'apis'
 import type { UserType } from './type'
 import { formatUserResponse } from './tools'
+import { store } from '../../../app'
 
 const initialState: UserType | null = null
 const http = new UserAPI()
 
 export const getUser = createAsyncThunk('user/getUser', async function () {
   const response = await http.getUserData()
-
+  console.warn(`USER RESP:`, response)
   return response
 })
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    // me: (state, action) => {
+    // }
+  },
   extraReducers: builder => {
     builder
       .addCase(getUser.fulfilled, (state, { payload }) => {
@@ -33,4 +37,4 @@ export const userSlice = createSlice({
   },
 })
 
-// userSlice.actions
+// userSlice.actions.
