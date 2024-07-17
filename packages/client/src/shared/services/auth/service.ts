@@ -1,20 +1,26 @@
 import { AuthApi, AuthPayload } from 'apis'
+import { authSlice, checkAuth } from './model'
+import { useDispatch } from 'react-redux'
 // import { router } from 'routing'
 // import { store } from 'store'
 
 class AuthService {
-  private api = new AuthApi()
+  // private api = new AuthApi()
 
   public async singIn(data: AuthPayload): Promise<void> {
-    const isAuth = await this.api
-      .login(data)
-      .then(response => response === 'OK')
-      .catch(() => false)
+    const { reducer, actions } = authSlice
+    const dispatch = useDispatch()
 
-    /**
-     * TODO: set global store auth state
-     * TODO: pull user request
-     */
+    const user = checkAuth()
+
+    // if (user.)
+
+    // const isAuth = await this.api
+    //   .login(data)
+    //   .then(response => response === 'OK')
+    //   .catch(() => false)
+    // const { signIn } = actions
+    // actions
   }
 
   public signOut() {

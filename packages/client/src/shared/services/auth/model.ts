@@ -30,10 +30,12 @@ export const authSlice = createSlice({
     },
   },
 
-  /** НЕ МОГУ ПОНЯТЬ ПОЧЕМУ STATE И ACTION <any> */
-  extraReducers: {
-    [checkAuth.pending]: (state, action) => {
-      const res = state.isAuth
-    },
-  },
+  // extraReducers: {
+  //   [checkAuth.fulfilled]: (state, action) => {
+  //     const res = state.isAuth
+
+  //   },
+  // },
 })
+
+const { signIn, signOut } = authSlice.actions
