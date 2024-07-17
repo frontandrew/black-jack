@@ -23,7 +23,7 @@ export const LandingGameFlow: FC = () => {
   const CustomTLC: FC = () => <TimelineConnector style={{ height: 70 }} />
 
   return (
-    <Grid container justifyContent={'center'}>
+    <Grid container justifyContent={'center'} margin={5}>
       <LandingSpacer pr={spacing(40)}>
         <Timeline>
           <TimelineItem>

@@ -15,7 +15,7 @@ export const LandingFooter: FC = () => {
       item
       component={'footer'}
       width={'100%'}
-      padding={spacing(4, 2)}
+      padding={spacing(2, 5)}
       borderTop={1}
       borderColor={palette.divider}
       bgcolor={backgroundColor}
