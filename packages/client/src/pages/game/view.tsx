@@ -19,7 +19,8 @@ import {
 } from 'features/game/model'
 import CanvasGame from 'features/game/view'
 import { calcHand } from 'features/game/utils'
-import { Button, Typography } from '@mui/material'
+import { Box, Button, Container, Typography } from '@mui/material'
+import { FullscreenButton } from 'features/fullscreen'
 import './style.css'
 
 export const GamePage: React.FC = () => {
@@ -123,6 +124,8 @@ export const GamePage: React.FC = () => {
             You don't have money to bet
           </Button>
         )}
+
+        <FullscreenButton />
       </div>
     </div>
   )
