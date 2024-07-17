@@ -25,6 +25,7 @@ export default defineConfig({
       components: path.resolve('src/shared/components/index'),
       theme: path.resolve('src/shared/theme/index'),
       transport: path.resolve('src/shared/transport/index'),
+      services: path.resolve('src/shared/services/index'),
       utils: path.resolve('src/shared/utils/index'),
     },
   },

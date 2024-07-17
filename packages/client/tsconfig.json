@@ -27,6 +27,7 @@
       "components": ["./shared/components/index"],
       "theme": ["./shared/theme/index"],
       "transport": ["./shared/transport/index"],
+      "services": ["./shared/services/index"],
       "utils": ["./shared/utils/index"]
     }
   },
