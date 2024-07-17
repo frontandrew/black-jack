@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "webworker"],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": false,
@@ -27,6 +27,6 @@
       "utils": ["./shared/utils/index"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "public/sw.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
