@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { queryStringify } from './tools'
 import { HTTPMethod, HTTPRequest, METHODS } from './type'
 
@@ -58,19 +57,7 @@ export class HTTPTransport {
       }
       return response.json()
     })
-    //   .catch((error) => {
-    //     throw new Error(`HTTP Request Error: ${error.reasone}`)
-    //   // return this.handleResponse<R>(response)
-    // }
   }
-
-  // private handleResponse = async <R>(response: Response): Promise<R> => {
-  //   if (!response.ok) {
-  //     const errorMessage = await response.text()
-  //     throw new Error(`Error ${response.status}: ${errorMessage}`)
-  //   }
-  //   return response.json() as Promise<R>
-  // }
 }
 
 // Example usage:
