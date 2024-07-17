@@ -21,3 +21,9 @@ export interface PassUserType {
   passNew: string
   passNewMore: string
 }
+
+export interface UserState {
+  user: UserType | null
+  isLoading: boolean
+  errors: unknown[]
+}

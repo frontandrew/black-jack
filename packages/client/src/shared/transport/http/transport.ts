@@ -28,13 +28,13 @@ export class HTTPTransport {
     payload = null,
     headers = {}
   ) => {
-    const isJSONPayload = headers['Content-Type'].includes('application/json')
+    const isJSONPayload = headers['Content-Type'] === 'application/json'
     const isGetRequest = method === METHODS.GET
 
     let url = `${this.host}/${path}`
     const payloadAsBody = isJSONPayload ? JSON.stringify(payload) : payload
 
-    if (!isJSONPayload && isGetRequest && payload) {
+    if (isGetRequest && payload) {
       const params = queryStringify(payload)
       url = `${url}?${params}`
     }
