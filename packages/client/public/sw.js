@@ -1,20 +1,11 @@
 const CACHE_NAME = 'black-jack-v1'
 
-const URLS = [
-  '/',
-  '/sign-in',
-  '/sign-up',
-  'settings',
-  'start',
-  'game',
-  'finish',
-  'leaderboard',
-]
+const HTML_PATH = ['index.html']
 
 self.addEventListener('install', event => {
   const addCache = async () => {
     const cache = await caches.open(CACHE_NAME)
-    return cache.addAll(URLS)
+    return cache.addAll(HTML_PATH)
   }
   event.waitUntil(addCache())
 })
@@ -24,7 +15,7 @@ self.addEventListener('activate', async event => {
     const cacheNames = await caches.keys()
     return Promise.all(
       cacheNames
-        .filter(cacheName => cacheName !== cacheNames)
+        .filter(cacheName => cacheName !== CACHE_NAME)
         .map(cache => caches.delete(cache))
     )
   }
