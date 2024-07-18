@@ -14,11 +14,11 @@
 
 [Документация](./docs/README.md) [LiveDemo](https://blackjack-cheaters.netlify.app/)
 
-![Blackjack](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Blackjack.svg/512px-Blackjack.svg.png)
+![Black Jack](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Blackjack.svg/512px-Blackjack.svg.png)
 
 ## Возможности
 
-- Реализация базовых правил игры Blackjack.
+- Реализация базовых правил игры Black Jack.
 - Использование Redux для управления состоянием игры.
 - Отрисовка игрового процесса с использованием `<canvas>`.
 - Возможность делать ставки и управлять балансом игрока.
