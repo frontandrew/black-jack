@@ -1,23 +1,18 @@
+import React from 'react'
 import {
   Button,
   Dialog,
   DialogActions,
-  DialogContent,
   DialogTitle,
   Grid,
-  Typography,
+  useTheme,
 } from '@mui/material'
 import { FieldText } from 'components'
-import React from 'react'
 import { useForm } from 'react-final-form-hooks'
 import { validators } from 'validators'
+import { PropsChange } from './type'
 
 type Password = object
-
-type PropsChange = {
-  isOpen: boolean
-  handle: () => void
-}
 
 const config = {
   validateOnBlur: true,
@@ -26,36 +21,61 @@ const config = {
   },
 }
 
-export const Changes: React.FC = props => {
+export const Changes: React.FC<PropsChange> = props => {
   const { isOpen, handle, rest } = props
   const { type, title, lable, button } = rest
 
   const { form, handleSubmit } = useForm(config)
   const { hasValidationErrors } = form.getState()
+  const { spacing } = useTheme()
 
   return (
-    <Dialog open={isOpen} onClose={handle}>
+    <Dialog
+      open={isOpen}
+      onClose={handle}
+      PaperProps={{
+        component: 'form',
+        onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+          if (type === 'file') {
+            event.preventDefault()
+            console.log('file')
+          } else {
+            handleSubmit(event)
+          }
+        },
+      }}>
       <Grid
         container
         flexDirection={'column'}
         alignItems={'center'}
-        padding={2}>
-        <DialogTitle>
-          <Typography variant={'h4'}>{title}</Typography>
-        </DialogTitle>
-        <DialogContent>
+        padding={spacing(3, 4)}>
+        <DialogTitle>{title}</DialogTitle>
+        {type === 'file' ? (
           <FieldText
             form={form}
             name={type}
             label={lable}
             type={type}
-            // helperText={type === 'file' ? 'upload only a JPEG or PNG' : ''}
+            helperText={'Upload only JPEG or PNG images'}
+            required
+          />
+        ) : (
+          <FieldText
+            form={form}
+            name={type}
+            label={lable}
+            type={type}
             validator={validators.password}
             required
           />
-        </DialogContent>
+        )}
         <DialogActions sx={{ justifyContent: 'center' }}>
-          <Button variant={'contained'}>{button}</Button>
+          <Button
+            type={'submit'}
+            variant={'contained'}
+            disabled={hasValidationErrors}>
+            {button}
+          </Button>
         </DialogActions>
       </Grid>
     </Dialog>
