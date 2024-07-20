@@ -24,7 +24,7 @@ export const SettingsPage: FC = () => {
         boxSizing={'border-box'}
         flexDirection={contentDirection}
         padding={spacing(4)}>
-        <Grid item padding={spacing(4, 8)} minWidth={400}>
+        <Grid item padding={spacing(4, 2)} minWidth={400}>
           <CardUser />
         </Grid>
 

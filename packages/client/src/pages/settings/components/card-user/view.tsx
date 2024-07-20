@@ -7,14 +7,46 @@ import {
   useTheme,
 } from '@mui/material'
 
-import type { FC } from 'react'
+import { useState, type FC } from 'react'
 import { SomeAvatar } from 'images'
+import { Changes } from './components/changes'
 
 export const CardUser: FC = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [state, setState] = useState({
+    type: '',
+    title: '',
+    lable: '',
+    button: '',
+  })
   const { palette, spacing } = useTheme()
   const isLandscape = useMediaQuery('(min-width:900px)')
 
   const actionsAlign = isLandscape ? 'center' : 'flex-end'
+
+  const handleModal = () => {
+    setIsOpen(!isOpen)
+  }
+
+  const handleModalAvatar = () => {
+    setState(() => ({
+      type: 'file',
+      title: 'Change Avatar',
+      lable: '',
+      button: 'upload',
+    }))
+    handleModal()
+  }
+
+  const handleModalPassword = () => {
+    setState(() => ({
+      type: 'password',
+      title: 'Change Password',
+      lable: 'Password',
+      button: 'change',
+    }))
+    handleModal()
+  }
 
   return (
     <Grid
@@ -25,6 +57,7 @@ export const CardUser: FC = () => {
       flexDirection={'column'}
       alignItems={'center'}
       gap={spacing(6)}>
+      <Changes isOpen={isOpen} handle={handleModal} rest={state} />
       <Avatar src={SomeAvatar} sx={{ width: 200, height: 200 }} />
       <Grid container flexDirection={'column'} alignItems={'center'}>
         <Typography variant={'h4'} fontWeight={800}>
@@ -68,7 +101,12 @@ export const CardUser: FC = () => {
         width={'max-content'}
         alignSelf={actionsAlign}
         gap={spacing(2)}>
-        <Button variant={'outlined'}>change avatar</Button>
+        <Button variant={'outlined'} onClick={handleModalAvatar}>
+          change avatar
+        </Button>
+        <Button variant={'outlined'} onClick={handleModalPassword}>
+          change password
+        </Button>
         <Button variant={'contained'} color={'error'}>
           sign out
         </Button>
