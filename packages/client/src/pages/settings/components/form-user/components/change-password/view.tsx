@@ -21,10 +21,8 @@ const config = {
   },
 }
 
-export const Changes: React.FC<PropsChange> = props => {
-  const { isOpen, handle, rest } = props
-  const { type, title, lable, button } = rest
-
+export const ChangePasswordModal: React.FC<PropsChange> = props => {
+  const { isOpen, handle } = props
   const { form, handleSubmit } = useForm(config)
   const { hasValidationErrors } = form.getState()
   const { spacing } = useTheme()
@@ -36,45 +34,30 @@ export const Changes: React.FC<PropsChange> = props => {
       PaperProps={{
         component: 'form',
         onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-          if (type === 'file') {
-            event.preventDefault()
-            console.log('file')
-          } else {
-            handleSubmit(event)
-          }
+          handleSubmit(event)
         },
       }}>
       <Grid
         container
         flexDirection={'column'}
         alignItems={'center'}
-        padding={spacing(3, 4)}>
-        <DialogTitle>{title}</DialogTitle>
-        {type === 'file' ? (
-          <FieldText
-            form={form}
-            name={type}
-            label={lable}
-            type={type}
-            helperText={'Upload only JPEG or PNG images'}
-            required
-          />
-        ) : (
-          <FieldText
-            form={form}
-            name={type}
-            label={lable}
-            type={type}
-            validator={validators.password}
-            required
-          />
-        )}
+        padding={spacing(3, 5)}
+        gap={4}>
+        <DialogTitle>Change Password</DialogTitle>
+        <FieldText
+          form={form}
+          name={'password'}
+          label={'Password'}
+          type={'password'}
+          validator={validators.password}
+          required
+        />
         <DialogActions sx={{ justifyContent: 'center' }}>
           <Button
             type={'submit'}
             variant={'contained'}
             disabled={hasValidationErrors}>
-            {button}
+            change
           </Button>
         </DialogActions>
       </Grid>

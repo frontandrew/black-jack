@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import { FieldText } from 'components'
 import type { FormUserType } from './type'
 import { validators } from 'validators'
+import { ChangePasswordModal } from './components'
 
 /* TODO: need to use UserType */
 type UserType = object
@@ -30,9 +31,14 @@ const config = {
 export const FormUser: React.FC<FormUserType> = ({ submit, reset }) => {
   const { spacing } = useTheme()
   const [isEditMode, setEditMode] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
   const { form, handleSubmit } = useForm(config)
   const { hasValidationErrors } = form.getState()
+
+  const handleModal = () => {
+    setIsOpen(!isOpen)
+  }
 
   return (
     <Grid
@@ -43,6 +49,7 @@ export const FormUser: React.FC<FormUserType> = ({ submit, reset }) => {
         handleSubmit(event)
         if (submit) submit()
       }}>
+      <ChangePasswordModal isOpen={isOpen} handle={handleModal} />
       <Grid container width={'100%'} height={'min-content'} gap={spacing(2)}>
         <FieldText
           form={form}
@@ -99,6 +106,9 @@ export const FormUser: React.FC<FormUserType> = ({ submit, reset }) => {
         justifyContent={'flex-end'}
         gap={spacing(2)}
         pt={spacing(3)}>
+        <Button variant={'outlined'} onClick={handleModal}>
+          change password
+        </Button>
         {isEditMode ? (
           <>
             <Button
