@@ -372,11 +372,11 @@ const GameCanvas: React.FC = () => {
     ctx.clearRect(0, 0, 800, 600)
 
     playerHand.forEach((card, index) => {
-      drawCard(ctx, card, 100 + index * 60, 285)
+      drawCard(ctx, card, 100 + index * 70, 285)
     })
 
     dealerHand.forEach((card, index) => {
-      drawCard(ctx, card, 100 + index * 60, 75)
+      drawCard(ctx, card, 100 + index * 70, 75)
     })
 
     // Вычисление значений рук
