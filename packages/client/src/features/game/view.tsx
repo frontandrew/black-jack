@@ -8,9 +8,12 @@ import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../shared/store/store'
 import { Card } from './types'
-import { calcHand, makeCard } from './utils'
-import { backRed } from 'images'
-import { CardHand } from './CardHand'
+import { calcHand, drawCard } from './utils'
+import { DrawSprite } from './DrawSprite'
+import { backRed, tableGreen } from 'images'
+
+const deck = new DrawSprite(backRed, 450, 150)
+const table = new DrawSprite(tableGreen, -225, -100)
 
 const GameCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -22,40 +25,55 @@ const GameCanvas: React.FC = () => {
     if (canvas) {
       const ctx = canvas.getContext('2d')
       if (ctx) {
-        drawGame(ctx, game.playerHand, game.dealerHand, game.playerMoney)
+        // массивы для обьектов класса, с методом draw
+        const playerCards: DrawSprite[] = []
+        const dealerCards: DrawSprite[] = []
+
+        game.playerHand.forEach((card, index) => {
+          playerCards.push(drawCard(ctx, card, 100 + index * 70, 285)) //  закидуем в массив игрока созданый обьект карта
+        })
+
+        game.dealerHand.forEach((card, index) => {
+          dealerCards.push(drawCard(ctx, card, 100 + index * 70, 75)) //  закидуем в массив дилера созданый обьект карта
+        })
+
+        const animation = () => {
+          drawGame(
+            ctx,
+            playerCards,
+            dealerCards,
+            game.playerHand,
+            game.dealerHand,
+            game.playerMoney
+          )
+
+          window.requestAnimationFrame(animation)
+        }
+
+        animation()
       }
     }
   }, [game.playerHand, game.dealerHand, game.playerMoney])
 
-  // Функция рисования карты
-  const drawCard = (
-    ctx: CanvasRenderingContext2D,
-    card: Card,
-    x: number,
-    y: number
-  ) => {
-    if (card.hidden) {
-      const cardHand = new CardHand(backRed, x, y)
-      cardHand.draw(ctx)
-    } else {
-      makeCard(ctx, card, x, y)
-    }
-  }
-
   const drawGame = (
     ctx: CanvasRenderingContext2D,
+    playerCards: DrawSprite[],
+    dealerCards: DrawSprite[],
     playerHand: Card[],
     dealerHand: Card[],
     playerMoney: number
   ) => {
     ctx.clearRect(0, 0, 800, 600)
+    table.drawTable(ctx, 1300, 850)
+    deck.draw(ctx)
 
-    playerHand.forEach((card, index) => {
-      drawCard(ctx, card, 100 + index * 70, 285)
+    // проходимся по массивам карт(обьектов класса) игрока, и дилера, запускаем метод draw, для отрисовки
+    playerCards.forEach(card => {
+      card.draw(ctx)
     })
 
-    dealerHand.forEach((card, index) => {
-      drawCard(ctx, card, 100 + index * 70, 75)
+    dealerCards.forEach(card => {
+      card.draw(ctx)
     })
 
     // Вычисление значений рук
@@ -79,7 +97,7 @@ const GameCanvas: React.FC = () => {
     ctx.fillText('Money: $' + playerMoney, 215, 420)
   }
 
-  return <canvas ref={canvasRef} width={550} height={450} />
+  return <canvas ref={canvasRef} width={850} height={650} />
 }
 
 export default GameCanvas

@@ -1,6 +1,8 @@
 export { default as LandBack } from './land-back.png'
 export { default as SomeAvatar } from './magick.jpg'
 
+export { default as tableGreen } from './table/table_green.jpg'
+
 export { default as backRed } from './cards/back_red_basic.png'
 
 export { default as twoClubs } from './cards/2_clubs.png'
