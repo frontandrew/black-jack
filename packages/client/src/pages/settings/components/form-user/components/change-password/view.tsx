@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
+  Alert,
   Button,
   Dialog,
   DialogActions,
@@ -12,20 +13,50 @@ import { useForm } from 'react-final-form-hooks'
 import { validators } from 'validators'
 import { PropsChange } from './type'
 
-type Password = object
+type Password = Record<string, string>
 
-const config = {
-  validateOnBlur: true,
-  onSubmit: (formValues: Password) => {
-    console.table(formValues)
-  },
-}
-
-export const ChangePasswordModal: React.FC<PropsChange> = props => {
-  const { isOpen, handle } = props
-  const { form, handleSubmit } = useForm(config)
-  const { hasValidationErrors } = form.getState()
+export const ChangePasswordModal: React.FC<PropsChange> = ({
+  isOpen,
+  handle,
+}) => {
   const { spacing } = useTheme()
+  const [errorText, setErrorText] = useState('change password')
+  const [error, setError] = useState(false)
+
+  const formConfig = {
+    validateOnBlur: true,
+    onSubmit: (formValues: Password) => {
+      if (formValues.currentPassword === formValues.password) {
+        setError(true)
+        setErrorText('Do not repeat')
+      }
+
+      if (
+        formValues.password !== formValues.confirmPassword ||
+        formValues.confirmPassword !== formValues.password
+      ) {
+        console.log('work')
+        setError(true)
+        setErrorText('Repeat the new password')
+      }
+
+      if (
+        formValues.currentPassword !== formValues.password &&
+        formValues.password === formValues.confirmPassword &&
+        formValues.confirmPassword === formValues.password
+      ) {
+        setError(false)
+        setErrorText('Done')
+      }
+    },
+  }
+
+  const { form, handleSubmit } = useForm(formConfig)
+  const { hasValidationErrors } = form.getState()
+
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    handleSubmit(event)
+  }
 
   return (
     <Dialog
@@ -33,25 +64,48 @@ export const ChangePasswordModal: React.FC<PropsChange> = props => {
       onClose={handle}
       PaperProps={{
         component: 'form',
-        onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-          handleSubmit(event)
-        },
+        onSubmit: onSubmit,
       }}>
       <Grid
         container
         flexDirection={'column'}
         alignItems={'center'}
-        padding={spacing(3, 5)}
-        gap={4}>
+        padding={spacing(2, 8)}
+        gap={4.5}>
         <DialogTitle>Change Password</DialogTitle>
         <FieldText
           form={form}
-          name={'password'}
-          label={'Password'}
+          name={'currentPassword'}
+          label={'Current password'}
           type={'password'}
           validator={validators.password}
+          size="small"
           required
         />
+        <FieldText
+          form={form}
+          name={'password'}
+          label={'New password'}
+          type={'password'}
+          validator={validators.password}
+          size="small"
+          required
+        />
+        <FieldText
+          form={form}
+          name={'confirmPassword'}
+          label={'Confirm new password'}
+          type={'password'}
+          validator={validators.password}
+          size="small"
+          required
+        />
+        <Alert
+          icon={false}
+          variant="outlined"
+          severity={error ? 'error' : 'info'}>
+          {errorText}
+        </Alert>
         <DialogActions sx={{ justifyContent: 'center' }}>
           <Button
             type={'submit'}

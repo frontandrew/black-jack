@@ -10,10 +10,15 @@ import {
 } from '@mui/material'
 import { PropsChange } from './type'
 
-export const ChangeAvatarModal: React.FC<PropsChange> = props => {
-  const { isOpen, handle } = props
-
+export const ChangeAvatarModal: React.FC<PropsChange> = ({
+  isOpen,
+  handle,
+}) => {
   const { spacing } = useTheme()
+
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+  }
 
   return (
     <Dialog
@@ -21,10 +26,7 @@ export const ChangeAvatarModal: React.FC<PropsChange> = props => {
       onClose={handle}
       PaperProps={{
         component: 'form',
-        onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-          event.preventDefault()
-          console.log('file')
-        },
+        onSubmit: onSubmit,
       }}>
       <Grid
         container
