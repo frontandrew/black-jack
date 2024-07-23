@@ -14,5 +14,7 @@ export interface GameState {
   playerStand: boolean
   result: 'blackjack' | 'win' | 'lose' | 'tie' | null
   playerMoney: number
+  playerBet: number
+  isPlayerBlackjack: boolean
   message: string
 }

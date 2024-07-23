@@ -13,7 +13,6 @@ import {
   drawPlayerCard,
   playerStand,
   startGame,
-  updatePlayerMoney,
   resetGame,
   newGame,
 } from 'features/game/model'
@@ -27,9 +26,8 @@ export const GamePage: React.FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const game = useSelector((state: RootState) => state.game)
-  const minbet = 1
+  const [bet, setBet] = useState(1)
   const maxbet = game.playerMoney
-  const [bet, setBet] = useState(minbet)
 
   useEffect(() => {
     dispatch(newGame())
@@ -37,56 +35,41 @@ export const GamePage: React.FC = () => {
 
   // Обработка состояние завершения раздачи
   useEffect(() => {
+    if (bet > game.playerMoney) {
+      setBet(maxbet)
+    }
     if (game.status === 'gameover') {
-      if (game.result == 'blackjack') {
-        dispatch(updatePlayerMoney(bet * 2.5)) // Blackjack pays 3:2
-      }
-      if (game.result == 'win') {
-        dispatch(updatePlayerMoney(bet * 2)) // Normal win, 1:1 payout
-      }
-      if (game.result == 'tie') {
-        dispatch(updatePlayerMoney(bet)) // Tie, bet is returned
-      }
-      if (bet > game.playerMoney) setBet(maxbet)
       dispatch(resetGame())
     }
-  }, [game.status, game.result, game.playerMoney, dispatch, navigate])
+  }, [game.status, dispatch, navigate])
 
-  // Обработка действия "Hit" игрока
-  const handleHit = () => {
+  const onHit = () => {
     if (game.status === 'playing' && calcHand(game.playerHand) < 21) {
       dispatch(drawPlayerCard())
     }
   }
 
-  // Обработка действие "Stand" игрока
-  const handleStand = () => {
+  const onStand = () => {
     if (game.status === 'playing') {
       dispatch(playerStand())
     }
   }
 
-  // Обработка новой ставки
-  const handleBet = () => {
-    dispatch(resetGame())
-    dispatch(startGame())
-    dispatch(updatePlayerMoney(-bet))
+  const onBet = () => {
+    dispatch(startGame(bet))
   }
 
   const getInputBet = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const inputValue = e.target.value
-    if (inputValue === '') {
-      setBet(minbet)
-      return
-    }
+    let betValue = parseInt(inputValue, 10)
 
-    let value = parseInt(inputValue, 10)
-    if (isNaN(value)) return
+    if (isNaN(betValue)) return
+    if (inputValue === '') setBet(betValue)
 
-    value = Math.max(minbet, Math.min(maxbet, value))
-    setBet(value)
+    betValue = Math.max(1, Math.min(maxbet, betValue))
+    setBet(betValue)
   }
 
   return (
@@ -107,7 +90,7 @@ export const GamePage: React.FC = () => {
             value={bet}
             type="number"
             onChange={e => getInputBet(e)}
-            inputProps={{ minbet, maxbet }}
+            inputProps={{ maxbet }}
             sx={{ m: 1, maxWidth: '80px' }}
             disabled={
               (game.status !== 'init' && game.playerMoney >= 0) ||
@@ -116,7 +99,7 @@ export const GamePage: React.FC = () => {
           />
           <Button
             variant="contained"
-            onClick={handleBet}
+            onClick={onBet}
             size="large"
             sx={{ m: 1 }}
             disabled={
@@ -127,7 +110,7 @@ export const GamePage: React.FC = () => {
           </Button>
           <Button
             variant="contained"
-            onClick={handleHit}
+            onClick={onHit}
             size="large"
             sx={{ m: 1 }}
             disabled={game.status !== 'playing' && game.playerMoney >= 0}>
@@ -135,7 +118,7 @@ export const GamePage: React.FC = () => {
           </Button>
           <Button
             variant="contained"
-            onClick={handleStand}
+            onClick={onStand}
             size="large"
             sx={{ m: 1 }}
             disabled={game.status !== 'playing' && game.playerMoney >= 0}>
