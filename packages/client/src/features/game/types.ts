@@ -4,6 +4,11 @@ export interface Card {
   hidden?: boolean
 }
 
+export interface skinCard {
+  face: string
+  back: string
+}
+
 export interface GameState {
   playerHand: Card[]
   dealerHand: Card[]
@@ -15,4 +20,5 @@ export interface GameState {
   result: 'blackjack' | 'win' | 'lose' | 'tie' | null
   playerMoney: number
   message: string
+  skinCard: skinCard
 }

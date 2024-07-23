@@ -30,6 +30,10 @@ const initialState: GameState = {
   result: null,
   playerMoney: 100,
   message: '',
+  skinCard: {
+    face: 'brown',
+    back: 'red',
+  },
 }
 
 const gameSlice = createSlice({
@@ -140,6 +144,9 @@ const gameSlice = createSlice({
       state.dealerHand = []
       state.deck = shuffle(createDeck())
     },
+    skinCards(state) {
+      console.log(state)
+    },
   },
 })
 
@@ -153,6 +160,7 @@ export const {
   resultGame,
   resetGame,
   newGame,
+  skinCards,
 } = gameSlice.actions
 
 export default gameSlice.reducer
