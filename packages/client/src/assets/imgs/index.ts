@@ -1,9 +1,12 @@
 export { default as LandBack } from './land-back.png'
 export { default as SomeAvatar } from './magick.jpg'
 
-export { default as tableGreen } from './table/table_green.jpg'
+export { default as Background } from './backgrond.jpg'
+export { default as tableGreen } from './table/table_green.png'
 
 export { default as backRed } from './cards/back_red_basic.png'
+export { default as backBlack } from './cards/back_black_basic.png'
+export { default as backBlue } from './cards/back_blue_basic_white.png'
 
 export { default as twoClubs } from './cards/2_clubs.png'
 export { default as twoDiamonds } from './cards/2_diamonds.png'
@@ -69,3 +72,5 @@ export { default as queenClubs } from './cards/queen_clubs.png'
 export { default as queenDiamonds } from './cards/queen_diamonds.png'
 export { default as queenHearts } from './cards/queen_hearts.png'
 export { default as queenSpades } from './cards/queen_spades.png'
+
+export { default as twoClubsWhite } from './cards/2_clubs_white.png'

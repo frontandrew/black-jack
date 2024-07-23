@@ -12,12 +12,12 @@ import { calcHand, drawCard } from './utils'
 import { DrawSprite } from './DrawSprite'
 import { backRed, tableGreen } from 'images'
 
-const deck = new DrawSprite(backRed, 450, 150)
-const table = new DrawSprite(tableGreen, -225, -100)
-
 const GameCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const game = useSelector((state: RootState) => state.game)
+
+  const deck = new DrawSprite(backRed, 800, 250)
+  const table = new DrawSprite(tableGreen, -225, -100)
 
   // Перерисовывание игры (canvas) при каждом изменении состояния игры
   useEffect(() => {
@@ -25,27 +25,8 @@ const GameCanvas: React.FC = () => {
     if (canvas) {
       const ctx = canvas.getContext('2d')
       if (ctx) {
-        // массивы для обьектов класса, с методом draw
-        const playerCards: DrawSprite[] = []
-        const dealerCards: DrawSprite[] = []
-
-        game.playerHand.forEach((card, index) => {
-          playerCards.push(drawCard(ctx, card, 100 + index * 70, 285)) //  закидуем в массив игрока созданый обьект карта
-        })
-
-        game.dealerHand.forEach((card, index) => {
-          dealerCards.push(drawCard(ctx, card, 100 + index * 70, 75)) //  закидуем в массив дилера созданый обьект карта
-        })
-
         const animation = () => {
-          drawGame(
-            ctx,
-            playerCards,
-            dealerCards,
-            game.playerHand,
-            game.dealerHand,
-            game.playerMoney
-          )
+          drawGame(ctx, game.playerHand, game.dealerHand, game.playerMoney)
 
           window.requestAnimationFrame(animation)
         }
@@ -57,23 +38,20 @@ const GameCanvas: React.FC = () => {
 
   const drawGame = (
     ctx: CanvasRenderingContext2D,
-    playerCards: DrawSprite[],
-    dealerCards: DrawSprite[],
     playerHand: Card[],
     dealerHand: Card[],
     playerMoney: number
   ) => {
     ctx.clearRect(0, 0, 800, 600)
-    table.drawTable(ctx, 1300, 850)
+    table.drawTable(ctx, 1600, 950)
     deck.draw(ctx)
 
-    // проходимся по массивам карт(обьектов класса) игрока, и дилера, запускаем метод draw, для отрисовки
-    playerCards.forEach(card => {
-      card.draw(ctx)
+    playerHand.forEach((card, index) => {
+      drawCard(card, 300 + index * 70, 430).draw(ctx)
     })
 
-    dealerCards.forEach(card => {
-      card.draw(ctx)
+    dealerHand.forEach((card, index) => {
+      drawCard(card, 300 + index * 70, 235).draw(ctx)
     })
 
     // Вычисление значений рук
@@ -85,19 +63,19 @@ const GameCanvas: React.FC = () => {
 
     // Рисование значений очков
     if (game.status === 'playing' || game.result !== null) {
-      ctx.fillText('Player : ' + playerHandValue, 100, 270)
-      ctx.fillText('Dealer: ' + dealerHandValue, 100, 60)
+      ctx.fillText('Player : ' + playerHandValue, 300, 420)
+      ctx.fillText('Dealer: ' + dealerHandValue, 300, 225)
     }
 
     if (game.message !== '' && game.result !== null) {
-      ctx.fillText(game.message, 225, 210)
+      ctx.fillText(game.message, 500, 380)
     }
 
     // Рисование денег игрока
-    ctx.fillText('Money: $' + playerMoney, 215, 420)
+    ctx.fillText('Money: $' + playerMoney, 500, 550)
   }
 
-  return <canvas ref={canvasRef} width={850} height={650} />
+  return <canvas ref={canvasRef} width={1100} height={650} />
 }
 
 export default GameCanvas
