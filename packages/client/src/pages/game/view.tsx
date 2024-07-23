@@ -81,88 +81,72 @@ export const GamePage: React.FC = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            flexDirection: 'column',
             my: 1,
           }}>
-          <TextField
-            name="bet"
-            label="$"
-            size="small"
-            value={bet}
-            type="number"
-            onChange={e => getInputBet(e)}
-            inputProps={{ maxbet }}
-            sx={{ m: 1, maxWidth: '80px' }}
-            disabled={
-              (game.status !== 'init' && game.playerMoney >= 0) ||
-              (game.status !== 'gameover' && game.playerMoney <= 0)
-            }
-          />
-          <Button
-            variant="contained"
-            onClick={onBet}
-            size="large"
-            sx={{ m: 1 }}
-            disabled={
-              (game.status !== 'init' && game.playerMoney >= 0) ||
-              (game.status !== 'gameover' && game.playerMoney <= 0)
-            }>
-            Bet
-          </Button>
-          <Button
-            variant="contained"
-            onClick={onHit}
-            size="large"
-            sx={{ m: 1 }}
-            disabled={game.status !== 'playing' && game.playerMoney >= 0}>
-            Hit
-          </Button>
-          <Button
-            variant="contained"
-            onClick={onStand}
-            size="large"
-            sx={{ m: 1 }}
-            disabled={game.status !== 'playing' && game.playerMoney >= 0}>
-            Stand
-          </Button>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            my: 1,
-          }}>
-          <Button
-            variant="contained"
-            onClick={() => navigate('/finish')}
-            size="large"
-            sx={{ m: 1 }}
-            disabled={
-              (game.status !== 'init' && game.playerMoney >= 0) ||
-              (game.status !== 'gameover' && game.playerMoney <= 0)
-            }>
-            Take the money and leave
-          </Button>
-          <FullscreenButton />
-        </Box>
+          {game.status === 'init' && game.playerMoney > 0 && (
+            <Box>
+              <TextField
+                name="bet"
+                label="$"
+                size="small"
+                value={bet}
+                type="number"
+                onChange={e => getInputBet(e)}
+                inputProps={{ maxbet }}
+                sx={{ m: 1, maxWidth: '80px' }}
+              />
+              <Button
+                variant="contained"
+                onClick={onBet}
+                size="large"
+                sx={{ m: 1 }}>
+                Bet
+              </Button>
+            </Box>
+          )}
 
-        {game.playerMoney <= 0 && game.status === 'init' && (
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              my: 1,
-            }}>
-            <Button
-              variant="contained"
-              onClick={() => navigate('/finish')}
-              size="large"
-              sx={{ m: 1 }}>
-              You have lost all the money. Goodbye
-            </Button>
+          {game.status === 'playing' && (
+            <Box>
+              <Button
+                variant="contained"
+                onClick={onHit}
+                size="large"
+                sx={{ m: 1 }}>
+                Hit
+              </Button>
+              <Button
+                variant="contained"
+                onClick={onStand}
+                size="large"
+                sx={{ m: 1 }}>
+                Stand
+              </Button>
+            </Box>
+          )}
+
+          <Box sx={{ mt: 3 }}>
+            {game.status === 'init' && game.playerMoney > 0 && (
+              <Button
+                variant="contained"
+                onClick={() => navigate('/finish')}
+                size="large"
+                sx={{ m: 1 }}>
+                Leave table
+              </Button>
+            )}
+            {game.status === 'init' && game.playerMoney <= 0 && (
+              <Button
+                variant="contained"
+                onClick={() => navigate('/finish')}
+                size="large"
+                sx={{ m: 1 }}>
+                You have no money. Goodbye
+              </Button>
+            )}
+            <FullscreenButton />
           </Box>
-        )}
+        </Box>
       </div>
     </div>
   )
