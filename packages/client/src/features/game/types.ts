@@ -1,18 +1,18 @@
-export interface Card {
+export interface ICard {
   suit: string
   value: string
   hidden?: boolean
 }
 
-export interface skinCard {
-  face: string
+interface ICardCover {
+  front: string
   back: string
 }
 
-export interface GameState {
-  playerHand: Card[]
-  dealerHand: Card[]
-  deck: Card[]
+export interface IGameState {
+  playerHand: ICard[]
+  dealerHand: ICard[]
+  deck: ICard[]
   status: 'init' | 'playing' | 'gameover'
   playerBust: boolean
   dealerBust: boolean
@@ -22,5 +22,5 @@ export interface GameState {
   playerBet: number
   isPlayerBlackjack: boolean
   message: string
-  skinCard: skinCard
+  cardCover: ICardCover
 }
