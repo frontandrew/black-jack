@@ -31,7 +31,7 @@ const initialState: GameState = {
   playerStand: false,
   result: null,
   playerMoney: 100,
-  playerBet: 1,
+  playerBet: 10,
   isPlayerBlackjack: false,
   message: '',
 }

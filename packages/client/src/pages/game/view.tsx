@@ -26,7 +26,7 @@ export const GamePage: React.FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const game = useSelector((state: RootState) => state.game)
-  const [bet, setBet] = useState(1)
+  const [bet, setBet] = useState(game.playerBet)
   const maxbet = game.playerMoney
 
   useEffect(() => {
@@ -94,13 +94,13 @@ export const GamePage: React.FC = () => {
                 type="number"
                 onChange={e => getInputBet(e)}
                 inputProps={{ maxbet }}
-                sx={{ m: 1, maxWidth: '80px' }}
+                sx={{ m: 1, maxWidth: '105px' }}
               />
               <Button
                 variant="contained"
                 onClick={onBet}
                 size="large"
-                sx={{ m: 1 }}>
+                sx={{ m: 1, minWidth: '105px' }}>
                 Bet
               </Button>
             </Box>
@@ -112,20 +112,20 @@ export const GamePage: React.FC = () => {
                 variant="contained"
                 onClick={onHit}
                 size="large"
-                sx={{ m: 1 }}>
+                sx={{ m: 1, minWidth: '105px' }}>
                 Hit
               </Button>
               <Button
                 variant="contained"
                 onClick={onStand}
                 size="large"
-                sx={{ m: 1 }}>
+                sx={{ m: 1, minWidth: '105px' }}>
                 Stand
               </Button>
             </Box>
           )}
 
-          <Box sx={{ mt: 3 }}>
+          <Box sx={{ mt: 2 }}>
             {game.status === 'init' && game.playerMoney > 0 && (
               <Button
                 variant="contained"
