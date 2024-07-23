@@ -313,8 +313,6 @@ export function drawCard(card: Card, x: number, y: number): DrawSprite {
         return new DrawSprite(sprites.kingClubs, x, y)
       }
       break
-
-    default:
-      return new DrawSprite(sprites.backBlue, x, y)
   }
+  return new DrawSprite(sprites.backBlue, x, y)
 }
