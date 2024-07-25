@@ -7,7 +7,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../shared/store/store'
-import { Card } from './types'
+import { ICard } from './types'
 import { calcHand, drawCard } from './utils'
 import { DrawSprite } from './DrawSprite'
 import { backRed, tableGreen } from 'images'
@@ -38,8 +38,8 @@ const GameCanvas: React.FC = () => {
 
   const drawGame = (
     ctx: CanvasRenderingContext2D,
-    playerHand: Card[],
-    dealerHand: Card[],
+    playerHand: ICard[],
+    dealerHand: ICard[],
     playerMoney: number
   ) => {
     ctx.clearRect(0, 0, 800, 600)

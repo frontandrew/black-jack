@@ -1,5 +1,5 @@
 import { DrawSprite } from './DrawSprite'
-import { Card } from './types'
+import { ICard } from './types'
 import * as sprites from 'images'
 
 const cardSuits: string[] = ['♥️', '♦️', '♠️', '♣️']
@@ -22,8 +22,8 @@ const cardValues: string[] = [
 /**
  * Создание колоды карт
  */
-export function createDeck(): Card[] {
-  const deck: Card[] = []
+export function createDeck(): ICard[] {
+  const deck: ICard[] = []
 
   // для каждой игры замешиваем 6 колод
   for (let i = 0; i < 6; i++) {
@@ -42,7 +42,7 @@ export function createDeck(): Card[] {
  * для эффективного перемешивания элементов массива
  * @param {Card[]} deck - массив карт для перемешивания
  */
-export function shuffle(deck: Card[]): Card[] {
+export function shuffle(deck: ICard[]): ICard[] {
   for (let i = deck.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
     ;[deck[i], deck[j]] = [deck[j], deck[i]]
@@ -52,9 +52,9 @@ export function shuffle(deck: Card[]): Card[] {
 
 /**
  * Подсчет очков в руке
- * @param {Card[]} hand - массив карт текущей руки
+ * @param {ICard[]} hand - массив карт текущей руки
  */
-export function calcHand(hand: Card[]): number {
+export function calcHand(hand: ICard[]): number {
   let value = 0
   let aceCount = 0
 
@@ -114,7 +114,7 @@ export function calcHand(hand: Card[]): number {
 //   return new DrawSprite(sprite, x, y)
 // }
 
-export function drawCard(card: Card, x: number, y: number): DrawSprite {
+export function drawCard(card: ICard, x: number, y: number): DrawSprite {
   if (card.hidden) {
     return new DrawSprite(sprites.backRed, x, y)
   }
