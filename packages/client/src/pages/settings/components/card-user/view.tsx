@@ -7,11 +7,11 @@ import {
   useTheme,
 } from '@mui/material'
 
-import { useState, type FC } from 'react'
+import React, { useState } from 'react'
 import { SomeAvatar } from 'images'
 import { ChangeAvatarModal } from './components'
 
-export const CardUser: FC = () => {
+export const CardUser: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { palette, spacing } = useTheme()
   const isLandscape = useMediaQuery('(min-width:900px)')

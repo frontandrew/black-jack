@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import {
   Alert,
   Button,
@@ -11,44 +11,49 @@ import {
 import { FieldText } from 'components'
 import { useForm } from 'react-final-form-hooks'
 import { validators } from 'validators'
-import { PropsChange } from './type'
-
-type Password = Record<string, string>
+import { PropsChange, CheckRepeatPassword, Password } from './type'
 
 export const ChangePasswordModal: React.FC<PropsChange> = ({
   isOpen,
   handle,
 }) => {
   const { spacing } = useTheme()
-  const [errorText, setErrorText] = useState('change password')
-  const [error, setError] = useState(false)
+  const [error, setError] = useState({
+    text: 'Change password',
+    error: false,
+  })
+  const checkRepeatPassword: CheckRepeatPassword = useCallback(values => {
+    if (values.currentPassword === values.password) {
+      return {
+        text: 'Do not repeat',
+        error: true,
+      }
+    }
+
+    if (values.password !== values.confirmPassword) {
+      return {
+        text: 'Repeat the new password',
+        error: true,
+      }
+    }
+
+    return {
+      text: 'Done',
+      error: false,
+    }
+  }, [])
+
+  const checkForm = useCallback(
+    (formValues: Password) => {
+      const result = checkRepeatPassword(formValues)
+      setError(result)
+    },
+    [checkRepeatPassword]
+  )
 
   const formConfig = {
     validateOnBlur: true,
-    onSubmit: (formValues: Password) => {
-      if (formValues.currentPassword === formValues.password) {
-        setError(true)
-        setErrorText('Do not repeat')
-      }
-
-      if (
-        formValues.password !== formValues.confirmPassword ||
-        formValues.confirmPassword !== formValues.password
-      ) {
-        console.log('work')
-        setError(true)
-        setErrorText('Repeat the new password')
-      }
-
-      if (
-        formValues.currentPassword !== formValues.password &&
-        formValues.password === formValues.confirmPassword &&
-        formValues.confirmPassword === formValues.password
-      ) {
-        setError(false)
-        setErrorText('Done')
-      }
-    },
+    onSubmit: checkForm,
   }
 
   const { form, handleSubmit } = useForm(formConfig)
@@ -73,38 +78,29 @@ export const ChangePasswordModal: React.FC<PropsChange> = ({
         padding={spacing(2, 8)}
         gap={4.5}>
         <DialogTitle>Change Password</DialogTitle>
-        <FieldText
-          form={form}
-          name={'currentPassword'}
-          label={'Current password'}
-          type={'password'}
-          validator={validators.password}
-          size="small"
-          required
-        />
-        <FieldText
-          form={form}
-          name={'password'}
-          label={'New password'}
-          type={'password'}
-          validator={validators.password}
-          size="small"
-          required
-        />
-        <FieldText
-          form={form}
-          name={'confirmPassword'}
-          label={'Confirm new password'}
-          type={'password'}
-          validator={validators.password}
-          size="small"
-          required
-        />
+        {['currentPassword', 'password', 'confirmPassword'].map(name => (
+          <FieldText
+            key={name}
+            form={form}
+            name={name as string}
+            label={
+              name === 'currentPassword'
+                ? 'Current password'
+                : name === 'password'
+                ? 'New password'
+                : 'Confirm new password'
+            }
+            type="password"
+            validator={validators.password}
+            size="small"
+            required
+          />
+        ))}
         <Alert
           icon={false}
           variant="outlined"
-          severity={error ? 'error' : 'info'}>
-          {errorText}
+          severity={error.error ? 'error' : 'info'}>
+          {error.text}
         </Alert>
         <DialogActions sx={{ justifyContent: 'center' }}>
           <Button
