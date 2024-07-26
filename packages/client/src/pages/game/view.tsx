@@ -89,12 +89,14 @@ export const GamePage: React.FC = () => {
               <TextField
                 name="bet"
                 label="$"
+                color="success"
                 size="small"
                 value={bet}
                 type="number"
                 onChange={e => getInputBet(e)}
                 inputProps={{ maxbet }}
                 sx={{ m: 1, maxWidth: '105px' }}
+                focused
               />
               <Button
                 variant="contained"

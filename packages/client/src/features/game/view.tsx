@@ -7,17 +7,28 @@
 import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../shared/store/store'
-import { ICard } from './types'
+import { ICard, ICardCover } from './types'
 import { calcHand, drawCard } from './utils'
 import { DrawSprite } from './DrawSprite'
-import { backRed, tableGreen } from 'images'
+import { backBlack, backBlue, backRed, tableBlue, tableGreen } from 'images'
 
 const GameCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const game = useSelector((state: RootState) => state.game)
-
-  const deck = new DrawSprite(backRed, 800, 250)
-  const table = new DrawSprite(tableGreen, -225, -100)
+  const deck = new DrawSprite(
+    game.cardCover.back === 'red'
+      ? backRed
+      : game.cardCover.back === 'black'
+      ? backBlack
+      : backBlue,
+    800,
+    250
+  )
+  const table = new DrawSprite(
+    game.tableSkin === 'green' ? tableGreen : tableBlue,
+    -225,
+    -100
+  )
 
   // Перерисовывание игры (canvas) при каждом изменении состояния игры
   useEffect(() => {
@@ -26,7 +37,13 @@ const GameCanvas: React.FC = () => {
       const ctx = canvas.getContext('2d')
       if (ctx) {
         const animation = () => {
-          drawGame(ctx, game.playerHand, game.dealerHand, game.playerMoney)
+          drawGame(
+            ctx,
+            game.playerHand,
+            game.dealerHand,
+            game.playerMoney,
+            game.cardCover
+          )
 
           window.requestAnimationFrame(animation)
         }
@@ -40,25 +57,26 @@ const GameCanvas: React.FC = () => {
     ctx: CanvasRenderingContext2D,
     playerHand: ICard[],
     dealerHand: ICard[],
-    playerMoney: number
+    playerMoney: number,
+    cardCover: ICardCover
   ) => {
     ctx.clearRect(0, 0, 800, 600)
     table.drawTable(ctx, 1600, 950)
     deck.draw(ctx)
 
     playerHand.forEach((card, index) => {
-      drawCard(card, 300 + index * 70, 430).draw(ctx)
+      drawCard(card, 300 + index * 70, 430, cardCover).draw(ctx)
     })
 
     dealerHand.forEach((card, index) => {
-      drawCard(card, 300 + index * 70, 235).draw(ctx)
+      drawCard(card, 300 + index * 70, 235, cardCover).draw(ctx)
     })
 
     // Вычисление значений рук
     const playerHandValue = calcHand(playerHand)
     const dealerHandValue = calcHand(dealerHand.filter(card => !card.hidden))
 
-    ctx.fillStyle = 'black'
+    ctx.fillStyle = 'white'
     ctx.font = '22px Arial'
 
     // Рисование значений очков
