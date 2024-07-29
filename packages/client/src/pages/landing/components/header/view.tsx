@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router'
 export const LandingHeader: FC = () => {
   const navigate = useNavigate()
   const { spacing, palette } = useTheme()
+  const isAuth = true
 
   const headerContent = () => {
     const location = useLocation()
@@ -14,15 +15,37 @@ export const LandingHeader: FC = () => {
         <>
           <Typography variant="h4" flexGrow={1}>
             <Link href="/" sx={{ color: 'black', textDecoration: 'unset' }}>
-              ♠️ Black Jack ♥️
+              🃏 <b>Black Jack</b>
             </Link>
           </Typography>
+          <Button
+            variant={'outlined'}
+            color={'error'}
+            onClick={() => {
+              navigate('/start')
+            }}>
+            PLAY
+          </Button>
           <Button
             variant={'text'}
             onClick={() => {
               navigate('/forum')
             }}>
             FORUM
+          </Button>
+          <Button
+            variant={'text'}
+            onClick={() => {
+              navigate('/leaderboard')
+            }}>
+            LEADERS
+          </Button>
+          <Button
+            variant={'text'}
+            onClick={() => {
+              navigate('/settings')
+            }}>
+            PROFILE
           </Button>
         </>
       )
@@ -33,7 +56,7 @@ export const LandingHeader: FC = () => {
             <Link
               href="/forum"
               sx={{ color: 'black', textDecoration: 'unset' }}>
-              ♦️ Black Jack Forum ♣️
+              🃏 <b>Black Jack</b> / Forum
             </Link>
           </Typography>
           <Button

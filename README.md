@@ -1,4 +1,4 @@
-# 🎲 Blackjack Game 🃏
+# 🃏 Blackjack [Game](https://blackjack-cheaters.netlify.app/) 🎲
 
 ![React](https://img.shields.io/badge/React-18.3.1-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-4.8.2-blue)
@@ -9,13 +9,16 @@
 
 Добро пожаловать в игру Blackjack на JavaScript с использованием React и TypeScript! Игра позволяет сыграть против дилера, используя базовые правила Blackjack.
 
-[Документация](./docs/README.md)
+## Демонcтрация:
+![msedge_ViURtHeheB](https://github.com/user-attachments/assets/8d9f703d-2962-48e5-a51d-917e87ba1ce2)
 
-![Blackjack](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Blackjack.svg/512px-Blackjack.svg.png)
+[Документация](./docs/README.md) [LiveDemo](https://blackjack-cheaters.netlify.app/)
+
+![Black Jack](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Blackjack.svg/512px-Blackjack.svg.png)
 
 ## Возможности
 
-- Реализация базовых правил игры Blackjack.
+- Реализация базовых правил игры Black Jack.
 - Использование Redux для управления состоянием игры.
 - Отрисовка игрового процесса с использованием `<canvas>`.
 - Возможность делать ставки и управлять балансом игрока.
