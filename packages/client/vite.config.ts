@@ -16,12 +16,17 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
+      apis: path.resolve('src/shared/apis/index'),
       images: path.resolve(__dirname, 'src/assets/imgs/index'),
       sounds: path.resolve('src/assets/sounds/index'),
       features: path.resolve('src/features/'),
       pages: path.resolve('src/pages/index'),
+      consts: path.resolve('src/shared/consts/index'),
       components: path.resolve('src/shared/components/index'),
+      store: path.resolve('src/shared/store/index'),
       theme: path.resolve('src/shared/theme/index'),
+      transport: path.resolve('src/shared/transport/index'),
+      services: path.resolve('src/shared/services/index'),
       utils: path.resolve('src/shared/utils/index'),
       validators: path.resolve('src/shared/validation/index'),
     },

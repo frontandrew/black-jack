@@ -1,6 +1,6 @@
 import { useState, FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../../shared/store/store'
+import { RootState } from 'store'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Box, TextField, Button, Typography, Container } from '@mui/material'
 import { addComment } from '../../../features/forum/model'

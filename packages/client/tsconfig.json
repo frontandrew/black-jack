@@ -18,15 +18,19 @@
     "sourceMap": true,
     "baseUrl": "./src",
     "paths": {
+      "apis": ["./shared/apis/index"],
+      "consts": ["./shared/consts/index"],
       "images": ["./assets/imgs/index"],
       "sounds": ["./assets/sounds/index"],
       "features": ["./features/*"],
       "pages": ["./pages/index"],
       "components": ["./shared/components/index"],
+      "store": ["./shared/store/index"],
       "theme": ["./shared/theme/index"],
+      "transport": ["./shared/transport/index"],
+      "services": ["./shared/services/index"],
       "utils": ["./shared/utils/index"],
       "validators": ["./shared/validation/index"]
-
     }
   },
   "include": ["src", "public/sw.ts"],

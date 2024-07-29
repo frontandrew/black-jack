@@ -11,6 +11,7 @@ export default {
       "<rootDir>/file.parser.cjs",
   },
   moduleNameMapper: {
+    '^apis': '<rootDir>/src/shared/apis',
     '^images': '<rootDir>/src/assets/imgs',
     '^sounds': '<rootDir>/src/assets/sounds',
     '^features/(.*)': [
@@ -20,7 +21,11 @@ export default {
     ],
     '^pages': '<rootDir>/src/pages',
     '^components': '<rootDir>/src/shared/components',
+    '^consts': '<rootDir>/src/shared/consts',
+    '^store': '<rootDir>/src/shared/store',
     '^theme': '<rootDir>/src/shared/theme',
+    '^transport': '<rootDir>/src/shared/transport',
+    '^services': '<rootDir>/src/shared/services',
     '^utils': '<rootDir>/src/shared/utils',
     '^validators': '<rootDir>/src/shared/validation'
   },

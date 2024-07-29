@@ -1,19 +1,23 @@
-import { router } from './router'
-import { Provider } from 'react-redux'
+import { useEffect } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
-import { store } from '../shared/store/store'
+
+import { userServ } from 'services'
+
+import { router } from './router'
 import './style.css'
 
 const theme = createTheme()
 
 export function App() {
+  useEffect(() => {
+    userServ.getUser()
+  }, [])
+
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   )
 }
 
