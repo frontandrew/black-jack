@@ -61,9 +61,10 @@ export const LandingBanner: FC = () => {
               <Button
                 fullWidth
                 size={'large'}
+                color={'error'}
                 variant={'contained'}
                 onClick={() => {
-                  navigate('/sign-up')
+                  navigate('/start')
                 }}>
                 <Typography variant="h6" noWrap>
                   PUSH TO WIN
