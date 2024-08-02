@@ -1,9 +1,10 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
 import CssBaseline from '@mui/material/CssBaseline'
+import { hydrateRoot } from 'react-dom/client'
 import { App } from './app'
 
-ReactDOM.createRoot(document.querySelector('main') as HTMLElement).render(
+hydrateRoot(
+  document.querySelector('main') as HTMLElement,
   <React.StrictMode>
     <CssBaseline />
     <App />
