@@ -4,7 +4,7 @@
  * drawCard рисует карту в руке игрока и дилера (в том числе закрытую отдельным цветом)
  */
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../shared/store/store'
 import { ICard, ICardCover } from './types'
@@ -15,14 +15,29 @@ import { backBlack, backBlue, backRed, tableBlue, tableGreen } from 'images'
 const GameCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const game = useSelector((state: RootState) => state.game)
+  const [step, setStep] = useState({
+    player: 0,
+    dealer: 0,
+  })
+  const [sumDeck, setSumDeck] = useState(26)
+
   const deck = new DrawSprite(
     game.cardCover.back === 'red'
       ? backRed
       : game.cardCover.back === 'black'
       ? backBlack
       : backBlue,
-    800,
-    250
+    730,
+    300
+  )
+  let cardPlayer = new DrawSprite(
+    game.cardCover.back === 'red'
+      ? backRed
+      : game.cardCover.back === 'black'
+      ? backBlack
+      : backBlue,
+    750,
+    300
   )
   const table = new DrawSprite(
     game.tableSkin === 'green' ? tableGreen : tableBlue,
@@ -53,6 +68,47 @@ const GameCanvas: React.FC = () => {
     }
   }, [game.playerHand, game.dealerHand, game.playerMoney])
 
+  useEffect(() => {
+    if (game.playerHand.length > 0) {
+      cardPlayer = drawCard(
+        game.playerHand[game.playerHand.length - 1],
+        750,
+        300,
+        game.cardCover
+      )
+      const canvas = canvasRef.current
+      if (canvas) {
+        const ctx = canvas.getContext('2d')
+        if (ctx) {
+          if (step.player === 0) {
+            setStep({
+              player: game.playerHand.length,
+              dealer: step.dealer,
+            })
+          }
+          cardPlayer.moveCard(430, game.playerHand)
+          setSumDeck(sumDeck - 1)
+        }
+      }
+    }
+  }, [game.playerHand])
+
+  // useEffect(() => {
+  //   const canvas = canvasRef.current
+  //   if (canvas) {
+  //     const ctx = canvas.getContext('2d')
+  //     if (ctx) {
+  //       if (step.dealer === 0) {
+  //         setStep({
+  //           player: step.player,
+  //           dealer: game.dealerHand.length,
+  //         })
+  //       }
+  //       cardPlayer.moveCard(235, game.dealerHand)
+  //     }
+  //   }
+  // }, [game.dealerHand])
+
   const drawGame = (
     ctx: CanvasRenderingContext2D,
     playerHand: ICard[],
@@ -60,17 +116,22 @@ const GameCanvas: React.FC = () => {
     playerMoney: number,
     cardCover: ICardCover
   ) => {
-    ctx.clearRect(0, 0, 800, 600)
+    ctx.clearRect(0, 0, 1100, 650)
     table.drawTable(ctx, 1600, 950)
-    deck.draw(ctx)
+    cardPlayer.update(ctx)
 
-    playerHand.forEach((card, index) => {
+    playerHand.forEach((card, index, array) => {
+      if (index === array.length - 1) {
+        return
+      }
       drawCard(card, 300 + index * 70, 430, cardCover).draw(ctx)
     })
 
     dealerHand.forEach((card, index) => {
       drawCard(card, 300 + index * 70, 235, cardCover).draw(ctx)
     })
+
+    deck.drawDeck(ctx, sumDeck)
 
     // Вычисление значений рук
     const playerHandValue = calcHand(playerHand)
