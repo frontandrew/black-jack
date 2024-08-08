@@ -95,7 +95,11 @@ export const GamePage: React.FC = () => {
                 type="number"
                 onChange={e => getInputBet(e)}
                 inputProps={{ maxbet }}
-                sx={{ m: 1, maxWidth: '105px' }}
+                sx={{
+                  m: 1,
+                  maxWidth: '105px',
+                  input: { color: 'green', fontWeight: 'bold' },
+                }}
                 focused
               />
               <Button

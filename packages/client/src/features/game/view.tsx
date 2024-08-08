@@ -28,7 +28,7 @@ const GameCanvas: React.FC = () => {
       ? backBlack
       : backBlue,
     730,
-    300
+    150
   )
   let cardPlayer = new DrawSprite(
     game.cardCover.back === 'red'
@@ -42,7 +42,7 @@ const GameCanvas: React.FC = () => {
   const table = new DrawSprite(
     game.tableSkin === 'green' ? tableGreen : tableBlue,
     -225,
-    -100
+    -220
   )
 
   // Перерисовывание игры (canvas) при каждом изменении состояния игры
@@ -73,7 +73,7 @@ const GameCanvas: React.FC = () => {
       cardPlayer = drawCard(
         game.playerHand[game.playerHand.length - 1],
         750,
-        300,
+        150,
         game.cardCover
       )
       const canvas = canvasRef.current
@@ -86,7 +86,7 @@ const GameCanvas: React.FC = () => {
               dealer: step.dealer,
             })
           }
-          cardPlayer.moveCard(430, game.playerHand)
+          cardPlayer.moveCard(330, game.playerHand)
           setSumDeck(sumDeck - 1)
         }
       }
@@ -124,11 +124,11 @@ const GameCanvas: React.FC = () => {
       if (index === array.length - 1) {
         return
       }
-      drawCard(card, 300 + index * 70, 430, cardCover).draw(ctx)
+      drawCard(card, 300 + index * 70, 330, cardCover).draw(ctx)
     })
 
     dealerHand.forEach((card, index) => {
-      drawCard(card, 300 + index * 70, 235, cardCover).draw(ctx)
+      drawCard(card, 300 + index * 70, 100, cardCover).draw(ctx)
     })
 
     deck.drawDeck(ctx, sumDeck)
@@ -142,19 +142,19 @@ const GameCanvas: React.FC = () => {
 
     // Рисование значений очков
     if (game.status === 'playing' || game.result !== null) {
-      ctx.fillText('Player : ' + playerHandValue, 300, 420)
-      ctx.fillText('Dealer: ' + dealerHandValue, 300, 225)
+      ctx.fillText('Player : ' + playerHandValue, 300, 320)
+      ctx.fillText('Dealer: ' + dealerHandValue, 300, 90)
     }
 
     if (game.message !== '' && game.result !== null) {
-      ctx.fillText(game.message, 500, 380)
+      ctx.fillText(game.message, 520, 260)
     }
 
     // Рисование денег игрока
-    ctx.fillText('Money: $' + playerMoney, 500, 550)
+    ctx.fillText('Money: $' + playerMoney, 500, 540)
   }
 
-  return <canvas ref={canvasRef} width={1100} height={650} />
+  return <canvas ref={canvasRef} width={1100} height={550} />
 }
 
 export default GameCanvas
