@@ -101,7 +101,7 @@ export const RegPage: React.FC = () => {
           </Button>
           <Button
             variant="text"
-            sx={{ marginTop: 2 }}
+            sx={{ marginTop: 2, marginBottom: 2 }}
             fullWidth
             onClick={() => {
               navigate('/sign-in')

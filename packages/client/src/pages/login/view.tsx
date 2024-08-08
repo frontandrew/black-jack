@@ -1,6 +1,16 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
-import { Box, Button, Grid, Paper, Typography, useTheme } from '@mui/material'
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  IconButton,
+  Paper,
+  SvgIcon,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import { useForm } from 'react-final-form-hooks'
 import { FieldText } from 'components'
 import { validators } from 'validators'
@@ -15,6 +25,25 @@ const config = {
   },
 }
 
+export const getClientIdRequest = async () => {
+  try {
+    const response = await fetch(
+      'https://ya-praktikum.tech/api/v2/oauth/yandex/service-id?redirect_uri=http%3A%2F%2Flocalhost%3A3000'
+    )
+
+    if (response.status === 200) {
+      const result = await response.json()
+      const { service_id } = result
+
+      window.location.replace(
+        `https://oauth.yandex.ru/authorize?response_type=code&client_id=${service_id}&redirect_uri=http%3A%2F%2Flocalhost%3A3000`
+      )
+    }
+  } catch (error) {
+    console.error(`Yandex OAuth error: ${error}`)
+  }
+}
+
 export const LoginPage: React.FC = () => {
   const { spacing } = useTheme()
   const navigate = useNavigate()
@@ -22,6 +51,10 @@ export const LoginPage: React.FC = () => {
   const { form, handleSubmit } = useForm(config)
 
   const { hasValidationErrors } = form.getState()
+
+  const handleYandexOAuth = async () => {
+    getClientIdRequest()
+  }
 
   return (
     <Box className="login-page">
@@ -74,6 +107,24 @@ export const LoginPage: React.FC = () => {
             }}>
             sign up
           </Button>
+          <Divider variant="middle" />
+          <Grid>
+            <IconButton onClick={handleYandexOAuth} size="small">
+              <SvgIcon viewBox="-3 -3 70 70">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="70"
+                  height="70"
+                  fill="none">
+                  <circle cx="32" cy="32" r="36" fill="#FC3F1D" />
+                  <path
+                    d="M37.02 52h6.977V12H33.842c-10.213 0-15.57 5.228-15.57 12.951 0 6.667 3.473 10.426 9.625 14.509l3.738 2.467-4.798-4.024L17.33 52h7.564L35.05 36.846l-3.532-2.35c-4.268-2.878-6.358-5.11-6.358-9.956 0-4.258 3.003-7.136 8.712-7.136h3.12V52h.03z"
+                    fill="#fff"
+                  />
+                </svg>
+              </SvgIcon>
+            </IconButton>
+          </Grid>
         </Grid>
       </Paper>
     </Box>
