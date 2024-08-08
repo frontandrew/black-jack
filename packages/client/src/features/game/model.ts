@@ -171,7 +171,7 @@ const gameSlice = createSlice({
       state.cardCover = action.payload
     },
     skinTable(state: IGameState, action: PayloadAction<string>) {
-      state.tableSkin = 'blue'
+      state.tableSkin = action.payload
     },
   },
 })

@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Grid } from '@mui/material'
+import { Button, ButtonGroup, Grid } from '@mui/material'
 import { skinCards, skinTable } from 'features/game/model'
 import {
   backBlack,
