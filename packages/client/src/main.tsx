@@ -1,12 +1,13 @@
-import React from 'react'
-import CssBaseline from '@mui/material/CssBaseline'
 import { hydrateRoot } from 'react-dom/client'
+import { CssBaseline } from '@mui/material'
+import { StrictMode } from 'react'
+
 import { App } from './app'
 
 hydrateRoot(
   document.querySelector('main') as HTMLElement,
-  <React.StrictMode>
+  <StrictMode>
     <CssBaseline />
     <App />
-  </React.StrictMode>
+  </StrictMode>
 )
