@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+import cors from 'cors'
 import express, { Request as ExpressRequest } from 'express'
 import path from 'path'
 import fs from 'fs/promises'
@@ -12,6 +13,7 @@ const clientPath = path.join(__dirname, `${dev ? '../' : '../../'}`, 'client')
 
 async function createServer() {
   const app = express()
+  app.use(cors())
 
   let vite: ViteDevServer | undefined
   if (dev) {
@@ -54,7 +56,7 @@ async function createServer() {
           'utf-8'
         )
 
-        const serverPath = path.join(clientPath, 'dist/server/entry-server.js')
+        const serverPath = path.join(clientPath, 'dist/server/entry-server.cjs')
         render = (await import(serverPath)).render
       }
 
