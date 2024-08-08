@@ -6,7 +6,7 @@
  */
 
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { RootState } from '../../shared/store/store'
+import { RootState } from 'store/index'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import {

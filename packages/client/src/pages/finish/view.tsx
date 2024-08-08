@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { RootState } from 'shared/store/store'
+import { RootState } from 'store/index'
 import { Box, Button, Typography } from '@mui/material'
 import './style.css'
 

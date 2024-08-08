@@ -25,7 +25,8 @@
       "components/*": ["src/shared/components/*"],
       "theme/*": ["src/shared/theme/*"],
       "utils/*": ["src/shared/utils/*"],
-      "validators/*": ["src/shared/validation/*"]
+      "validators/*": ["src/shared/validation/*"],
+      "store/*": ["src/shared/store/*"]
     }
   },
   "include": ["src", "public/sw.js"],

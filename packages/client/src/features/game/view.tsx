@@ -6,7 +6,7 @@
 
 import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../shared/store/store'
+import { RootState } from 'store/index'
 import { ICard } from './types'
 import { calcHand, drawCard } from './utils'
 import { DrawSprite } from './DrawSprite'

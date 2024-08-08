@@ -1,6 +1,5 @@
 import { renderToString } from 'react-dom/server'
-import { App } from './main'
-import { TestSSRPage } from 'pages'
+import { TestSSRPage } from 'pages/index'
 
 // для теста SSR
 // в дальнешем необходимо релизовать render

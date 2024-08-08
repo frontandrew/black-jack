@@ -56,7 +56,7 @@ async function createServer() {
           'utf-8'
         )
 
-        const serverPath = path.join(clientPath, 'dist/server/entry-server.cjs')
+        const serverPath = path.join(clientPath, 'dist/server/entry-server.js') // ToDo entry-server.cjs
         render = (await import(serverPath)).render
       }
 
