@@ -3,7 +3,7 @@ import express from 'express'
 import path from 'path'
 import fs from 'fs/promises'
 
-import { createServer as createViteServer } from 'vite'
+import { createServer as createViteServer, ViteDevServer } from 'vite'
 
 dotenv.config()
 
@@ -14,29 +14,62 @@ const isDev = process.env.NODE_ENV === 'development'
 async function createServer() {
   const app = express()
 
-  const vite = await createViteServer({
-    server: { middlewareMode: true },
-    root: clientPath,
-    appType: 'custom',
-  })
+  let vite: ViteDevServer | undefined
+  if (isDev) {
+    vite = await createViteServer({
+      server: { middlewareMode: true },
+      root: clientPath,
+      appType: 'custom',
+    })
 
-  app.use(vite.middlewares)
+    app.use(vite.middlewares)
+  } else {
+    app.use(
+      express.static(path.join(clientPath, 'dist/client'), { index: false })
+    )
+  }
 
   app.get('*', async (req, res, next) => {
     const url = req.originalUrl
 
     try {
-      let template = await fs.readFile(
-        path.resolve(clientPath, 'index.html'),
-        'utf-8'
-      )
+      // Получаем файл client/index.html который мы правили ранее
+      // Создаём переменные
+      let render: () => Promise<string>
+      let template: string
+      if (vite) {
+        template = await fs.readFile(
+          path.resolve(clientPath, 'index.html'),
+          'utf-8'
+        )
 
-      template = await vite.transformIndexHtml(url, template)
+        // Применяем встроенные HTML-преобразования vite и плагинов
+        template = await vite.transformIndexHtml(url, template)
 
-      const { render } = await vite.ssrLoadModule(
-        path.join(clientPath, 'src/entry-server.tsx')
-      )
+        // Загружаем модуль клиента, который писали выше,
+        // он будет рендерить HTML-код
+        render = (
+          await vite.ssrLoadModule(
+            path.join(clientPath, 'src/entry-server.tsx')
+          )
+        ).render
+      } else {
+        template = await fs.readFile(
+          path.join(clientPath, 'dist/client/index.html'),
+          'utf-8'
+        )
 
+        // Получаем путь до сбилдженого модуля клиента, чтобы не тащить средства сборки клиента на сервер
+        const pathToServer = path.join(
+          clientPath,
+          'dist/server/entry-server.js'
+        )
+
+        // Импортируем этот модуль и вызываем с инишл стейтом
+        render = (await import(pathToServer)).render
+      }
+
+      // Получаем HTML-строку из JSX
       const appHtml = await render()
 
       const html = template.replace(`<!--ssr-outlet-->`, appHtml)
