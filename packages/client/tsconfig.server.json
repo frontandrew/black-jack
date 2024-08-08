@@ -1,12 +1,9 @@
 {
   "compilerOptions": {
-    "skipLibCheck": true,
     "composite": true,
-    "target": "es2019",
-    "module": "commonjs",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "lib": ["es2019", "DOM"]
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["server/index.ts"]
+  "include": ["vite.config.ts"]
 }

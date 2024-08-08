@@ -11,7 +11,7 @@ import {
   Container,
   Box,
 } from '@mui/material'
-import { AddTopicModal } from 'pages'
+import { AddTopicModal } from 'pages/index'
 import { LandingHeader } from '../landing/components'
 
 export const ForumPage: FC = () => {

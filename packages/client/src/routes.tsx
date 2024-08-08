@@ -1,4 +1,3 @@
-import { createBrowserRouter } from 'react-router-dom'
 import {
   ErrorPage,
   FinishPage,
@@ -11,9 +10,9 @@ import {
   SettingsPage,
   StartPage,
   TopicPage,
-} from '../pages'
+} from './pages'
 
-export const router = createBrowserRouter([
+export const routes = [
   {
     path: '/',
     element: <LandingPage />,
@@ -64,4 +63,4 @@ export const router = createBrowserRouter([
     element: <TopicPage />,
     errorElement: <ErrorPage />,
   },
-])
+]

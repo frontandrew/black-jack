@@ -1,6 +1,6 @@
 import { DrawSprite } from './DrawSprite'
 import { ICard } from './types'
-import * as sprites from 'images'
+import * as sprites from 'images/index'
 
 const cardSuits: string[] = ['♥️', '♦️', '♠️', '♣️']
 const cardValues: string[] = [

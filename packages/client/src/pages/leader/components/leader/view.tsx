@@ -1,11 +1,8 @@
 import { Avatar, Divider, Grid, Typography, useTheme } from '@mui/material'
-
-import { LandBack } from 'images'
-
-import type { FC } from 'react'
+import { LandBack } from 'images/index'
 import type { LeaderItemProps } from './type'
 
-export const LeaderItem: FC<LeaderItemProps> = ({
+export const LeaderItem: React.FC<LeaderItemProps> = ({
   id,
   cash,
   games,

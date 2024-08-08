@@ -16,22 +16,18 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "sourceMap": true,
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
-      "images": ["./assets/imgs/index"],
-      "sounds": ["./assets/sounds/index"],
-      "features": ["./features/*"],
-      "pages": ["./pages/index"],
-      "components": ["./shared/components/index"],
-      "theme": ["./shared/theme/index"],
-      "utils": ["./shared/utils/index"],
-      "validators": ["./shared/validation/index"]
-
+      "images/*": ["src/assets/imgs/*"],
+      "sounds/*": ["src/assets/sounds/*"],
+      "features/*": ["src/features/*"],
+      "pages/*": ["src/pages/*"],
+      "components/*": ["src/shared/components/*"],
+      "theme/*": ["src/shared/theme/*"],
+      "utils/*": ["src/shared/utils/*"],
+      "validators/*": ["src/shared/validation/*"]
     }
   },
-  "include": ["src", "public/sw.ts"],
-  "references": [
-    { "path": "./tsconfig.node.json" },
-    { "path": "./tsconfig.server.json" },
-  ]
+  "include": ["src", "public/sw.js"],
+  "references": [{ "path": "./tsconfig.server.json" }]
 }

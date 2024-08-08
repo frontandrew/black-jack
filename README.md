@@ -9,6 +9,19 @@
 
 Добро пожаловать в игру Blackjack на JavaScript с использованием React и TypeScript! Игра позволяет сыграть против дилера, используя базовые правила Blackjack.
 
+## Запуск SSR
+В prod режиме:
+- через  `"build"` и `"preview` в `packages/server/package.json`
+- через `"build:ssr"` и `"preview:ssr"` в глобальном `package.json`
+
+Если необходимо собрать билд по новой, не забудь удалить папку `packages/server/dist`
+т.к перед билдом нужно очищать папку (ToDo)
+
+В dev режиме (ToDo):
+- через `"dev"` в `packages/server/package.json` ToDo
+- через `"dev:server"`(`"lerna run dev --scope=server"`) в глобальном `package.json` ToDo
+- через `"dev:ssr"` в `packages/client/package.json` ToDo
+
 ## Демонcтрация:
 ![msedge_ViURtHeheB](https://github.com/user-attachments/assets/8d9f703d-2962-48e5-a51d-917e87ba1ce2)
 

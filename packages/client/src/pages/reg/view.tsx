@@ -2,8 +2,8 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 import { Box, Button, Grid, Paper, Typography, useTheme } from '@mui/material'
 import { useForm } from 'react-final-form-hooks'
-import { FieldText } from 'components'
-import { validators } from 'validators'
+import { FieldText } from 'components/field-text'
+import { validators } from 'validators/index'
 import './style.css'
 
 type LoginType = object

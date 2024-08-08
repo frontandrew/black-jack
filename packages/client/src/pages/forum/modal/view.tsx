@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import { useForm } from 'react-final-form-hooks'
 import { Modal, Box, Button, Typography, Grid } from '@mui/material'
 import { addTopic } from '../../../features/forum/model'
-import { FieldText } from 'components'
+import { FieldText } from 'components/field-text'
 
 interface AddTopicModalProps {
   open: boolean

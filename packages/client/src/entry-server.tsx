@@ -1,4 +1,7 @@
 import { renderToString } from 'react-dom/server'
-import { App } from './app'
+import { App } from './main'
+import { TestSSRPage } from 'pages'
 
-export const render = () => renderToString(<App />)
+// для теста SSR
+// в дальнешем необходимо релизовать render
+export const render = () => renderToString(<TestSSRPage />)

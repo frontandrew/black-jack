@@ -1,7 +1,7 @@
 import { Button, Grid, Typography, useTheme } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { FC } from 'react'
-import { LandBack } from 'images'
+import { LandBack } from 'images/index'
 import { LandingSpacer } from '../spacer'
 
 export const LandingBanner: FC = () => {

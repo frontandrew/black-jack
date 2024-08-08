@@ -3,9 +3,9 @@ import { useForm } from 'react-final-form-hooks'
 
 import React, { useState } from 'react'
 
-import { FieldText } from 'components'
+import { FieldText } from 'components/field-text'
 import type { FormUserType } from './type'
-import { validators } from 'validators'
+import { validators } from 'validators/index'
 
 /* TODO: need to use UserType */
 type UserType = object

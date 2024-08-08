@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 
 import type { FC } from 'react'
-import { SomeAvatar } from 'images'
+import { SomeAvatar } from 'images/index'
 
 export const CardUser: FC = () => {
   const { palette, spacing } = useTheme()

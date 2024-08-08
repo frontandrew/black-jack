@@ -1,5 +1,5 @@
 import React from 'react'
-import { useFullscreen } from 'utils'
+import { useFullscreen } from 'utils/index'
 import { Fullscreen, FullscreenExit } from '@mui/icons-material'
 import { ToggleButton } from '@mui/material'
 

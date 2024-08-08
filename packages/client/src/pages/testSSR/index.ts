@@ -1,0 +1,1 @@
+export { TestSSRPage } from './view'

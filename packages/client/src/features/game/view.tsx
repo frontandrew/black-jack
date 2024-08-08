@@ -10,7 +10,7 @@ import { RootState } from '../../shared/store/store'
 import { ICard } from './types'
 import { calcHand, drawCard } from './utils'
 import { DrawSprite } from './DrawSprite'
-import { backRed, tableGreen } from 'images'
+import { backRed, tableGreen } from 'images/index'
 
 const GameCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)

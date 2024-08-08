@@ -1,5 +1,11 @@
 import { Button, ButtonGroup, Grid } from '@mui/material'
-import { backBlack, backBlue, backRed, twoClubs, twoClubsWhite } from 'images'
+import {
+  backBlack,
+  backBlue,
+  backRed,
+  twoClubs,
+  twoClubsWhite,
+} from 'images/index'
 import React from 'react'
 
 export const CardCover: React.FC = () => {

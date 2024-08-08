@@ -10,7 +10,9 @@
     "test": "lerna run test",
     "lint": "lerna run lint",
     "format": "lerna run format",
-    "preview": "lerna run preview"
+    "preview": "lerna run preview",
+    "build:ssr": "lerna run --scope=client build:ssr && lerna run --scope=server build",
+    "preview:ssr": "lerna run --scope=server preview"
   },
   "license": "MIT",
   "workspaces": [
@@ -21,6 +23,10 @@
   },
   "devDependencies": {
     "@evilmartians/lefthook": "^1.3.9",
+    "@types/node": "^22.1.0",
     "lerna": "^5.4.3"
+  },
+  "dependencies": {
+    "typescript": "^5.5.4"
   }
 }

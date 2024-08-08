@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import dotenv from 'dotenv'
 import path from 'path'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
 dotenv.config()
 
@@ -11,19 +12,13 @@ export default defineConfig({
     port: Number(process.env.CLIENT_PORT) || 3000,
   },
   define: {
-    __SERVER_PORT__: process.env.SERVER_PORT,
+    __SERVER_PORT__: Number(process.env.SERVER_PORT) || 3001,
   },
-  plugins: [react()],
-  resolve: {
-    alias: {
-      images: path.resolve(__dirname, 'src/assets/imgs/index'),
-      sounds: path.resolve('src/assets/sounds/index'),
-      features: path.resolve('src/features/'),
-      pages: path.resolve('src/pages/index'),
-      components: path.resolve('src/shared/components/index'),
-      theme: path.resolve('src/shared/theme/index'),
-      utils: path.resolve('src/shared/utils/index'),
-      validators: path.resolve('src/shared/validation/index'),
-    },
+  plugins: [react(), tsconfigPaths()],
+  build: {
+    outDir: path.join(__dirname, 'dist/client'),
+  },
+  ssr: {
+    format: 'cjs',
   },
 })

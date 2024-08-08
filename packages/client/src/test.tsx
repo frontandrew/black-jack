@@ -1,4 +1,4 @@
-import { App } from './view'
+import { App } from './main'
 import { render, screen } from '@testing-library/react'
 
 const appContent = 'in world most popular card game'
