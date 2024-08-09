@@ -13,7 +13,7 @@ export const FinishPage: React.FC = () => {
   }
 
   return (
-    <Box className="finish">
+    <Box className="finish" sx={{ color: 'white' }}>
       <Typography variant="h3">End Game</Typography>
       <Typography variant="h4" sx={{ my: 3 }}>
         {game.playerMoney > 0

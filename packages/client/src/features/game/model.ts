@@ -38,6 +38,7 @@ const initialState: IGameState = {
     front: 'brown',
     back: 'red',
   },
+  tableSkin: 'green',
 }
 
 const gameSlice = createSlice({
@@ -167,7 +168,11 @@ const gameSlice = createSlice({
       state.deck = shuffle(createDeck())
     },
     skinCards(state: IGameState, action: PayloadAction<string>) {
-      state.cardCover = { front: '', back: '' }
+      // @ts-ignore
+      state.cardCover = action.payload
+    },
+    skinTable(state: IGameState, action: PayloadAction<string>) {
+      state.tableSkin = action.payload
     },
   },
 })
@@ -179,6 +184,7 @@ export const {
   resetGame,
   newGame,
   skinCards,
+  skinTable,
 } = gameSlice.actions
 
 export default gameSlice.reducer

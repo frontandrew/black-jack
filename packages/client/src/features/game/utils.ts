@@ -1,5 +1,5 @@
 import { DrawSprite } from './DrawSprite'
-import { ICard } from './types'
+import { ICard, ICardCover } from './types'
 import * as sprites from 'images'
 
 const cardSuits: string[] = ['♥️', '♦️', '♠️', '♣️']
@@ -114,203 +114,528 @@ export function calcHand(hand: ICard[]): number {
 //   return new DrawSprite(sprite, x, y)
 // }
 
-export function drawCard(card: ICard, x: number, y: number): DrawSprite {
+export function drawCard(
+  card: ICard,
+  x: number,
+  y: number,
+  cardCover: ICardCover
+): DrawSprite {
   if (card.hidden) {
-    return new DrawSprite(sprites.backRed, x, y)
+    return new DrawSprite(
+      cardCover.back === 'red'
+        ? sprites.backRed
+        : cardCover.back === 'black'
+        ? sprites.backBlack
+        : sprites.backBlue,
+      x,
+      y
+    )
   }
   switch (card.value) {
     case '2':
       if (card.suit === '♥️') {
-        return new DrawSprite(sprites.twoHearts, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.twoHearts
+            : sprites.twoHeartsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♦️') {
-        return new DrawSprite(sprites.twoDiamonds, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.twoDiamonds
+            : sprites.twoDiamondsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♠️') {
-        return new DrawSprite(sprites.twoSpades, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.twoSpades
+            : sprites.twoSpadesWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♣️') {
-        return new DrawSprite(sprites.twoClubs, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.twoClubs
+            : sprites.twoClubsWhite,
+          x,
+          y
+        )
       }
       break
 
     case '3':
       if (card.suit === '♥️') {
-        return new DrawSprite(sprites.threeHearts, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.threeHearts
+            : sprites.threeHeartsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♦️') {
-        return new DrawSprite(sprites.threeDiamonds, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.threeDiamonds
+            : sprites.threeDiamondsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♠️') {
-        return new DrawSprite(sprites.threeSpades, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.threeSpades
+            : sprites.threeSpadesWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♣️') {
-        return new DrawSprite(sprites.threeClubs, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.threeClubs
+            : sprites.threeClubsWhite,
+          x,
+          y
+        )
       }
       break
 
     case '4':
       if (card.suit === '♥️') {
-        return new DrawSprite(sprites.fourHearts, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.fourHearts
+            : sprites.fourHeartsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♦️') {
-        return new DrawSprite(sprites.fourDiamonds, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.fourDiamonds
+            : sprites.fourDiamondsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♠️') {
-        return new DrawSprite(sprites.fourSpades, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.fourSpades
+            : sprites.fourSpadesWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♣️') {
-        return new DrawSprite(sprites.fourClubs, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.fourClubs
+            : sprites.fourClubsWhite,
+          x,
+          y
+        )
       }
       break
 
     case '5':
       if (card.suit === '♥️') {
-        return new DrawSprite(sprites.fiveHearts, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.fiveHearts
+            : sprites.fiveHeartsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♦️') {
-        return new DrawSprite(sprites.fiveDiamonds, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.fiveDiamonds
+            : sprites.fiveDiamondsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♠️') {
-        return new DrawSprite(sprites.fiveSpades, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.fiveSpades
+            : sprites.fiveSpadesWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♣️') {
-        return new DrawSprite(sprites.fiveClubs, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.fiveClubs
+            : sprites.fiveClubsWhite,
+          x,
+          y
+        )
       }
       break
 
     case '6':
       if (card.suit === '♥️') {
-        return new DrawSprite(sprites.sixHearts, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.sixHearts
+            : sprites.sixHeartsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♦️') {
-        return new DrawSprite(sprites.sixDiamonds, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.sixDiamonds
+            : sprites.sixDiamondsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♠️') {
-        return new DrawSprite(sprites.sixSpades, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.sixSpades
+            : sprites.sixSpadesWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♣️') {
-        return new DrawSprite(sprites.sixClubs, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.sixClubs
+            : sprites.sixClubsWhite,
+          x,
+          y
+        )
       }
       break
 
     case '7':
       if (card.suit === '♥️') {
-        return new DrawSprite(sprites.sevenHearts, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.sevenHearts
+            : sprites.sevenHeartsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♦️') {
-        return new DrawSprite(sprites.sevenDiamonds, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.sevenDiamonds
+            : sprites.sevenDiamondsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♠️') {
-        return new DrawSprite(sprites.sevenSpades, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.sevenSpades
+            : sprites.sevenSpadesWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♣️') {
-        return new DrawSprite(sprites.sevenClubs, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.sevenClubs
+            : sprites.sevenClubsWhite,
+          x,
+          y
+        )
       }
       break
 
     case '8':
       if (card.suit === '♥️') {
-        return new DrawSprite(sprites.eightHearts, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.eightHearts
+            : sprites.eightHeartsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♦️') {
-        return new DrawSprite(sprites.eightDiamonds, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.eightDiamonds
+            : sprites.eightDiamondsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♠️') {
-        return new DrawSprite(sprites.eightSpades, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.eightSpades
+            : sprites.eightSpadesWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♣️') {
-        return new DrawSprite(sprites.eightClubs, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.eightClubs
+            : sprites.eightClubsWhite,
+          x,
+          y
+        )
       }
       break
 
     case '9':
       if (card.suit === '♥️') {
-        return new DrawSprite(sprites.nineHearts, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.nineHearts
+            : sprites.nineHeartsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♦️') {
-        return new DrawSprite(sprites.nineDiamonds, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.nineDiamonds
+            : sprites.nineDiamondsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♠️') {
-        return new DrawSprite(sprites.nineSpades, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.nineSpades
+            : sprites.nineSpadesWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♣️') {
-        return new DrawSprite(sprites.nineClubs, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.nineClubs
+            : sprites.nineClubsWhite,
+          x,
+          y
+        )
       }
       break
 
     case '10':
       if (card.suit === '♥️') {
-        return new DrawSprite(sprites.tenHearts, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.tenHearts
+            : sprites.tenHeartsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♦️') {
-        return new DrawSprite(sprites.tenDiamonds, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.tenDiamonds
+            : sprites.tenDiamondsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♠️') {
-        return new DrawSprite(sprites.tenSpades, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.tenSpades
+            : sprites.tenSpadesWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♣️') {
-        return new DrawSprite(sprites.tenClubs, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.tenClubs
+            : sprites.tenClubsWhite,
+          x,
+          y
+        )
       }
       break
 
     case 'A':
       if (card.suit === '♥️') {
-        return new DrawSprite(sprites.aceHearts, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.aceHearts
+            : sprites.aceHeartsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♦️') {
-        return new DrawSprite(sprites.aceDiamonds, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.aceDiamonds
+            : sprites.aceDiamondsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♠️') {
-        return new DrawSprite(sprites.aceSpades, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.aceSpades
+            : sprites.aceSpadesWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♣️') {
-        return new DrawSprite(sprites.aceClubs, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.aceClubs
+            : sprites.aceClubsWhite,
+          x,
+          y
+        )
       }
       break
 
     case 'J':
       if (card.suit === '♥️') {
-        return new DrawSprite(sprites.jackHearts, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.jackHearts
+            : sprites.jackHeartsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♦️') {
-        return new DrawSprite(sprites.jackDiamonds, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.jackDiamonds
+            : sprites.jackDiamondsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♠️') {
-        return new DrawSprite(sprites.jackSpades, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.jackSpades
+            : sprites.jackSpadesWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♣️') {
-        return new DrawSprite(sprites.jackClubs, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.jackClubs
+            : sprites.jackClubsWhite,
+          x,
+          y
+        )
       }
       break
 
     case 'Q':
       if (card.suit === '♥️') {
-        return new DrawSprite(sprites.queenHearts, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.queenHearts
+            : sprites.queenHeartsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♦️') {
-        return new DrawSprite(sprites.queenDiamonds, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.queenDiamonds
+            : sprites.queenDiamondsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♠️') {
-        return new DrawSprite(sprites.queenSpades, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.queenSpades
+            : sprites.queenSpadesWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♣️') {
-        return new DrawSprite(sprites.queenClubs, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.queenClubs
+            : sprites.queenClubsWhite,
+          x,
+          y
+        )
       }
       break
 
     case 'K':
       if (card.suit === '♥️') {
-        return new DrawSprite(sprites.kingHearts, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.kingHearts
+            : sprites.kingHeartsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♦️') {
-        return new DrawSprite(sprites.kingDiamonds, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.kingDiamonds
+            : sprites.kingDiamondsWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♠️') {
-        return new DrawSprite(sprites.kingSpades, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.kingSpades
+            : sprites.kingSpadesWhite,
+          x,
+          y
+        )
       }
       if (card.suit === '♣️') {
-        return new DrawSprite(sprites.kingClubs, x, y)
+        return new DrawSprite(
+          cardCover.front === 'brown'
+            ? sprites.kingClubs
+            : sprites.kingClubsWhite,
+          x,
+          y
+        )
       }
       break
   }
