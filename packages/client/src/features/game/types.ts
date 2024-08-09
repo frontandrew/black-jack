@@ -4,7 +4,7 @@ export interface ICard {
   hidden?: boolean
 }
 
-interface ICardCover {
+export interface ICardCover {
   front: string
   back: string
 }
@@ -23,4 +23,5 @@ export interface IGameState {
   isPlayerBlackjack: boolean
   message: string
   cardCover: ICardCover
+  tableSkin: string
 }
