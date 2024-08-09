@@ -11,7 +11,7 @@ export const FullscreenButton: React.FC = () => {
     <ToggleButton
       onChange={onFullscreenChange}
       value={Boolean(fullscreenElem)}
-      sx={{ m: 1 }}>
+      sx={{ m: 1, color: 'white' }}>
       {!fullscreenElem ? <Fullscreen /> : <FullscreenExit />}
     </ToggleButton>
   )

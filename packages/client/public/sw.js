@@ -1,60 +1,64 @@
-const CACHE_NAME = 'black-jack-v1'
+const CHECK_ONLINE = 'check-online'
 
-const URLS = [
-  '/',
-  '/sign-in',
-  '/sign-up',
-  '/settings',
-  '/start',
-  '/game',
-  '/finish',
-  '/leaderboard',
-]
+const VERSION = '0.1';
 
-self.addEventListener('install', event => {
+const STATIC_CACHE_NAME = `static-black-jack-v-${VERSION}`
+const DYNAMIC_CACHE_NAME = `dynamic-black-jack-v-${VERSION}`
+
+const HTML_PATH = 'index.html'
+
+const ASSET_URLS = [HTML_PATH]
+
+self.addEventListener('install', async event => {
+
   const addCache = async () => {
-    const cache = await caches.open(CACHE_NAME)
-    return cache.addAll(URLS)
+    const cache = await caches.open(STATIC_CACHE_NAME)
+    return cache.addAll(ASSET_URLS)
   }
   event.waitUntil(addCache())
 })
 
-self.addEventListener('activate', event => {
-  const deleteCache = async () => {
-    const cacheNames = await caches.keys()
-    return Promise.all(
-      cacheNames
-        .filter(cacheName => cacheName !== cacheNames)
-        .map(cache => caches.delete(cache))
-    )
-  }
-  event.waitUntil(deleteCache())
+self.addEventListener('activate', async () => {
+  const cacheNames = await caches.keys();
+  await Promise.all(
+    cacheNames
+      .filter(cacheName => cacheName !== STATIC_CACHE_NAME && cacheName !== DYNAMIC_CACHE_NAME)
+      .map(cacheName => caches.delete(cacheName))
+  )
 })
 
 self.addEventListener('fetch', async event => {
-  if (event.request.method !== 'GET') return;
+  const { request } = event;
 
-  caches.match(event.request).then(response => {
-    if (response) response
+  const url = new URL(request.clone().url);
 
-    const fetchRequest = event.request.clone()
+  const isCheckOnlineParam = url.searchParams.get(CHECK_ONLINE);
 
-    return fetch(fetchRequest)
-      .then(response => {
-        if (!response || response.status !== 200 || response.type !== 'basic') {
-          return response
-        }
+  if (isCheckOnlineParam) {
+    event.respondWith(fetch(request));
+  } else {
+    event.respondWith(networkFirst(request));
+  }
+});
 
-        const responseToCache = response.clone()
+const networkFirst = async (request) => {
+  const fetchRequest = await request.clone();
+  const cache = await caches.open(DYNAMIC_CACHE_NAME);
 
-        caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, responseToCache)
-        })
+  try {
+    const response = await fetch(fetchRequest);
+    await cache.put(request, response.clone());
 
-        return response
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  })
-})
+    return response;
+  } catch (e) {
+    const cached = await caches.match(request);
+
+    if (cached) {
+      return cached;
+    }
+
+    const cache = await caches.open(STATIC_CACHE_NAME);
+
+    return await cache.match(HTML_PATH);
+  }
+}
