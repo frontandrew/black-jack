@@ -22,9 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# SSR server files (generate on each start-up)
-
-server/index.js
-server/index.d.ts
-tsconfig.server.tsbuildinfo

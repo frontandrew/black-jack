@@ -13,11 +13,6 @@ export default defineConfig({
   define: {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
-  build: {
-    outDir: path.join(__dirname, 'dist/client'),
-  },
-  // There is no ssr option like `format`: https://vitejs.dev/config/ssr-options
-  // ssr: { format: 'cjs' },
   plugins: [react()],
   resolve: {
     alias: {

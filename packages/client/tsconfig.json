@@ -29,9 +29,6 @@
 
     }
   },
-  "include": ["src", "public/sw.ts"],
-  "references": [
-    { "path": "./tsconfig.node.json" },
-    { "path": "./tsconfig.server.json" },
-  ]
+  "include": ["src", "public/sw.ts", "server"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
