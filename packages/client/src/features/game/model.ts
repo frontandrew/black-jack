@@ -168,6 +168,7 @@ const gameSlice = createSlice({
       state.deck = shuffle(createDeck())
     },
     skinCards(state: IGameState, action: PayloadAction<string>) {
+      // @ts-ignore
       state.cardCover = action.payload
     },
     skinTable(state: IGameState, action: PayloadAction<string>) {

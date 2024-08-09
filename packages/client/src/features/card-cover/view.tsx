@@ -13,19 +13,36 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'shared/store/store'
 
+const checkImg = (name: string) => {
+  if (name === 'brown') {
+    return twoClubs
+  }
+  if (name === 'white') {
+    return twoClubsWhite
+  }
+  if (name === 'red') {
+    return backRed
+  }
+  if (name === 'black') {
+    return backBlack
+  } else {
+    return backBlue
+  }
+}
+
 export const CardCover: React.FC = () => {
   const dispatch = useDispatch()
   const game = useSelector((state: RootState) => state.game)
   const [cardCover, setCardCover] = useState(game.cardCover)
   const [tableSkin, setTableSkin] = useState(game.tableSkin)
 
-  const handleClick = event => {
+  const handleClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     const skin = event.currentTarget.name
 
     if (skin === 'brown') {
       setCardCover({
         front: skin,
-        back: cardCover.back,
+        back: '',
       })
     }
 
@@ -67,6 +84,7 @@ export const CardCover: React.FC = () => {
   }
 
   useEffect(() => {
+    // @ts-ignore
     dispatch(skinCards(cardCover))
   }, [cardCover])
 
@@ -80,19 +98,7 @@ export const CardCover: React.FC = () => {
         <ButtonGroup variant="outlined" aria-label="Basic button group">
           {['brown', 'white', 'red', 'black', 'blue'].map(name => (
             <Button key={name} name={name} onClick={handleClick}>
-              <img
-                src={
-                  name === 'brown'
-                    ? twoClubs
-                    : name === 'white'
-                    ? twoClubsWhite
-                    : name === 'red'
-                    ? backRed
-                    : name === 'black'
-                    ? backBlack
-                    : backBlue
-                }
-              />
+              <img src={checkImg(name)} />
             </Button>
           ))}
         </ButtonGroup>

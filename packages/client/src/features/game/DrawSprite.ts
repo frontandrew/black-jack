@@ -33,7 +33,7 @@ export class DrawSprite {
     ctx.drawImage(this.sprites, this.x, this.y, width, heght)
   }
 
-  moveCard(y: number, player) {
+  moveCard(y: number, player: { suit: string; value: string }[]) {
     if (player.length === 0) {
       this.x = 810
       this.y = 300

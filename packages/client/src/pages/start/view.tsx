@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
-import { Box, Button, Grid, Typography } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import './style.css'
-import { CardCover } from 'features'
+import { CardCover } from 'features/card-cover/index'
 
 export const StartPage: React.FC = () => {
   const navigate = useNavigate()
