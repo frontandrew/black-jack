@@ -1,4 +1,4 @@
-import { AUTH_API, BASE, METHOD, OAUTH } from 'consts'
+import { AUTH_API, BASE, METHODS, OAUTH } from 'consts'
 
 export const oAuth = async () => {
   try {
@@ -18,12 +18,11 @@ export const oAuth = async () => {
 
 export const loginInOAuth = async () => {
   const code = new URL(window.location.href).searchParams.get('code')
-  console.log(typeof code)
   try {
     const response = await fetch(
       `https://ya-praktikum.tech/api/v2/oauth/yandex`,
       {
-        method: METHOD.POST,
+        method: METHODS.POST,
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
         },

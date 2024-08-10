@@ -1,6 +1,6 @@
 export const BASE = 'https://ya-praktikum.tech/api/v2'
 
-export enum METHOD {
+export enum METHODS {
   GET = 'GET',
   POST = 'POST',
   PUT = 'PUT',
