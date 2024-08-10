@@ -1,17 +1,59 @@
-export const getClientIdRequest = async () => {
+import { AUTH_API, BASE, METHOD, OAUTH } from 'consts'
+
+export const oAuth = async () => {
   try {
-    const response = await fetch(
-      'https://ya-praktikum.tech/api/v2/oauth/yandex/service-id?redirect_uri=http%3A%2F%2Flocalhost%3A3000'
-    )
+    const response = await fetch(`${BASE}${OAUTH.SERVICE_ID}`)
 
     if (response.status === 200) {
       const result = await response.json()
       const { service_id } = result
       window.location.replace(
-        `https://oauth.yandex.ru/authorize?response_type=code&client_id=${service_id}&redirect_uri=http%3A%2F%2Flocalhost%3A3000`
+        `${OAUTH.YANDEX}${service_id}&redirect_uri=${OAUTH.REDIRECT}`
       )
     }
   } catch (error) {
     console.error(`Yandex OAuth error: ${error}`)
+  }
+}
+
+export const loginInOAuth = async () => {
+  const code = new URL(window.location.href).searchParams.get('code')
+  console.log(typeof code)
+  try {
+    const response = await fetch(
+      `https://ya-praktikum.tech/api/v2/oauth/yandex`,
+      {
+        method: METHOD.POST,
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify({
+          code: code,
+          redirect_uri: OAUTH.REDIRECT,
+        }),
+      }
+    )
+
+    if (response.status === 200) {
+      const result = await response.json()
+      console.log(result)
+      // getUser()
+    }
+  } catch (error) {
+    console.error(`Yandex oAuth post error: ${error}`)
+  }
+}
+
+const getUser = async () => {
+  try {
+    const response = await fetch(`${BASE}${AUTH_API.GET_USER}`)
+
+    if (response.status === 200) {
+      const result = response.json()
+
+      console.log(result)
+    }
+  } catch (error) {
+    console.error(`Get user error: ${error}`)
   }
 }

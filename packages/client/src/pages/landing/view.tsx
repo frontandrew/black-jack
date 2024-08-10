@@ -8,8 +8,11 @@ import {
   LandingGameFlow,
   LandingHeader,
 } from './components'
+import { loginInOAuth } from 'oauth'
 
 export const LandingPage: FC = () => {
+  loginInOAuth()
+
   return (
     <Grid
       container
