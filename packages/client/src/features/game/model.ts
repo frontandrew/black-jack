@@ -19,7 +19,7 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { createDeck, shuffle, calcHand } from './utils'
-import { ICard, IGameState } from './types'
+import { ICard, ICardCover, IGameState } from './types'
 
 const initialState: IGameState = {
   playerHand: [],
@@ -167,8 +167,7 @@ const gameSlice = createSlice({
       state.dealerHand = []
       state.deck = shuffle(createDeck())
     },
-    skinCards(state: IGameState, action: PayloadAction<string>) {
-      // @ts-ignore
+    skinCards(state: IGameState, action: PayloadAction<ICardCover>) {
       state.cardCover = action.payload
     },
     skinTable(state: IGameState, action: PayloadAction<string>) {

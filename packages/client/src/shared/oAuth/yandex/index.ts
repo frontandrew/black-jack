@@ -1,0 +1,1 @@
+export { signinWithYandex } from './oAuthY'
