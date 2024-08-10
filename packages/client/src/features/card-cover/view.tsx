@@ -36,7 +36,9 @@ export const CardCover: React.FC = () => {
   const [cardCover, setCardCover] = useState(game.cardCover)
   const [tableSkin, setTableSkin] = useState(game.tableSkin)
 
-  const handleClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     const skin = event.currentTarget.name
 
     if (skin === 'brown') {
@@ -84,7 +86,6 @@ export const CardCover: React.FC = () => {
   }
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(skinCards(cardCover))
   }, [cardCover])
 
