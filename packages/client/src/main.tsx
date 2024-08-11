@@ -1,12 +1,13 @@
+import { hydrateRoot } from 'react-dom/client'
 import { CssBaseline } from '@mui/material'
-import ReactDOM from 'react-dom/client'
-import React from 'react'
+import { StrictMode } from 'react'
 
 import { App } from './app'
 
-ReactDOM.createRoot(document.querySelector('main') as HTMLElement).render(
-  <React.StrictMode>
+hydrateRoot(
+  document.querySelector('main') as HTMLElement,
+  <StrictMode>
     <CssBaseline />
     <App />
-  </React.StrictMode>
+  </StrictMode>
 )

@@ -29,6 +29,6 @@
 
     }
   },
-  "include": ["src", "public/sw.ts"],
+  "include": ["src", "public/sw.ts", "server"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
