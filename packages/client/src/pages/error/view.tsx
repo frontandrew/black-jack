@@ -1,16 +1,21 @@
+import React from 'react'
 import { Box, Button, Typography } from '@mui/material'
-import { useNavigate } from 'react-router'
+import { useNavigate, useRouteError } from 'react-router'
 
 import './style.css'
 
-export const ErrorPage = () => {
+export const ErrorPage: React.FC = () => {
   const navigate = useNavigate()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const error: any = useRouteError()
 
   return (
     <Box className="error-page">
-      <Typography variant="h3">Oops!!</Typography>
-      <Typography variant="h5">Something gose wrong...</Typography>
-      <Typography variant="body2">Try to reload or comeback later.</Typography>
+      <Typography variant="h1">{error.status || 'Opps...'}</Typography>
+      <Typography variant="h5">{error.statusText || error.message}</Typography>
+      <Typography variant="body2" mb={4}>
+        {error.data}
+      </Typography>
       <Button
         variant="contained"
         onClick={() => {

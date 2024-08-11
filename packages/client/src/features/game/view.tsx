@@ -6,13 +6,18 @@
 
 import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../app/store'
-import { Card } from './types'
-import { calcHand } from './utils'
+import { RootState } from '../../shared/store/store'
+import { ICard } from './types'
+import { calcHand, drawCard } from './utils'
+import { DrawSprite } from './DrawSprite'
+import { backRed, tableGreen } from 'images'
 
 const GameCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const game = useSelector((state: RootState) => state.game)
+
+  const deck = new DrawSprite(backRed, 800, 250)
+  const table = new DrawSprite(tableGreen, -225, -100)
 
   // Перерисовывание игры (canvas) при каждом изменении состояния игры
   useEffect(() => {
@@ -20,69 +25,57 @@ const GameCanvas: React.FC = () => {
     if (canvas) {
       const ctx = canvas.getContext('2d')
       if (ctx) {
-        drawGame(ctx, game.playerHand, game.dealerHand, game.playerMoney)
+        const animation = () => {
+          drawGame(ctx, game.playerHand, game.dealerHand, game.playerMoney)
+
+          window.requestAnimationFrame(animation)
+        }
+
+        animation()
       }
     }
   }, [game.playerHand, game.dealerHand, game.playerMoney])
 
-  // Функция рисования карты
-  const drawCard = (
-    ctx: CanvasRenderingContext2D,
-    card: Card,
-    x: number,
-    y: number
-  ) => {
-    if (card.hidden) {
-      ctx.fillStyle = 'gray'
-      ctx.fillRect(x, y, 50, 70)
-      ctx.strokeRect(x, y, 50, 70)
-    } else {
-      ctx.fillStyle = 'white'
-      ctx.fillRect(x, y, 50, 70)
-      ctx.strokeRect(x, y, 50, 70)
-      if (card.suit === '♥️' || card.suit === '♦️') {
-        ctx.fillStyle = 'red'
-      }
-      if (card.suit === '♠️' || card.suit === '♣️') {
-        ctx.fillStyle = 'black'
-      }
-      ctx.font = '22px Arial'
-      ctx.fillText(`${card.value}${card.suit}`, x + 5, y + 45)
-    }
-  }
-
   const drawGame = (
     ctx: CanvasRenderingContext2D,
-    playerHand: Card[],
-    dealerHand: Card[],
+    playerHand: ICard[],
+    dealerHand: ICard[],
     playerMoney: number
   ) => {
     ctx.clearRect(0, 0, 800, 600)
+    table.drawTable(ctx, 1600, 950)
+    deck.draw(ctx)
 
     playerHand.forEach((card, index) => {
-      drawCard(ctx, card, 100 + index * 60, 285)
+      drawCard(card, 300 + index * 70, 430).draw(ctx)
     })
 
     dealerHand.forEach((card, index) => {
-      drawCard(ctx, card, 100 + index * 60, 75)
+      drawCard(card, 300 + index * 70, 235).draw(ctx)
     })
 
     // Вычисление значений рук
     const playerHandValue = calcHand(playerHand)
     const dealerHandValue = calcHand(dealerHand.filter(card => !card.hidden))
 
-    // Рисование значений очков
     ctx.fillStyle = 'black'
-    ctx.font = '20px Arial'
-    ctx.fillText('Player : ' + playerHandValue, 100, 270)
-    ctx.fillText('Dealer: ' + dealerHandValue, 100, 60)
+    ctx.font = '22px Arial'
+
+    // Рисование значений очков
+    if (game.status === 'playing' || game.result !== null) {
+      ctx.fillText('Player : ' + playerHandValue, 300, 420)
+      ctx.fillText('Dealer: ' + dealerHandValue, 300, 225)
+    }
+
+    if (game.message !== '' && game.result !== null) {
+      ctx.fillText(game.message, 500, 380)
+    }
 
     // Рисование денег игрока
-    ctx.font = '22px Arial'
-    ctx.fillText('Money: $' + playerMoney, 215, 420)
+    ctx.fillText('Money: $' + playerMoney, 500, 550)
   }
 
-  return <canvas ref={canvasRef} width={550} height={450} />
+  return <canvas ref={canvasRef} width={1100} height={650} />
 }
 
 export default GameCanvas
