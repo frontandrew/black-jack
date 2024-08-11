@@ -2,18 +2,18 @@ import { Grid, Typography, useTheme } from '@mui/material'
 import { FC } from 'react'
 import { LandingSpacer } from '../spacer'
 
-export const LandingAbout: FC = () => {
+export const LandingAbout: React.FC = () => {
   const { spacing, palette } = useTheme()
 
   return (
-    <Grid container padding={spacing(2)} justifyContent={'center'}>
+    <Grid container margin={5} justifyContent={'center'}>
       <LandingSpacer>
         <Grid
           container
           width={'100%'}
           flexDirection={'row'}
           flexWrap={'nowrap'}
-          padding={spacing(2)}
+          padding={spacing(5)}
           gap={spacing(4)}
           borderBottom={1}
           borderTop={1}

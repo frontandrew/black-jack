@@ -1,10 +1,77 @@
-import { Button, Grid, Typography, useTheme } from '@mui/material'
+import { Button, Grid, Typography, useTheme, Link } from '@mui/material'
 import { FC } from 'react'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 
 export const LandingHeader: FC = () => {
   const navigate = useNavigate()
   const { spacing, palette } = useTheme()
+  const isAuth = true
+
+  const headerContent = () => {
+    const location = useLocation()
+
+    if (location.pathname === '/') {
+      return (
+        <>
+          <Typography variant="h4" flexGrow={1}>
+            <Link href="/" sx={{ color: 'black', textDecoration: 'unset' }}>
+              🃏 <b>Black Jack</b>
+            </Link>
+          </Typography>
+          <Button
+            variant={'outlined'}
+            color={'error'}
+            onClick={() => {
+              navigate('/start')
+            }}>
+            PLAY
+          </Button>
+          <Button
+            variant={'text'}
+            onClick={() => {
+              navigate('/forum')
+            }}>
+            FORUM
+          </Button>
+          <Button
+            variant={'text'}
+            onClick={() => {
+              navigate('/leaderboard')
+            }}>
+            LEADERS
+          </Button>
+          <Button
+            variant={'text'}
+            onClick={() => {
+              navigate('/settings')
+            }}>
+            PROFILE
+          </Button>
+        </>
+      )
+    } else if (location.pathname !== '/') {
+      return (
+        <>
+          <Typography variant="h4" flexGrow={1}>
+            <Link
+              href="/forum"
+              sx={{ color: 'black', textDecoration: 'unset' }}>
+              🃏 <b>Black Jack</b> / Forum
+            </Link>
+          </Typography>
+          <Button
+            variant={'text'}
+            onClick={() => {
+              navigate('/')
+            }}>
+            HOME
+          </Button>
+        </>
+      )
+    } else {
+      ;<span>Page not found</span>
+    }
+  }
 
   return (
     <Grid
@@ -14,12 +81,11 @@ export const LandingHeader: FC = () => {
       alignItems={'center'}
       width={'100%'}
       gap={spacing(2)}
-      padding={spacing(4, 2)}
+      padding={spacing(2, 5)}
       borderBottom={1}
       borderColor={palette.divider}>
-      <Typography variant="h4" flexGrow={1}>
-        Black Jack
-      </Typography>
+      {headerContent()}
+
       <Button
         variant={'text'}
         onClick={() => {
