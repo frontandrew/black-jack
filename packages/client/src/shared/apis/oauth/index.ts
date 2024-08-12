@@ -1,4 +1,11 @@
+import axios from 'axios'
 import { AUTH_API, BASE, METHODS, OAUTH } from 'consts'
+
+const ax = axios.create({
+  baseURL: 'https://ya-praktikum.tech/api/v2',
+  withCredentials: true,
+  timeout: 1000,
+})
 
 export const oAuth = async () => {
   try {
@@ -18,41 +25,52 @@ export const oAuth = async () => {
 
 export const loginInOAuth = async () => {
   const code = new URL(window.location.href).searchParams.get('code')
-  try {
-    const response = await fetch(
-      `https://ya-praktikum.tech/api/v2/oauth/yandex`,
-      {
-        method: METHODS.POST,
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-        },
-        body: JSON.stringify({
-          code: code,
-          redirect_uri: OAUTH.REDIRECT,
-        }),
-      }
-    )
 
-    if (response.status === 200) {
-      const result = await response.json()
-      console.log(result)
-      // getUser()
-    }
-  } catch (error) {
-    console.error(`Yandex oAuth post error: ${error}`)
-  }
+  ax.post('/oauth/yandex', {
+    code: code,
+    redirect_uri: OAUTH.REDIRECT,
+  }).then(response => {
+    console.log(response)
+  })
+
+  getUser()
+
+  // try {
+  //   const response = await fetch(
+  //     `https://ya-praktikum.tech/api/v2/oauth/yandex`,
+  //     {
+  //       method: METHODS.POST,
+  //       headers: {
+  //         'Content-Type': 'application/json;charset=utf-8',
+  //       },
+  //       body: JSON.stringify({
+  //         code: code,
+  //         redirect_uri: OAUTH.REDIRECT,
+  //       }),
+  //     }
+  //   )
+
+  //   if (response.status === 200) {
+  //     const result = await response.json()
+  //     console.log(result)
+  //     // getUser()
+  //   }
+  // } catch (error) {
+  //   console.error(`Yandex oAuth post error: ${error}`)
+  // }
 }
 
 const getUser = async () => {
-  try {
-    const response = await fetch(`${BASE}${AUTH_API.GET_USER}`)
+  ax.get(`${AUTH_API.GET_USER}`)
+  // try {
+  //   const response = await fetch(`${BASE}${AUTH_API.GET_USER}`)
 
-    if (response.status === 200) {
-      const result = response.json()
+  //   if (response.status === 200) {
+  //     const result = response.json()
 
-      console.log(result)
-    }
-  } catch (error) {
-    console.error(`Get user error: ${error}`)
-  }
+  //     console.log(result)
+  //   }
+  // } catch (error) {
+  //   console.error(`Get user error: ${error}`)
+  // }
 }

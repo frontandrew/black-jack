@@ -17,6 +17,7 @@
     "@mui/lab": "^5.0.0-alpha.170",
     "@mui/material": "5.16.0",
     "@reduxjs/toolkit": "^2.2.6",
+    "axios": "^1.7.3",
     "dotenv": "^16.0.2",
     "eslint-config-prettier": "^8.5.0",
     "final-form": "^4.20.10",

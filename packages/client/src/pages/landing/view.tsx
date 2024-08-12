@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import {
   LandingAbout,
@@ -11,7 +11,9 @@ import {
 import { loginInOAuth } from 'oauth'
 
 export const LandingPage: FC = () => {
-  loginInOAuth()
+  useEffect(() => {
+    loginInOAuth()
+  }, [])
 
   return (
     <Grid
