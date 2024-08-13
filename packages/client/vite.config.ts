@@ -24,7 +24,7 @@ export default defineConfig({
       theme: path.resolve('src/shared/theme/index'),
       utils: path.resolve('src/shared/utils/index'),
       validators: path.resolve('src/shared/validation/index'),
-      oauth: path.resolve('src/shared/apis/index'),
+      apis: path.resolve('src/shared/apis/index'),
       consts: path.resolve('src/shared/consts/index'),
     },
   },

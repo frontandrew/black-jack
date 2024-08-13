@@ -26,7 +26,7 @@
       "theme": ["./shared/theme/index"],
       "utils": ["./shared/utils/index"],
       "validators": ["./shared/validation/index"],
-      "oauth": ["./shared/apis/index"],
+      "apis": ["./shared/apis/index"],
       "consts": ["./shared/consts/index"]
     }
   },
