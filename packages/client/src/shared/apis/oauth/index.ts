@@ -1,2 +1,2 @@
-export { oAuth } from './api'
-export { loginInOAuth } from './api'
+export { oAuth } from './apis'
+export { loginInOAuth } from './apis'
