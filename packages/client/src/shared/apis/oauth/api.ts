@@ -20,11 +20,12 @@ export const loginInOAuth = async () => {
   const code = new URL(window.location.href).searchParams.get('code')
 
   try {
-    await fetch(BASE, {
+    await fetch(`https://ya-praktikum.tech/api/v2/oauth/yandex`, {
       method: METHODS.POST,
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
       },
+      credentials: 'include',
       body: JSON.stringify({
         code: code,
         redirect_uri: OAUTH.REDIRECT,
