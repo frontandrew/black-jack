@@ -14,6 +14,11 @@ export default defineConfig({
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
   plugins: [react()],
+  // build: {
+  //   commonjsOptions: {
+  //     transformMixedEsModules: true,
+  //   },
+  // },
   resolve: {
     alias: {
       images: path.resolve(__dirname, 'src/assets/imgs/index'),
@@ -26,4 +31,7 @@ export default defineConfig({
       validators: path.resolve('src/shared/validation/index'),
     },
   },
+  // optimizeDeps: {
+  //   include: ['@mui/material', '@mui/system', '@mui/utils'],
+  // },
 })
