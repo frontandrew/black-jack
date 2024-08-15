@@ -6,7 +6,7 @@
 
 import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../shared/store/store'
+import { TRootState } from '../../shared/store/store'
 import { ICard } from './types'
 import { calcHand, drawCard } from './utils'
 import { DrawSprite } from './DrawSprite'
@@ -14,7 +14,7 @@ import { backRed, tableGreen } from 'images'
 
 const GameCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const game = useSelector((state: RootState) => state.game)
+  const game = useSelector((state: TRootState) => state.game)
 
   const deck = new DrawSprite(backRed, 800, 250)
   const table = new DrawSprite(tableGreen, -225, -100)

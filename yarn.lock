@@ -3477,7 +3477,7 @@ compressible@~2.0.16:
   dependencies:
     mime-db ">= 1.43.0 < 2"
 
-compression@^1.7.4:
+compression@1.7.4:
   version "1.7.4"
   resolved "https://registry.yarnpkg.com/compression/-/compression-1.7.4.tgz#95523eff170ca57c29a0ca41e6fe131f41e5bb8f"
   integrity sha512-jaSIDzP9pZVS4ZfQ+TzvtiWhdpFhE2RDHz8QJkpX9SIpLq88VueF5jJw6t+6CUQcAoA6t+x89MLrWAqpfDE8iQ==
@@ -7585,6 +7585,13 @@ quick-lru@^4.0.1:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-4.0.1.tgz#5b8878f113a58217848c6482026c73e1ba57727f"
   integrity sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==
 
+randombytes@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/randombytes/-/randombytes-2.1.0.tgz#df6f84372f0270dc65cdf6291349ab7a473d4f2a"
+  integrity sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==
+  dependencies:
+    safe-buffer "^5.1.0"
+
 range-parser@~1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
@@ -7945,7 +7952,7 @@ safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
   integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
 
-safe-buffer@5.2.1, safe-buffer@~5.2.0:
+safe-buffer@5.2.1, safe-buffer@^5.1.0, safe-buffer@~5.2.0:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.1.tgz#1eaf9fa9bdb1fdd4ec75f58f9cdb4e6b7827eec6"
   integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==
@@ -8014,6 +8021,13 @@ send@0.18.0:
     on-finished "2.4.1"
     range-parser "~1.2.1"
     statuses "2.0.1"
+
+serialize-javascript@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-6.0.2.tgz#defa1e055c83bf6d59ea805d8da862254eb6a6c2"
+  integrity sha512-Saa1xPByTTq2gdeFZYLLo+RFE35NHZkAbqZeWNd3BpzppeVisAqpDjcp8dyf6uIvEqJRd46jemmyA4iFIeVk8g==
+  dependencies:
+    randombytes "^2.1.0"
 
 serve-static@1.15.0:
   version "1.15.0"
@@ -8098,7 +8112,7 @@ simple-update-notifier@^1.0.7:
   dependencies:
     semver "~7.0.0"
 
-sirv@^2.0.4:
+sirv@2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/sirv/-/sirv-2.0.4.tgz#5dd9a725c578e34e449f332703eb2a74e46a29b0"
   integrity sha512-94Bdh3cC2PKrbgSOUqTiGPWVZeSiXfKOVZNJniWoqrWrRkB1CJzBU3NEbiTsPcYy1lDsANA/THzS+9WBiy5nfQ==
@@ -8810,7 +8824,7 @@ vary@^1, vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
-vite@^5.4.0:
+vite@5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/vite/-/vite-5.4.0.tgz#11dca8a961369ba8b5cae42d068c7ad684d5370f"
   integrity sha512-5xokfMX0PIiwCMCMb9ZJcMyh5wbBun0zUzKib+L65vAZ8GY9ePZMXxFrHbr/Kyll2+LSCY7xtERPpxkBDKngwg==

@@ -6,7 +6,7 @@
  */
 
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { RootState } from '../../shared/store/store'
+import { TRootState } from '../../shared/store/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -25,7 +25,7 @@ import './style.css'
 export const GamePage: React.FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const game = useSelector((state: RootState) => state.game)
+  const game = useSelector((state: TRootState) => state.game)
   const [bet, setBet] = useState(game.playerBet)
   const maxbet = game.playerMoney
 
