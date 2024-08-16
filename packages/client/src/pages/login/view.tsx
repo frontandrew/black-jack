@@ -1,10 +1,19 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
-import { Box, Button, Grid, Paper, Typography, useTheme } from '@mui/material'
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Paper,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import { useForm } from 'react-final-form-hooks'
 import { FieldText } from 'components'
 import { validators } from 'validators'
 import './style.css'
+import { ButtonYandex } from './components'
 
 type LoginType = object
 
@@ -75,6 +84,8 @@ export const LoginPage: React.FC = () => {
             sign up
           </Button>
         </Grid>
+        <Divider variant="middle" />
+        <ButtonYandex />
       </Paper>
     </Box>
   )

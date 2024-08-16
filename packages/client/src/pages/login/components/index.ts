@@ -1,0 +1,1 @@
+export { ButtonYandex } from './buttonyandex'
