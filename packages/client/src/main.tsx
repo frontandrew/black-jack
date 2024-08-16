@@ -2,8 +2,11 @@ import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { CssBaseline } from '@mui/material'
-import { App } from './app'
 import { store } from './shared/store/store'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { routes } from './routes'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import './style.css'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
@@ -25,12 +28,17 @@ if ('serviceWorker' in navigator) {
   })
 }
 
+const router = createBrowserRouter(routes)
+const theme = createTheme()
+
 hydrateRoot(
   document.querySelector('main') as HTMLElement,
   <StrictMode>
     <CssBaseline />
     <Provider store={store}>
-      <App />
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </Provider>
   </StrictMode>
 )

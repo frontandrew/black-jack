@@ -19,8 +19,8 @@ declare global {
 
 export const reducer = combineReducers({
   game: gameReducer,
-  // topics: topicsReducer,
-  user: userReducer, // demo
+  topics: topicsReducer,
+  // user: userReducer, // demo
 })
 
 export const store = configureStore({

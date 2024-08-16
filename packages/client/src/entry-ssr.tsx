@@ -1,25 +1,44 @@
 import { CssBaseline } from '@mui/material'
 import { StrictMode } from 'react'
-import { App } from './app'
+import { Request as ExpressRequest } from 'express'
+import {
+  createStaticHandler,
+  createStaticRouter,
+  StaticRouterProvider,
+} from 'react-router-dom/server'
+import { matchRoutes } from 'react-router-dom'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import { fetchUserThunk } from 'features/userSlice/model'
+import { createFetchRequest, createUrl } from './entry-server.utils'
 import { reducer } from './shared/store/store'
 import { renderToString } from 'react-dom/server'
+import { routes } from './routes'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 
-export const render = async () => {
+export async function render(req: ExpressRequest) {
+  const { query, dataRoutes } = createStaticHandler(routes)
+  const fetchRequest = createFetchRequest(req)
+  const context = await query(fetchRequest)
+  if (context instanceof Response) {
+    throw context
+  }
+
   const store = configureStore({
     reducer,
   })
 
-  try {
-    await store.dispatch(fetchUserThunk())
+  const router = createStaticRouter(dataRoutes, context)
+  const theme = createTheme()
 
+  try {
     const html = renderToString(
       <StrictMode>
         <CssBaseline />
         <Provider store={store}>
-          <App />
+          <ThemeProvider theme={theme}>
+            <StaticRouterProvider router={router} context={context} />
+          </ThemeProvider>
         </Provider>
       </StrictMode>
     )

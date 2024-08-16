@@ -7,5 +7,5 @@
     "esModuleInterop": true,
     "lib": ["es2019", "DOM"]
   },
-  "include": ["ssr-server.js"]
+  "include": ["ssr-server.ts"]
 }
