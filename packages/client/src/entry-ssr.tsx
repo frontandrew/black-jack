@@ -17,18 +17,18 @@ import { routes } from './routes'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 
 export async function render(req: ExpressRequest) {
-  const { query, dataRoutes } = createStaticHandler(routes)
-  const fetchRequest = createFetchRequest(req)
-  const context = await query(fetchRequest)
-  if (context instanceof Response) {
-    throw context
-  }
+  // const { query, dataRoutes } = createStaticHandler(routes)
+  // const fetchRequest = createFetchRequest(req)
+  // const context = await query(fetchRequest)
+  // if (context instanceof Response) {
+  //   throw context
+  // }
 
   const store = configureStore({
     reducer,
   })
 
-  const router = createStaticRouter(dataRoutes, context)
+  // const router = createStaticRouter(dataRoutes, context)
   const theme = createTheme()
 
   try {
@@ -36,9 +36,10 @@ export async function render(req: ExpressRequest) {
       <StrictMode>
         <CssBaseline />
         <Provider store={store}>
-          <ThemeProvider theme={theme}>
+          <>loading...</>
+          {/* <ThemeProvider theme={theme}>
             <StaticRouterProvider router={router} context={context} />
-          </ThemeProvider>
+          </ThemeProvider> */}
         </Provider>
       </StrictMode>
     )
