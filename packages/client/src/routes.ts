@@ -1,6 +1,16 @@
 import { MainPage } from './pages/demo/main'
 import { FriendsPage } from './pages/demo/friend'
-import { NotFoundPage } from './pages/demo/404'
+import { TAppDispatch, TRootState } from 'shared/store/store'
+
+export type PageInitContext = {
+  clientToken?: string
+}
+
+export type PageInitArgs = {
+  dispatch: TAppDispatch
+  state: TRootState
+  ctx: PageInitContext
+}
 
 import {
   ErrorPage,
@@ -17,6 +27,14 @@ import {
 } from './pages'
 
 export const routes = [
+  {
+    path: '/demo',
+    Component: MainPage,
+  },
+  {
+    path: '/friends',
+    Component: FriendsPage,
+  },
   {
     path: '/',
     Component: LandingPage,

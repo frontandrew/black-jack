@@ -5,7 +5,10 @@
     "module": "commonjs",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "lib": ["es2019", "DOM"]
+    "lib": ["es2019", "DOM"],
+    "allowJs": true,
+    "checkJs": true,
+    "outDir": "./dist" 
   },
-  "include": ["ssr-server.ts"]
+  "include": ["ssr-server.js"]
 }

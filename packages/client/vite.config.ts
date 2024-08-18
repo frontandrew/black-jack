@@ -6,6 +6,7 @@ import path from 'path'
 dotenv.config()
 
 // https://vitejs.dev/config/
+// ToDo не работает <ThemeProvider> в entry-ssr при preview
 export default defineConfig({
   server: {
     port: Number(process.env.CLIENT_PORT) || 3000,
@@ -14,10 +15,8 @@ export default defineConfig({
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
   plugins: [react()],
-  // build: {
-  //   commonjsOptions: {
-  //     transformMixedEsModules: true,
-  //   },
+  // ssr: {
+  //   noExternal: ['@mui/material', '@mui/system', '@emotion/react', '@emotion/styled']
   // },
   resolve: {
     alias: {
@@ -32,6 +31,6 @@ export default defineConfig({
     },
   },
   // optimizeDeps: {
-  //   include: ['@mui/material', '@mui/system', '@mui/utils'],
-  // },
+  //   include: ['@mui/material', '@mui/system', '@emotion/react', '@emotion/styled']
+  // }
 })
