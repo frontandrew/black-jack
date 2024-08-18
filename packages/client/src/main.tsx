@@ -33,12 +33,12 @@ const theme = createTheme()
 
 hydrateRoot(
   document.querySelector('main') as HTMLElement,
-  <StrictMode>
+  <>
     <CssBaseline />
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <RouterProvider router={router} />
       </ThemeProvider>
     </Provider>
-  </StrictMode>
+  </>
 )

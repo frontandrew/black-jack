@@ -71,14 +71,14 @@ export async function render(req: ExpressRequest) {
   try {
     const html = renderToString(
       sheet.collectStyles(
-        <StrictMode>
+        <>
           <CssBaseline />
           <Provider store={store}>
             {/* <ThemeProvider theme={theme}> */}
             <StaticRouterProvider router={router} context={context} />
             {/* </ThemeProvider> */}
           </Provider>
-        </StrictMode>
+        </>
       )
     )
     const styleTags = sheet.getStyleTags()
