@@ -25,6 +25,7 @@ export default defineConfig({
   // },
   resolve: {
     alias: {
+      apis: path.resolve('src/shared/apis/index'),
       images: path.resolve(__dirname, 'src/assets/imgs/index'),
       sounds: path.resolve('src/assets/sounds/index'),
       features: path.resolve('src/features/'),
@@ -33,6 +34,7 @@ export default defineConfig({
       theme: path.resolve('src/shared/theme/index'),
       utils: path.resolve('src/shared/utils/index'),
       validators: path.resolve('src/shared/validation/index'),
+      consts: path.resolve('src/shared/consts/index'),
     },
   },
   // optimizeDeps: {
