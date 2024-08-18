@@ -6,9 +6,11 @@ import {
 } from 'react-redux'
 import { combineReducers } from 'redux'
 import { configureStore } from '@reduxjs/toolkit'
-import gameReducer from '../../features/game/model'
-import topicsReducer from '../../features/forum/model'
-import userReducer from '../../features/userSlice/model'
+import gameReducer from './game/gameSlice'
+import topicsReducer from './forum/topicsSlice'
+import friendsReducer from '../store/demo/friendsSlice'
+import ssrReducer from '../store/ssr/ssrSlice'
+import userReducer from '../store/demo/userSlice'
 import logger from 'redux-logger'
 
 declare global {
@@ -20,7 +22,9 @@ declare global {
 export const reducer = combineReducers({
   game: gameReducer,
   topics: topicsReducer,
-  // user: userReducer, // demo
+  friends: friendsReducer, // demo
+  ssr: ssrReducer,
+  user: userReducer, // demo
 })
 
 export const store = configureStore({

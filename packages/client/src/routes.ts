@@ -1,5 +1,7 @@
-import { MainPage } from './pages/demo/main'
-import { FriendsPage } from './pages/demo/friend'
+import { initMainPage, MainPage } from './pages/demo/main' // demo
+import { initFriendsPage, FriendsPage } from './pages/demo/friend' // demo
+import { initNotFoundPage, NotFoundPage } from './pages/demo/notFound' // demo
+
 import { TAppDispatch, TRootState } from 'shared/store/store'
 
 export type PageInitContext = {
@@ -30,19 +32,26 @@ export const routes = [
   {
     path: '/demo',
     Component: MainPage,
+    fetchData: initMainPage,
   },
   {
     path: '/friends',
     Component: FriendsPage,
+    fetchData: initFriendsPage,
+  },
+  {
+    path: '*',
+    Component: NotFoundPage,
+    fetchData: initNotFoundPage,
   },
   {
     path: '/',
     Component: LandingPage,
   },
-  {
-    path: '*',
-    Component: ErrorPage,
-  },
+  // {
+  //   path: '*',
+  //   Component: ErrorPage,
+  // },
   {
     path: 'sign-in',
     Component: LoginPage,

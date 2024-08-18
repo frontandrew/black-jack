@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { TRootState } from '../../../shared/store/store'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Box, TextField, Button, Typography, Container } from '@mui/material'
-import { addComment } from '../../../features/forum/model'
+import { addComment } from '../../../shared/store/forum/topicsSlice'
 import { LandingHeader } from '../../landing/components'
 
 export const TopicPage: FC = () => {

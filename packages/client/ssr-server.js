@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises'
 import express from 'express'
 import serialize from 'serialize-javascript'
+import cors from 'cors';
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production'
@@ -18,6 +19,13 @@ async function createServer() {
 
   // Create http server
   const app = express()
+
+  app.use(
+    cors({
+      origin: ['http://localhost:3001'],
+      credentials: true,
+    }),
+  );
 
   // Add Vite or respective production middlewares
   let vite
@@ -42,11 +50,13 @@ async function createServer() {
       const url = req.originalUrl.replace(base, '')
 
       let template
-      let render = function () {
+      let render = function (req) {
         return new Promise(function (resolve) {
           resolve({
             html: '',
             initialState: {},
+            helmet: {},
+            styleTags: {},
           })
         })
       }
@@ -62,14 +72,23 @@ async function createServer() {
         render = (await import('./dist/server/entry-ssr.js')).render
       }
 
-      const { html: appHtml, initialState } = await render(req)
+      const {
+        html: appHtml,
+        initialState,
+        helmet,
+        styleTags,
+      } = await render(req)
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml).replace(
-        `<!--ssr-initial-state-->`,
-        `<script>window.APP_INITIAL_STATE = ${serialize(initialState, {
-          isJSON: true,
-        })}</script>`
-      )
+      const html = template
+        .replace('<!--ssr-styles-->', styleTags)
+        .replace(`<!--ssr-helmet-->`, `${helmet.meta.toString()} ${helmet.title.toString()} ${helmet.link.toString()}`)
+        .replace(`<!--ssr-outlet-->`, appHtml)
+        .replace(
+          `<!--ssr-initial-state-->`,
+          `<script>window.APP_INITIAL_STATE = ${serialize(initialState, {
+            isJSON: true,
+          })}</script>`
+        )
 
       res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
     } catch (e) {

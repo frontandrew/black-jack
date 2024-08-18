@@ -26,9 +26,11 @@
       "theme": ["./shared/theme/index"],
       "utils": ["./shared/utils/index"],
       "validators": ["./shared/validation/index"]
-
     }
   },
   "include": ["src", "public/sw.ts", "server"],
-  "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.server.json" }]
+  "references": [
+    { "path": "./tsconfig.node.json" },
+    { "path": "./tsconfig.server.json" }
+  ]
 }

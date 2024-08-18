@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { TRootState } from 'shared/store/store'
+import { TRootState } from '../store'
+import { SERVER_HOST } from '../../../constants'
 
 interface User {
   name: string
@@ -19,6 +20,7 @@ const initialState: UserState = {
 export const fetchUserThunk = createAsyncThunk(
   'user/fetchUserThunk',
   async (_: void) => {
+    // const url = `${SERVER_HOST}/user` ToDo SERVER_HOST
     const url = `http://localhost:3001/user`
     return fetch(url).then(res => res.json())
   }

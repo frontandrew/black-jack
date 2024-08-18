@@ -12,9 +12,14 @@ export default defineConfig({
     port: Number(process.env.CLIENT_PORT) || 3000,
   },
   define: {
-    __SERVER_PORT__: process.env.SERVER_PORT,
+    //__SERVER_PORT__: process.env.SERVER_PORT,
+    __EXTERNAL_SERVER_URL__: JSON.stringify(process.env.EXTERNAL_SERVER_URL),
+    __INTERNAL_SERVER_URL__: JSON.stringify(process.env.INTERNAL_SERVER_URL),
   },
   plugins: [react()],
+  build: {
+    outDir: path.join(__dirname, 'dist/client'),
+  },
   // ssr: {
   //   noExternal: ['@mui/material', '@mui/system', '@emotion/react', '@emotion/styled']
   // },

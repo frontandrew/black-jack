@@ -15,7 +15,7 @@ import {
   startGame,
   resetGame,
   newGame,
-} from 'features/game/model'
+} from '../../shared/store/game/gameSlice'
 import CanvasGame from 'features/game/view'
 import { calcHand } from 'features/game/utils'
 import { Button, TextField, Box } from '@mui/material'
