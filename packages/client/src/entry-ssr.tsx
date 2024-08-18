@@ -48,19 +48,19 @@ export async function render(req: ExpressRequest) {
     },
   ] = foundRoutes
 
-  try {
-    if (fetchData) {
-      await fetchData({
-        dispatch: store.dispatch,
-        state: store.getState(),
-        ctx: createContext(req),
-      })
-    } else {
-      console.log('fetchData is not defined')
-    }
-  } catch (e) {
-    console.log('Инициализация страницы произошла с ошибкой', e)
-  }
+  // try {
+  //   if (fetchData) {
+  //   await fetchData({
+  //     dispatch: store.dispatch,
+  //     state: store.getState(),
+  //     ctx: createContext(req),
+  //   })
+  //   } else {
+  //     console.log('fetchData is not defined')
+  //   }
+  // } catch (e) {
+  //   console.log('Инициализация страницы произошла с ошибкой', e)
+  // }
 
   store.dispatch(setPageHasBeenInitializedOnServer(true))
 

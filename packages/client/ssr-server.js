@@ -22,7 +22,7 @@ async function createServer() {
 
   app.use(
     cors({
-      origin: ['http://localhost:3001'],
+      origin: ['http://localhost', 'http://localhost:3001'],
       credentials: true,
     }),
   );
@@ -60,7 +60,6 @@ async function createServer() {
           })
         })
       }
-      // let render: () => Promise<{ html: string; initialState: unknown }> // ToDo need ssr-server.ts
 
       if (!isProduction) {
         // Always read fresh template in development
