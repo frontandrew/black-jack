@@ -11,7 +11,7 @@
     "open": "start http://localhost",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "jest ./"
+    "test": "jest ./ --passWithNoTests"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
