@@ -2,43 +2,32 @@ import { DrawSprite } from './DrawSprite'
 import { ICard, TCardSuit, TCardValue } from './types'
 import * as sprites from 'images'
 
-const cards: Record<TCardSuit | TCardValue, string> = {
-  '♥️': 'Hearts',
-  '♦️': 'Diamonds',
-  '♠️': 'Spades',
-  '♣️': 'Clubs',
-  '2': 'two',
-  '3': 'three',
-  '4': 'four',
-  '5': 'five',
-  '6': 'six',
-  '7': 'seven',
-  '8': 'eight',
-  '9': 'nine',
-  '10': 'ten',
-  J: 'jack',
-  Q: 'queen',
-  K: 'king',
-  A: 'ace',
-}
+const cardSuits: TCardSuit[] = ['♥️', '♦️', '♠️', '♣️']
+const cardValues: TCardValue[] = [
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '10',
+  'J',
+  'Q',
+  'K',
+  'A',
+]
 
 /**
  * Создание колоды карт
  */
 export function createDeck(): ICard[] {
-  const suitValues = ['Hearts', 'Diamonds', 'Spades', 'Clubs']
-  const deck: ICard[] = []
-  const suits = Object.entries(cards)
-    .filter(([_, value]) => suitValues.includes(value))
-    .map(([key]) => key as TCardSuit)
-  const values = Object.entries(cards)
-    .filter(([_, value]) => !suitValues.includes(value))
-    .map(([key]) => key as TCardValue)
-
   // для каждой игры замешиваем 6 колод
+  const deck: ICard[] = []
   for (let i = 0; i < 6; i++) {
-    for (const suit of suits) {
-      for (const value of values) {
+    for (const suit of cardSuits) {
+      for (const value of cardValues) {
         deck.push({ suit, value })
       }
     }
@@ -85,6 +74,29 @@ export function calcHand(hand: ICard[]): number {
   }
 
   return value
+}
+
+/**
+ * Draw cards with sprites
+ */
+const cards: Record<TCardSuit | TCardValue, string> = {
+  '♥️': 'Hearts',
+  '♦️': 'Diamonds',
+  '♠️': 'Spades',
+  '♣️': 'Clubs',
+  '2': 'two',
+  '3': 'three',
+  '4': 'four',
+  '5': 'five',
+  '6': 'six',
+  '7': 'seven',
+  '8': 'eight',
+  '9': 'nine',
+  '10': 'ten',
+  J: 'jack',
+  Q: 'queen',
+  K: 'king',
+  A: 'ace',
 }
 
 export function drawCard(card: ICard, x: number, y: number): DrawSprite {
