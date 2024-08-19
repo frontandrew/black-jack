@@ -1,6 +1,6 @@
 import { DrawSprite } from './DrawSprite'
 import { ICard, TCardSuit, TCardValue } from './types'
-import * as sprites from 'images'
+// import * as sprites from 'images'
 
 const cardSuits: TCardSuit[] = ['♥️', '♦️', '♠️', '♣️']
 const cardValues: TCardValue[] = [
@@ -99,7 +99,7 @@ export function drawCard(
     if (card.suit === '♠️' || card.suit === '♣️') {
       ctx.fillStyle = 'black'
     }
-    ctx.font = '22px Arial'
+    ctx.font = '18px Arial'
     ctx.fillText(`${card.value}${card.suit}`, x + 5, y + 45)
   }
 }
@@ -127,16 +127,16 @@ const cards: Record<TCardSuit | TCardValue, string> = {
   A: 'ace',
 }
 
-export function drawSpriteCard(card: ICard, x: number, y: number): DrawSprite {
-  if (card.hidden) {
-    return new DrawSprite(sprites.backRed, x, y)
-  }
+// export function drawSpriteCard(card: ICard, x: number, y: number): DrawSprite {
+//   if (card.hidden) {
+//     return new DrawSprite(sprites.backRed, x, y)
+//   }
 
-  const spriteName = `${cards[card.value]}${cards[card.suit]}`
+//   const spriteName = `${cards[card.value]}${cards[card.suit]}`
 
-  return new DrawSprite(
-    sprites[spriteName as keyof typeof sprites] || sprites.backBlue,
-    x,
-    y
-  )
-}
+//   return new DrawSprite(
+//     sprites[spriteName as keyof typeof sprites] || sprites.backBlue,
+//     x,
+//     y
+//   )
+// }
