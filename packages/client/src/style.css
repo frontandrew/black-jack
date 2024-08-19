@@ -13,7 +13,6 @@ body {
     display: flex;
     flex-direction: column;
 }
-
 .custom-text-error p.Mui-error {
     width: 100%;
     position: absolute;
