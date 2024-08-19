@@ -1,6 +1,22 @@
+export type TCardSuit = '♥️' | '♦️' | '♠️' | '♣️'
+export type TCardValue =
+  | '2'
+  | '3'
+  | '4'
+  | '5'
+  | '6'
+  | '7'
+  | '8'
+  | '9'
+  | '10'
+  | 'J'
+  | 'Q'
+  | 'K'
+  | 'A'
+
 export interface ICard {
-  suit: string
-  value: string
+  suit: TCardSuit
+  value: TCardValue
   hidden?: boolean
 }
 
