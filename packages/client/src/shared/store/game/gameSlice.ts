@@ -18,8 +18,8 @@
  */
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { createDeck, shuffle, calcHand } from './utils'
-import { ICard, IGameState } from './types'
+import { createDeck, shuffle, calcHand } from '../../../features/game/utils'
+import { ICard, IGameState } from '../../../features/game/types'
 
 const initialState: IGameState = {
   playerHand: [],

@@ -28,9 +28,11 @@
       "utils": ["./shared/utils/index"],
       "validators": ["./shared/validation/index"],
       "consts": ["./shared/consts/index"]
-
     }
   },
   "include": ["src", "public/sw.ts", "server"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [
+    { "path": "./tsconfig.node.json" },
+    { "path": "./tsconfig.server.json" }
+  ]
 }

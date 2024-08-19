@@ -1,16 +1,16 @@
 import { useState, FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../../shared/store/store'
+import { TRootState } from '../../../shared/store/store'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Box, TextField, Button, Typography, Container } from '@mui/material'
-import { addComment } from '../../../features/forum/model'
+import { addComment } from '../../../shared/store/forum/topicsSlice'
 import { LandingHeader } from '../../landing/components'
 
 export const TopicPage: FC = () => {
   const [comment, setComment] = useState('')
   const { id } = useParams<{ id: string }>()
   const dispatch = useDispatch()
-  const topic = useSelector((state: RootState) => {
+  const topic = useSelector((state: TRootState) => {
     if (id) return state.topics.topics.find(t => t.id === id) // ToDo move in createSlice
   })
   const navigate = useNavigate()

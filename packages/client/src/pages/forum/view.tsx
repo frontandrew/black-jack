@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../shared/store/store'
+import { TRootState } from '../../shared/store/store'
 import {
   Typography,
   List,
@@ -17,7 +17,7 @@ import { LandingHeader } from '../landing/components'
 export const ForumPage: FC = () => {
   const navigate = useNavigate()
   const [isModalOpen, setModalOpen] = useState(false)
-  const topics = useSelector((state: RootState) => state.topics.topics)
+  const topics = useSelector((state: TRootState) => state.topics.topics)
 
   return (
     <>

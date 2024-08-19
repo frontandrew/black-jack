@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { useForm } from 'react-final-form-hooks'
 import { Modal, Box, Button, Typography, Grid } from '@mui/material'
-import { addTopic } from '../../../features/forum/model'
+import { addTopic } from '../../../shared/store/forum/topicsSlice'
 import { FieldText } from 'components'
 
 interface AddTopicModalProps {

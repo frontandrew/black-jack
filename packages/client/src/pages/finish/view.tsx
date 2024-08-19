@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { RootState } from 'shared/store/store'
+import { TRootState } from 'shared/store/store'
 import { Box, Button, Typography } from '@mui/material'
 import './style.css'
 
 export const FinishPage: React.FC = () => {
   const navigate = useNavigate()
-  const game = useSelector((state: RootState) => state.game)
+  const game = useSelector((state: TRootState) => state.game)
 
   const handleRestart = () => {
     navigate('/start')
