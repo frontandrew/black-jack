@@ -3,7 +3,6 @@ import express from 'express'
 import serialize from 'serialize-javascript'
 import cors from 'cors';
 
-// Constants
 const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT || 80
 const base = process.env.BASE || '/'
@@ -13,7 +12,7 @@ async function createServer() {
   const templateHtml = isProduction
     ? await fs.readFile('./dist/client/index.html', 'utf-8')
     : ''
-  const ssrManifest = isProduction
+  const ssrManifest = isProduction // ToDo ssrManifest
     ? await fs.readFile('./dist/client/.vite/ssr-manifest.json', 'utf-8')
     : undefined
 
