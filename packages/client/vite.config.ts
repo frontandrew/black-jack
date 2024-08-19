@@ -12,7 +12,6 @@ export default defineConfig({
     port: Number(process.env.CLIENT_PORT) || 3000,
   },
   define: {
-    //__SERVER_PORT__: process.env.SERVER_PORT,
     __EXTERNAL_SERVER_URL__: JSON.stringify(process.env.EXTERNAL_SERVER_URL),
     __INTERNAL_SERVER_URL__: JSON.stringify(process.env.INTERNAL_SERVER_URL),
   },
@@ -21,12 +20,12 @@ export default defineConfig({
     outDir: path.join(__dirname, 'dist/client'),
   },
   // ssr: {
-  //   noExternal: ['@mui/material', '@mui/system', '@emotion/react', '@emotion/styled']
+  //   noExternal: ['@mui/material', '@mui/system', '@emotion/react', '@emotion/styled'] // Возможно пригодится для ThemeProvider
   // },
   resolve: {
     alias: {
       apis: path.resolve('src/shared/apis/index'),
-      images: path.resolve(__dirname, 'src/assets/imgs/index'),
+      images: path.resolve(__dirname, 'src/assets/img/index'),
       sounds: path.resolve('src/assets/sounds/index'),
       features: path.resolve('src/features/'),
       pages: path.resolve('src/pages/index'),
@@ -34,10 +33,10 @@ export default defineConfig({
       theme: path.resolve('src/shared/theme/index'),
       utils: path.resolve('src/shared/utils/index'),
       validators: path.resolve('src/shared/validation/index'),
-      consts: path.resolve('src/shared/consts/index'),
+      constant: path.resolve('src/shared/constant/index'),
     },
   },
   // optimizeDeps: {
-  //   include: ['@mui/material', '@mui/system', '@emotion/react', '@emotion/styled']
+  //   include: ['@mui/material', '@mui/system', '@emotion/react', '@emotion/styled'] // Возможно пригодится для ThemeProvider
   // }
 })

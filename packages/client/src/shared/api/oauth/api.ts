@@ -1,4 +1,4 @@
-import { BASE, METHODS, OAUTH } from 'consts'
+import { BASE, METHODS, OAUTH } from 'constant'
 
 export const oAuth = async () => {
   try {

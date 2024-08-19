@@ -19,7 +19,7 @@
     "baseUrl": "./src",
     "paths": {
       "apis": ["./shared/apis/index"],
-      "images": ["./assets/imgs/index"],
+      "images": ["./assets/img/index"],
       "sounds": ["./assets/sounds/index"],
       "features": ["./features/*"],
       "pages": ["./pages/index"],
@@ -27,7 +27,7 @@
       "theme": ["./shared/theme/index"],
       "utils": ["./shared/utils/index"],
       "validators": ["./shared/validation/index"],
-      "consts": ["./shared/consts/index"]
+      "constant": ["./shared/constant/index"]
     }
   },
   "include": ["src", "public/sw.ts", "server"],

@@ -1,4 +1,5 @@
 export const BASE = 'https://ya-praktikum.tech/api/v2'
+import './client.d'
 
 export enum METHODS {
   GET = 'GET',
@@ -17,3 +18,8 @@ export const OAUTH = {
 export const AUTH_API = {
   GET_USER: '/auth/user',
 }
+
+export const SERVER_HOST =
+  typeof window === 'undefined'
+    ? __INTERNAL_SERVER_URL__
+    : __EXTERNAL_SERVER_URL__
