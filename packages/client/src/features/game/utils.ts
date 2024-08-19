@@ -79,6 +79,34 @@ export function calcHand(hand: ICard[]): number {
 /**
  * Draw cards with sprites
  */
+export function drawCard(
+  ctx: CanvasRenderingContext2D,
+  card: ICard,
+  x: number,
+  y: number
+) {
+  if (card.hidden) {
+    ctx.fillStyle = 'gray'
+    ctx.fillRect(x, y, 50, 70)
+    ctx.strokeRect(x, y, 50, 70)
+  } else {
+    ctx.fillStyle = 'white'
+    ctx.fillRect(x, y, 50, 70)
+    ctx.strokeRect(x, y, 50, 70)
+    if (card.suit === '♥️' || card.suit === '♦️') {
+      ctx.fillStyle = 'red'
+    }
+    if (card.suit === '♠️' || card.suit === '♣️') {
+      ctx.fillStyle = 'black'
+    }
+    ctx.font = '22px Arial'
+    ctx.fillText(`${card.value}${card.suit}`, x + 5, y + 45)
+  }
+}
+
+/**
+ * Draw cards with sprites
+ */
 const cards: Record<TCardSuit | TCardValue, string> = {
   '♥️': 'Hearts',
   '♦️': 'Diamonds',
@@ -99,7 +127,7 @@ const cards: Record<TCardSuit | TCardValue, string> = {
   A: 'ace',
 }
 
-export function drawCard(card: ICard, x: number, y: number): DrawSprite {
+export function drawSpriteCard(card: ICard, x: number, y: number): DrawSprite {
   if (card.hidden) {
     return new DrawSprite(sprites.backRed, x, y)
   }

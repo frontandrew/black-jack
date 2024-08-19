@@ -16,7 +16,7 @@ const GameCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const game = useSelector((state: TRootState) => state.game)
 
-  const deck = new DrawSprite(backRed, 800, 250)
+  // const deck = new DrawSprite(backRed, 800, 250)
   const table = new DrawSprite(tableGreen, -225, -100)
 
   // Перерисовывание игры (canvas) при каждом изменении состояния игры
@@ -44,14 +44,16 @@ const GameCanvas: React.FC = () => {
   ) => {
     ctx.clearRect(0, 0, 800, 600)
     table.drawTable(ctx, 1600, 950)
-    deck.draw(ctx)
+    // deck.draw(ctx)
 
     playerHand.forEach((card, index) => {
-      drawCard(card, 300 + index * 70, 430).draw(ctx)
+      // drawCard(card, 300 + index * 70, 430).draw(ctx)
+      drawCard(ctx, card, 300 + index * 70, 430)
     })
 
     dealerHand.forEach((card, index) => {
-      drawCard(card, 300 + index * 70, 235).draw(ctx)
+      // drawCard(card, 300 + index * 70, 235).draw(ctx)
+      drawCard(ctx, card, 300 + index * 70, 235)
     })
 
     // Вычисление значений рук
@@ -63,7 +65,7 @@ const GameCanvas: React.FC = () => {
 
     // Рисование значений очков
     if (game.status === 'playing' || game.result !== null) {
-      ctx.fillText('Player : ' + playerHandValue, 300, 420)
+      ctx.fillText('Player: ' + playerHandValue, 300, 420)
       ctx.fillText('Dealer: ' + dealerHandValue, 300, 225)
     }
 
