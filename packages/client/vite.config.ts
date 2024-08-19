@@ -25,7 +25,7 @@ export default defineConfig({
   resolve: {
     alias: {
       apis: path.resolve('src/shared/apis/index'),
-      images: path.resolve(__dirname, 'src/assets/imgs/index'),
+      images: path.resolve(__dirname, 'src/assets/img/index'),
       sounds: path.resolve('src/assets/sounds/index'),
       features: path.resolve('src/features/'),
       pages: path.resolve('src/pages/index'),

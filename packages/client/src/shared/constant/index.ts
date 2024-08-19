@@ -1,5 +1,5 @@
 export const BASE = 'https://ya-praktikum.tech/api/v2'
-import './client'
+import './client.d'
 
 export enum METHODS {
   GET = 'GET',

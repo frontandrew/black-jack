@@ -11,7 +11,7 @@ export default {
       "<rootDir>/file.parser.cjs",
   },
   moduleNameMapper: {
-    '^images': '<rootDir>/src/assets/imgs',
+    '^images': '<rootDir>/src/assets/img',
     '^sounds': '<rootDir>/src/assets/sounds',
     '^features/(.*)': [
       '<rootDir>/src/features/game/model',
