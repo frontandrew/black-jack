@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
+import { Helmet } from 'react-helmet'
 import {
   Box,
   Button,
@@ -33,60 +34,67 @@ export const LoginPage: React.FC = () => {
   const { hasValidationErrors } = form.getState()
 
   return (
-    <Box className="login-page">
-      <Paper elevation={3} square={false}>
-        <Grid
-          container
-          direction="column"
-          display="flex"
-          gap="2em"
-          padding={spacing(4, 4)}
-          component={'form'}
-          className="custom-text-error"
-          width={'400px'}
-          onSubmit={event => {
-            handleSubmit(event)
-          }}>
-          <Typography variant="h5" align="center" paddingBottom={3}>
-            Login
-          </Typography>
-
-          <FieldText
-            form={form}
-            name="login"
-            label="Login"
-            validator={validators.login}
-            size="small"
-            required
-          />
-
-          <FieldText
-            form={form}
-            name="password"
-            label="Password"
-            validator={validators.password}
-            size="small"
-            type="password"
-            required
-          />
-
-          <Button
-            type="submit"
-            variant="contained"
-            disabled={hasValidationErrors}>
-            SIGN IN
-          </Button>
-          <Button
-            variant="text"
-            onClick={() => {
-              navigate('/sign-up')
+    <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Login</title>
+        <meta name="description" content="Login" />
+      </Helmet>
+      <Box className="login-page">
+        <Paper elevation={3} square={false}>
+          <Grid
+            container
+            direction="column"
+            display="flex"
+            gap="2em"
+            padding={spacing(4, 4)}
+            component={'form'}
+            className="custom-text-error"
+            width={'400px'}
+            onSubmit={event => {
+              handleSubmit(event)
             }}>
-            sign up
-          </Button>
-        </Grid>
-        <Divider variant="middle" />
-        <ButtonYandex />
-      </Paper>
-    </Box>
+            <Typography variant="h5" align="center" paddingBottom={3}>
+              Login
+            </Typography>
+
+            <FieldText
+              form={form}
+              name="login"
+              label="Login"
+              validator={validators.login}
+              size="small"
+              required
+            />
+
+            <FieldText
+              form={form}
+              name="password"
+              label="Password"
+              validator={validators.password}
+              size="small"
+              type="password"
+              required
+            />
+
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={hasValidationErrors}>
+              SIGN IN
+            </Button>
+            <Button
+              variant="text"
+              onClick={() => {
+                navigate('/sign-up')
+              }}>
+              sign up
+            </Button>
+          </Grid>
+          <Divider variant="middle" />
+          <ButtonYandex />
+        </Paper>
+      </Box>
+    </>
   )
 }

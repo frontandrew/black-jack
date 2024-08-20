@@ -1,10 +1,9 @@
 import { Grid, Link, SvgIcon, Typography, useTheme } from '@mui/material'
 import { GitHub } from '@mui/icons-material'
-import { FC } from 'react'
 
 const currYear = new Date().getFullYear()
 
-export const LandingFooter: FC = () => {
+export const LandingFooter: React.FC = () => {
   const { spacing, palette } = useTheme()
 
   const backgroundColor = palette.grey[800]

@@ -1,12 +1,13 @@
-import { useState, FC } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Helmet } from 'react-helmet'
 import { TRootState } from '../../../shared/store/store'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Box, TextField, Button, Typography, Container } from '@mui/material'
 import { addComment } from '../../../shared/store/forum/topicsSlice'
 import { LandingHeader } from '../../landing/components'
 
-export const TopicPage: FC = () => {
+export const TopicPage: React.FC = () => {
   const [comment, setComment] = useState('')
   const { id } = useParams<{ id: string }>()
   const dispatch = useDispatch()
@@ -18,6 +19,11 @@ export const TopicPage: FC = () => {
   if (!topic)
     return (
       <>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Topic</title>
+          <meta name="description" content="Topic" />
+        </Helmet>
         <LandingHeader />
         <Container maxWidth="md" sx={{ my: 5 }}>
           <Box

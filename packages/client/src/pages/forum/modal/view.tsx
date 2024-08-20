@@ -24,7 +24,7 @@ export const AddTopicModal: React.FC<AddTopicModalProps> = ({
   const config = {
     // validate: false,
     onSubmit: (values: newTopicType) => {
-      //@ts-ignore
+      // @ts-ignore
       dispatch(addTopic(values.title, values.content))
       form.reset()
       onClose()

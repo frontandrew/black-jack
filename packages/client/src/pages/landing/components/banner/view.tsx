@@ -1,10 +1,9 @@
 import { Button, Grid, Typography, useTheme } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { FC } from 'react'
 import { LandBack } from 'images'
 import { LandingSpacer } from '../spacer'
 
-export const LandingBanner: FC = () => {
+export const LandingBanner: React.FC = () => {
   const navigate = useNavigate()
   const { spacing, palette } = useTheme()
 
