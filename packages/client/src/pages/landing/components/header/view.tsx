@@ -1,8 +1,7 @@
 import { Button, Grid, Typography, useTheme, Link } from '@mui/material'
-import { FC } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
-export const LandingHeader: FC = () => {
+export const LandingHeader: React.FC = () => {
   const navigate = useNavigate()
   const { spacing, palette } = useTheme()
   const isAuth = true

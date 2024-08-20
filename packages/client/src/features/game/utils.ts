@@ -1,5 +1,5 @@
-import { DrawSprite } from './DrawSprite'
 import { ICard, TCardSuit, TCardValue } from './types'
+// import { DrawSprite } from './DrawSprite'
 // import * as sprites from 'images'
 
 const cardSuits: TCardSuit[] = ['♥️', '♦️', '♠️', '♣️']
@@ -107,25 +107,25 @@ export function drawCard(
 /**
  * Draw cards with sprites
  */
-const cards: Record<TCardSuit | TCardValue, string> = {
-  '♥️': 'Hearts',
-  '♦️': 'Diamonds',
-  '♠️': 'Spades',
-  '♣️': 'Clubs',
-  '2': 'two',
-  '3': 'three',
-  '4': 'four',
-  '5': 'five',
-  '6': 'six',
-  '7': 'seven',
-  '8': 'eight',
-  '9': 'nine',
-  '10': 'ten',
-  J: 'jack',
-  Q: 'queen',
-  K: 'king',
-  A: 'ace',
-}
+// const cards: Record<TCardSuit | TCardValue, string> = {
+//   '♥️': 'Hearts',
+//   '♦️': 'Diamonds',
+//   '♠️': 'Spades',
+//   '♣️': 'Clubs',
+//   '2': 'two',
+//   '3': 'three',
+//   '4': 'four',
+//   '5': 'five',
+//   '6': 'six',
+//   '7': 'seven',
+//   '8': 'eight',
+//   '9': 'nine',
+//   '10': 'ten',
+//   J: 'jack',
+//   Q: 'queen',
+//   K: 'king',
+//   A: 'ace',
+// }
 
 // export function drawSpriteCard(card: ICard, x: number, y: number): DrawSprite {
 //   if (card.hidden) {

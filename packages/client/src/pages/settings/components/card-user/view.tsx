@@ -6,11 +6,9 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-
-import type { FC } from 'react'
 import { SomeAvatar } from 'images'
 
-export const CardUser: FC = () => {
+export const CardUser: React.FC = () => {
   const { palette, spacing } = useTheme()
   const isLandscape = useMediaQuery('(min-width:900px)')
 

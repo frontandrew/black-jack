@@ -1,9 +1,7 @@
 import { Grid, useTheme } from '@mui/material'
-
 import type { GridProps } from '@mui/material'
-import type { FC } from 'react'
 
-export const LandingSpacer: FC<GridProps> = ({ children, ...rest }) => {
+export const LandingSpacer: React.FC<GridProps> = ({ children, ...rest }) => {
   const { breakpoints } = useTheme()
 
   return (
