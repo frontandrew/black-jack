@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet'
 import { Grid } from '@mui/material'
-import { AppHeader } from 'components'
+import { AppHeader } from 'features/app-header'
 
 import {
   LandingAbout,

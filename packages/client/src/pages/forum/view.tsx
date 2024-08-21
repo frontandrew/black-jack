@@ -13,7 +13,7 @@ import {
   Box,
 } from '@mui/material'
 import { AddTopicModal } from 'pages'
-import { AppHeader } from 'components'
+import { AppHeader } from 'features/app-header'
 
 export const ForumPage: React.FC = () => {
   const navigate = useNavigate()

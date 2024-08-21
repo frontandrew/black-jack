@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material'
 import { Helmet } from 'react-helmet'
-import { AppHeader } from 'components'
+import { AppHeader } from 'features/app-header'
 
 import { LeaderItem } from './components'
 

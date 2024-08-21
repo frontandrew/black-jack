@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { TRootState } from 'shared/store/store'
 import { Box, Button, Typography } from '@mui/material'
-import { AppHeader } from 'components'
+import { AppHeader } from 'features/app-header'
 
 import './style.css'
 

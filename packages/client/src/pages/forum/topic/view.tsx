@@ -5,7 +5,7 @@ import { TRootState } from '../../../shared/store/store'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Box, TextField, Button, Typography, Container } from '@mui/material'
 import { addComment } from '../../../shared/store/forum/topicsSlice'
-import { AppHeader } from 'components'
+import { AppHeader } from 'features/app-header'
 
 export const TopicPage: React.FC = () => {
   const [comment, setComment] = useState('')

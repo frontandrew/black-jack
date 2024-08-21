@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { Box, Button, Typography } from '@mui/material'
-import { AppHeader } from 'components'
+import { AppHeader } from 'features/app-header'
 
 import './style.css'
 
