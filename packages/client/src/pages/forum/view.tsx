@@ -13,7 +13,7 @@ import {
   Box,
 } from '@mui/material'
 import { AddTopicModal } from 'pages'
-import { LandingHeader } from '../landing/components'
+import { AppHeader } from 'components'
 
 export const ForumPage: React.FC = () => {
   const navigate = useNavigate()
@@ -27,7 +27,7 @@ export const ForumPage: React.FC = () => {
         <title>Forum</title>
         <meta name="description" content="Forum" />
       </Helmet>
-      <LandingHeader />
+      <AppHeader />
       <Container maxWidth="md" sx={{ my: 5 }}>
         <Box>
           <Box
