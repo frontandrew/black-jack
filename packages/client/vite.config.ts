@@ -30,7 +30,7 @@ export default defineConfig({
       features: path.resolve('src/features/'),
       pages: path.resolve('src/pages/index'),
       components: path.resolve('src/shared/components/index'),
-      theme: path.resolve('src/shared/theme/index'),
+      themes: path.resolve('src/shared/themes/index'),
       utils: path.resolve('src/shared/utils/index'),
       validators: path.resolve('src/shared/validation/index'),
       constant: path.resolve('src/shared/constant/index'),

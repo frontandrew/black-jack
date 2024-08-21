@@ -24,7 +24,7 @@
       "features": ["./features/*"],
       "pages": ["./pages/index"],
       "components": ["./shared/components/index"],
-      "theme": ["./shared/theme/index"],
+      "themes": ["./shared/themes/index"],
       "utils": ["./shared/utils/index"],
       "validators": ["./shared/validation/index"],
       "constant": ["./shared/constant/index"]
