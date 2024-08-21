@@ -4,7 +4,9 @@ import { Provider } from 'react-redux'
 import { CssBaseline } from '@mui/material'
 import { store } from './shared/store/store'
 import { routes } from './routes'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material'
+import { CacheProvider } from '@emotion/react'
+import { createEmotionCache, lightTheme } from 'themes'
 import './style.css'
 
 if ('serviceWorker' in navigator) {
@@ -28,16 +30,18 @@ if ('serviceWorker' in navigator) {
 }
 
 const router = createBrowserRouter(routes)
-const theme = createTheme()
+const styleCache = createEmotionCache()
 
 hydrateRoot(
   document.querySelector('main') as HTMLElement,
   <>
-    <CssBaseline />
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <RouterProvider router={router} />
+    <CacheProvider value={styleCache}>
+      <ThemeProvider theme={lightTheme}>
+        <CssBaseline />
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
       </ThemeProvider>
-    </Provider>
+    </CacheProvider>
   </>
 )

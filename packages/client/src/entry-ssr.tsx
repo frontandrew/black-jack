@@ -9,7 +9,6 @@ import {
 import { matchRoutes } from 'react-router-dom'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
-import { ServerStyleSheet } from 'styled-components'
 import {
   createContext,
   createFetchRequest,
@@ -20,7 +19,9 @@ import { renderToString } from 'react-dom/server'
 import { routes } from './routes'
 import { setPageHasBeenInitializedOnServer } from './shared/store/ssr/ssrSlice'
 import { Helmet } from 'react-helmet'
-// import { createTheme, ThemeProvider } from '@mui/material/styles' // ToDo починить <ThemeProvider> в preview
+import { CacheProvider } from '@emotion/react'
+import { ThemeProvider } from '@mui/material'
+import { createEmotionCache, lightTheme } from 'themes'
 
 export async function render(req: ExpressRequest) {
   const { query, dataRoutes } = createStaticHandler(routes)
@@ -65,36 +66,32 @@ export async function render(req: ExpressRequest) {
   store.dispatch(setPageHasBeenInitializedOnServer(true))
 
   const router = createStaticRouter(dataRoutes, context)
-  const sheet = new ServerStyleSheet()
-  // const theme = createTheme()
+  const styleCache = createEmotionCache()
 
   try {
     const html = renderToString(
-      sheet.collectStyles(
-        <>
-          <CssBaseline />
-          <Provider store={store}>
-            {/* <ThemeProvider theme={theme}> */}
-            <StaticRouterProvider router={router} context={context} />
-            {/* </ThemeProvider> */}
-          </Provider>
-        </>
-      )
+      <>
+        <CacheProvider value={styleCache}>
+          <ThemeProvider theme={lightTheme}>
+            <CssBaseline />
+            <Provider store={store}>
+              <StaticRouterProvider router={router} context={context} />
+            </Provider>
+          </ThemeProvider>
+        </CacheProvider>
+      </>
     )
-    const styleTags = sheet.getStyleTags()
 
     const helmet = Helmet.renderStatic()
 
     return {
       html,
       helmet,
-      styleTags,
+      styleCache,
       initialState: store.getState(),
     }
   } catch (error) {
     console.error('Render error:', error)
     throw error
-  } finally {
-    sheet.seal()
   }
 }
