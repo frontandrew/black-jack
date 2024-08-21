@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { Box, Button, Typography } from '@mui/material'
+import { AppHeader } from 'components'
+
 import './style.css'
 
 export const StartPage: React.FC = () => {
@@ -14,6 +16,7 @@ export const StartPage: React.FC = () => {
         <title>Start game</title>
         <meta name="description" content="Start game" />
       </Helmet>
+      <AppHeader />
       <Box className="start">
         <Typography variant="h3">Welcome to Black Jack</Typography>
         <Button
