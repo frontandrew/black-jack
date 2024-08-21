@@ -1,12 +1,12 @@
 import { Helmet } from 'react-helmet'
 import { Grid } from '@mui/material'
+import { AppHeader } from 'components'
 
 import {
   LandingAbout,
   LandingBanner,
   LandingFooter,
   LandingGameFlow,
-  LandingHeader,
 } from './components'
 
 export const LandingPage: React.FC = () => {
@@ -14,7 +14,7 @@ export const LandingPage: React.FC = () => {
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Landing</title>
+        <title>Black Jack</title>
         <meta name="description" content="Landing" />
       </Helmet>
       <Grid
@@ -24,8 +24,7 @@ export const LandingPage: React.FC = () => {
         flexWrap={'nowrap'}
         width={'100%'}
         height={'100%'}>
-        <LandingHeader />
-
+        <AppHeader />
         <Grid item overflow={'hidden auto'}>
           <LandingBanner />
           <LandingAbout />
