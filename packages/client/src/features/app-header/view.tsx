@@ -2,6 +2,8 @@ import { Button, Grid, Link, Typography, useTheme } from '@mui/material'
 import { useNavigate } from 'react-router'
 import { FC } from 'react'
 
+import { ThemeSwitch } from './components'
+
 export const AppHeader: FC = () => {
   const navigate = useNavigate()
   const { spacing, palette } = useTheme()
@@ -11,7 +13,6 @@ export const AppHeader: FC = () => {
       item
       component={'header'}
       display={'flex'}
-      // alignItems={'center'}
       width={'100%'}
       gap={spacing(2)}
       padding={spacing(4, 2)}
@@ -22,6 +23,7 @@ export const AppHeader: FC = () => {
           🃏 Black Jack
         </Link>
       </Typography>
+      <ThemeSwitch />
       <Button
         variant={'outlined'}
         color={'error'}
