@@ -1,35 +1,32 @@
-import { Grid, useTheme } from '@mui/material'
+import { Grid } from '@mui/material'
+import { Helmet } from 'react-helmet'
+import { AppHeader } from 'components'
 
 import { LeaderItem } from './components'
 
 export const LeaderPage = () => {
-  const { spacing } = useTheme()
-
   return (
-    <Grid
-      container
-      width={'100%'}
-      height={'100%'}
-      justifyContent={'center'}
-      alignItems={'center'}>
-      {/* TODO: place for app header nav */}
+    <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Leader board</title>
+        <meta name="description" content="Leader board" />
+      </Helmet>
       <Grid
         container
+        display={'flex'}
+        flexDirection={'column'}
+        flexWrap={'nowrap'}
         width={'100%'}
-        height={'100%'}
-        justifyContent={'center'}
-        overflow={'hidden auto'}
-        alignItems={'center'}>
-        <Grid
-          container
-          padding={spacing(4, 0)}
-          maxWidth={'1080px'}
-          justifyContent={'center'}
-          alignItems={'center'}>
-          {renderLeaders()}
+        height={'100%'}>
+        <AppHeader />
+        <Grid container justifyContent={'center'} overflow={'hidden auto'}>
+          <Grid width={'1080px'} alignItems={'start'}>
+            {renderLeaders()}
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </>
   )
 }
 
