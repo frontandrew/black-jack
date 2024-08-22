@@ -10,7 +10,7 @@ export const createTopic = async (req: Request, res: Response) => {
   }
 }
 
-export const getAllTopics = async (req: Request, res: Response) => {
+export const getAllTopics = async (_: Request, res: Response) => {
   try {
     const topics = await Topic.findAll()
     return res.status(200).json(topics)

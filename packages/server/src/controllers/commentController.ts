@@ -10,7 +10,7 @@ export const createComment = async (req: Request, res: Response) => {
   }
 }
 
-export const getAllComments = async (req: Request, res: Response) => {
+export const getAllComments = async (_: Request, res: Response) => {
   try {
     const comments = await Comment.findAll()
     return res.status(200).json(comments)
