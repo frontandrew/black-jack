@@ -7,10 +7,13 @@ import {
   useTheme,
 } from '@mui/material'
 import { SomeAvatar } from 'images'
+import { logout } from '../../../../shared/api'
+import { useNavigate } from 'react-router'
 
 export const CardUser: React.FC = () => {
   const { palette, spacing } = useTheme()
   const isLandscape = useMediaQuery('(min-width:900px)')
+  const navigate = useNavigate()
 
   const actionsAlign = isLandscape ? 'center' : 'flex-end'
 
@@ -67,7 +70,13 @@ export const CardUser: React.FC = () => {
         alignSelf={actionsAlign}
         gap={spacing(2)}>
         <Button variant={'outlined'}>change avatar</Button>
-        <Button variant={'contained'} color={'error'}>
+        <Button
+          variant={'contained'}
+          color={'error'}
+          onClick={() => {
+            logout()
+            navigate('/sign-in')
+          }}>
           sign out
         </Button>
       </Grid>

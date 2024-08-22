@@ -5,6 +5,7 @@ export enum METHODS {
   GET = 'GET',
   POST = 'POST',
   PUT = 'PUT',
+  PATCH = 'PATCH',
   DELETE = 'DELETE',
 }
 
@@ -12,7 +13,7 @@ export const OAUTH = {
   OAUTH_YANDEX: '/oauth/yandex',
   SERVICE_ID: '/oauth/yandex/service-id',
   YANDEX: 'https://oauth.yandex.ru/authorize?response_type=code&client_id=',
-  REDIRECT: import.meta.env.VITE_DEPLOY_HOST ?? 'http://localhost:3000',
+  REDIRECT: import.meta.env.VITE_DEPLOY_HOST ?? 'http://localhost:80',
 }
 
 export const AUTH_API = {

@@ -3,19 +3,20 @@ import cors from 'cors'
 dotenv.config()
 
 import express from 'express'
-import { createClientAndConnect } from './db'
+// import { createClientAndConnect } from './db'
 
 const app = express()
 app.use(cors())
 const port = Number(process.env.SERVER_PORT) || 3001
 
-createClientAndConnect()
+// createClientAndConnect()
 
 app.get('/friends', (_, res) => {
   res.json([
     { name: 'Саша', secondName: 'Панов' },
     { name: 'Лёша', secondName: 'Садовников' },
     { name: 'Серёжа', secondName: 'Иванов' },
+    { name: 'Дима', secondName: 'Мартыненко' },
   ])
 })
 
