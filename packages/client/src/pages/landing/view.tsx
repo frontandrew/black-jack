@@ -8,8 +8,26 @@ import {
   LandingGameFlow,
   LandingHeader,
 } from './components'
+import { getUser } from '../../shared/api'
+import { useEffect } from 'react'
+
+const checkUser = async () => {
+  try {
+    const user = await getUser()
+  } catch (error) {
+    return error
+  }
+}
 
 export const LandingPage: React.FC = () => {
+  useEffect(() => {
+    try {
+      checkUser()
+    } catch (error) {
+      console.log(error)
+    }
+  })
+
   return (
     <>
       <Helmet>

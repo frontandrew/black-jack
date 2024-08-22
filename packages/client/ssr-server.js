@@ -4,7 +4,7 @@ import serialize from 'serialize-javascript'
 import cors from 'cors';
 
 const isProduction = process.env.NODE_ENV === 'production'
-const port = process.env.PORT || 80
+const port = process.env.PORT || 3000
 const base = process.env.BASE || '/'
 
 async function createServer() {
@@ -21,7 +21,7 @@ async function createServer() {
 
   app.use(
     cors({
-      origin: ['http://localhost', 'http://localhost:3001'],
+      origin: ['http://localhost:3000', 'http://localhost:3001'],
       credentials: true,
     }),
   );
