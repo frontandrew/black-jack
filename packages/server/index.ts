@@ -1,12 +1,14 @@
 import dotenv from 'dotenv'
 import { app } from './src/app'
-import { createClientAndConnect } from './src/config/db'
+// import { createClientAndConnect } from './src/config/db'
+import { dbConnect } from './src/config/db'
 
 dotenv.config()
 const port = Number(process.env.SERVER_PORT) || 3001
 
 async function startServer() {
-  await createClientAndConnect()
+  // await createClientAndConnect()
+  await dbConnect()
 
   app.listen(port, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
