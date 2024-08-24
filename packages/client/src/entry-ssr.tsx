@@ -1,5 +1,4 @@
 import { CssBaseline } from '@mui/material'
-import { StrictMode } from 'react'
 import { Request as ExpressRequest } from 'express'
 import {
   createStaticHandler,
@@ -8,20 +7,21 @@ import {
 } from 'react-router-dom/server'
 import { matchRoutes } from 'react-router-dom'
 import { configureStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
+import { Provider, useSelector } from 'react-redux'
 import {
   createContext,
   createFetchRequest,
   createUrl,
 } from './entry-server.utils'
-import { reducer } from './shared/store/store'
+import { reducer, TRootState } from './shared/store/store'
 import { renderToString } from 'react-dom/server'
 import { routes } from './routes'
 import { setPageHasBeenInitializedOnServer } from './shared/store/ssr/ssrSlice'
 import { Helmet } from 'react-helmet'
+import { FC, useMemo } from 'react'
 import { CacheProvider } from '@emotion/react'
 import { ThemeProvider } from '@mui/material'
-import { createEmotionCache, lightTheme } from 'themes'
+import { createEmotionCache, themes } from 'themes'
 
 export async function render(req: ExpressRequest) {
   const { query, dataRoutes } = createStaticHandler(routes)
@@ -68,20 +68,26 @@ export async function render(req: ExpressRequest) {
   const router = createStaticRouter(dataRoutes, context)
   const styleCache = createEmotionCache()
 
+  const App: FC = () => {
+    const { current } = useSelector((state: TRootState) => state.theme)
+    const currentTheme = useMemo(() => themes[current], [current])
+
+    return (
+      <CacheProvider value={styleCache}>
+        <ThemeProvider theme={currentTheme}>
+          <CssBaseline />
+          <StaticRouterProvider router={router} context={context} />
+        </ThemeProvider>
+      </CacheProvider>
+    )
+  }
+
   try {
     const html = renderToString(
-      <>
-        <CacheProvider value={styleCache}>
-          <ThemeProvider theme={lightTheme}>
-            <CssBaseline />
-            <Provider store={store}>
-              <StaticRouterProvider router={router} context={context} />
-            </Provider>
-          </ThemeProvider>
-        </CacheProvider>
-      </>
+      <Provider store={store}>
+        <App />
+      </Provider>
     )
-
     const helmet = Helmet.renderStatic()
 
     return {
