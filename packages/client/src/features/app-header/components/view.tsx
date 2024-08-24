@@ -1,31 +1,43 @@
 import { colors, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { LightMode, DarkMode } from '@mui/icons-material'
-import { FC, MouseEvent, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { FC, MouseEvent } from 'react'
+
+import { TRootState } from 'shared/store/store'
+import { Themes, themeSlice } from '../../../shared/store/theme'
 
 export const ThemeSwitch: FC = () => {
-  const { amber, blue } = colors
-  const [theme, setTheme] = useState('light')
-
-  const handleChange = (
+  const dispatch = useDispatch()
+  const { actions } = themeSlice
+  const { current } = useSelector((state: TRootState) => state.theme)
+  const handleThemeChange = (
     event: MouseEvent<HTMLElement>,
-    currentTheme: string | null
+    nextTheme: Themes
   ) => {
-    if (currentTheme !== null) setTheme(currentTheme)
+    dispatch(actions.setTheme(nextTheme))
   }
 
-  const lightColor = theme === 'light' ? amber[300] : ''
-  const darkColor = theme === 'dark' ? blue[300] : ''
+  const { amber, blue } = colors
+  const lightColor = current === 'light' ? amber[300] : ''
+  const darkColor = current === 'dark' ? blue[300] : ''
 
   return (
     <ToggleButtonGroup
       size={'small'}
-      value={theme}
-      onChange={handleChange}
+      value={current}
+      onChange={handleThemeChange}
       exclusive={true}>
-      <ToggleButton value="light" key="light">
+      <ToggleButton
+        disabled={Themes.Light === current}
+        value={Themes.Light}
+        key={Themes.Light}>
         <LightMode htmlColor={lightColor} />
       </ToggleButton>
-      <ToggleButton value="dark" key="dark">
+
+      <ToggleButton
+        disabled={Themes.Dark === current}
+        value={Themes.Dark}
+        key={Themes.Dark}>
         <DarkMode htmlColor={darkColor} />
       </ToggleButton>
     </ToggleButtonGroup>
