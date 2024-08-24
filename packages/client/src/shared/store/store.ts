@@ -11,7 +11,7 @@ import topicsReducer from './forum/topicsSlice'
 import friendsReducer from '../store/demo/friendsSlice'
 import ssrReducer from '../store/ssr/ssrSlice'
 import userReducer from '../store/demo/userSlice'
-import logger from 'redux-logger'
+import { themeSlice } from './theme'
 
 declare global {
   interface Window {
@@ -25,11 +25,11 @@ export const reducer = combineReducers({
   friends: friendsReducer, // demo
   ssr: ssrReducer,
   user: userReducer, // demo
+  theme: themeSlice.reducer,
 })
 
 export const store = configureStore({
   reducer,
-  // middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
   devTools: process.env.NODE_ENV === 'development',
   preloadedState:
     typeof window === 'undefined' ? undefined : window.APP_INITIAL_STATE,
