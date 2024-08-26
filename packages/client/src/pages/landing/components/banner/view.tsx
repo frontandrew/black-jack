@@ -7,11 +7,8 @@ export const LandingBanner: React.FC = () => {
   const navigate = useNavigate()
   const { spacing, palette } = useTheme()
 
-  const defaultBackgroundColor = palette.background.default
-  const contrastBackgroundColor = palette.getContrastText(
-    defaultBackgroundColor
-  )
-  const contrastTextColor = palette.getContrastText(contrastBackgroundColor)
+  const contrastTextColor = palette.background.default
+  const contrastBackgroundColor = palette.getContrastText(contrastTextColor)
 
   return (
     <Grid container>
@@ -47,7 +44,7 @@ export const LandingBanner: React.FC = () => {
               display={'flex'}
               flexDirection={'column'}
               // Костыль для отделения текста от фона
-              sx={{ mixBlendMode: 'difference' }}>
+              sx={{ mixBlendMode: 'luminosity' }}>
               <Typography variant="h1" noWrap>
                 Try your luck
               </Typography>
@@ -65,7 +62,7 @@ export const LandingBanner: React.FC = () => {
                 onClick={() => {
                   navigate('/start')
                 }}>
-                <Typography variant="h6" noWrap>
+                <Typography color={contrastTextColor} variant="h6" noWrap>
                   PUSH TO WIN
                 </Typography>
               </Button>

@@ -1,10 +1,13 @@
 import { hydrateRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { Provider } from 'react-redux'
+import { Provider, useSelector } from 'react-redux'
 import { CssBaseline } from '@mui/material'
-import { store } from './shared/store/store'
+import { store, TRootState } from './shared/store/store'
 import { routes } from './routes'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { FC } from 'react'
+import { ThemeProvider } from '@mui/material'
+import { CacheProvider } from '@emotion/react'
+import { createEmotionCache, themes } from 'themes'
 import './style.css'
 
 if ('serviceWorker' in navigator) {
@@ -28,16 +31,25 @@ if ('serviceWorker' in navigator) {
 }
 
 const router = createBrowserRouter(routes)
-const theme = createTheme()
+const styleCache = createEmotionCache()
 
-hydrateRoot(
-  document.querySelector('main') as HTMLElement,
-  <>
-    <CssBaseline />
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
+const appContainer = document.querySelector('main')
+const App: FC = () => {
+  const { current } = useSelector((state: TRootState) => state.theme)
+
+  return (
+    <CacheProvider value={styleCache}>
+      <ThemeProvider theme={themes[current]}>
+        <CssBaseline />
         <RouterProvider router={router} />
       </ThemeProvider>
-    </Provider>
-  </>
+    </CacheProvider>
+  )
+}
+
+hydrateRoot(
+  appContainer as HTMLElement,
+  <Provider store={store}>
+    <App />
+  </Provider>
 )

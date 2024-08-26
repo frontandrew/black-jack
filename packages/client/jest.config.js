@@ -20,7 +20,7 @@ export default {
     ],
     '^pages': '<rootDir>/src/pages',
     '^components': '<rootDir>/src/shared/components',
-    '^theme': '<rootDir>/src/shared/theme',
+    '^themes': '<rootDir>/src/shared/themes',
     '^utils': '<rootDir>/src/shared/utils',
     '^validators': '<rootDir>/src/shared/validation'
   },

@@ -1,7 +1,8 @@
 import fs from 'node:fs/promises'
 import express from 'express'
 import serialize from 'serialize-javascript'
-import cors from 'cors';
+import cors from 'cors'
+import createEmotionServer from '@emotion/server/create-instance'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT || 80
@@ -55,7 +56,7 @@ async function createServer() {
             html: '',
             initialState: {},
             helmet: {},
-            styleTags: {},
+            styleCache: {},
           })
         })
       }
@@ -74,11 +75,16 @@ async function createServer() {
         html: appHtml,
         initialState,
         helmet,
-        styleTags,
+        styleCache,
       } = await render(req)
 
+      const { extractCriticalToChunks, constructStyleTagsFromChunks } =
+        createEmotionServer(styleCache);
+      const emotionChunks = extractCriticalToChunks(appHtml);
+      const css = constructStyleTagsFromChunks(emotionChunks);
+
       const html = template
-        .replace('<!--ssr-styles-->', styleTags)
+        .replace('<!--ssr-styles-->', css)
         .replace(`<!--ssr-helmet-->`, `${helmet.meta.toString()} ${helmet.title.toString()} ${helmet.link.toString()}`)
         .replace(`<!--ssr-outlet-->`, appHtml)
         .replace(

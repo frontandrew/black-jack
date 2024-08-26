@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { TRootState } from 'shared/store/store'
 import { Box, Button, Typography } from '@mui/material'
+import { AppHeader } from 'features/app-header'
+
 import './style.css'
 
 export const FinishPage: React.FC = () => {
@@ -20,6 +22,7 @@ export const FinishPage: React.FC = () => {
         <title>End game</title>
         <meta name="description" content="End game" />
       </Helmet>
+      <AppHeader />
       <Box className="finish">
         <Typography variant="h3">End Game</Typography>
         <Typography variant="h4" sx={{ my: 3 }}>

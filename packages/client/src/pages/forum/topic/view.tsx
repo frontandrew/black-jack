@@ -5,7 +5,7 @@ import { TRootState } from '../../../shared/store/store'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Box, TextField, Button, Typography, Container } from '@mui/material'
 import { addComment } from '../../../shared/store/forum/topicsSlice'
-import { LandingHeader } from '../../landing/components'
+import { AppHeader } from 'features/app-header'
 
 export const TopicPage: React.FC = () => {
   const [comment, setComment] = useState('')
@@ -24,7 +24,7 @@ export const TopicPage: React.FC = () => {
           <title>Topic</title>
           <meta name="description" content="Topic" />
         </Helmet>
-        <LandingHeader />
+        <AppHeader />
         <Container maxWidth="md" sx={{ my: 5 }}>
           <Box
             sx={{
@@ -54,7 +54,7 @@ export const TopicPage: React.FC = () => {
 
   return (
     <>
-      <LandingHeader />
+      <AppHeader />
       <Container maxWidth="md" sx={{ my: 5 }}>
         <Box
           sx={{

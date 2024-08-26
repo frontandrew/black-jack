@@ -7,19 +7,21 @@ import {
 } from 'react-router-dom/server'
 import { matchRoutes } from 'react-router-dom'
 import { configureStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
-import { ServerStyleSheet } from 'styled-components'
+import { Provider, useSelector } from 'react-redux'
 import {
   createContext,
   createFetchRequest,
   createUrl,
 } from './entry-server.utils'
-import { reducer } from './shared/store/store'
+import { reducer, TRootState } from './shared/store/store'
 import { renderToString } from 'react-dom/server'
 import { routes } from './routes'
 import { setPageHasBeenInitializedOnServer } from './shared/store/ssr/ssrSlice'
 import { Helmet } from 'react-helmet'
-// import { createTheme, ThemeProvider } from '@mui/material/styles' // ToDo починить <ThemeProvider> в preview
+import { FC } from 'react'
+import { CacheProvider } from '@emotion/react'
+import { ThemeProvider } from '@mui/material'
+import { createEmotionCache, themes } from 'themes'
 
 export async function render(req: ExpressRequest) {
   const { query, dataRoutes } = createStaticHandler(routes)
@@ -64,36 +66,37 @@ export async function render(req: ExpressRequest) {
   store.dispatch(setPageHasBeenInitializedOnServer(true))
 
   const router = createStaticRouter(dataRoutes, context)
-  const sheet = new ServerStyleSheet()
-  // const theme = createTheme()
+  const styleCache = createEmotionCache()
+
+  const App: FC = () => {
+    const { current } = useSelector((state: TRootState) => state.theme)
+
+    return (
+      <CacheProvider value={styleCache}>
+        <ThemeProvider theme={themes[current]}>
+          <CssBaseline />
+          <StaticRouterProvider router={router} context={context} />
+        </ThemeProvider>
+      </CacheProvider>
+    )
+  }
 
   try {
     const html = renderToString(
-      sheet.collectStyles(
-        <>
-          <CssBaseline />
-          <Provider store={store}>
-            {/* <ThemeProvider theme={theme}> */}
-            <StaticRouterProvider router={router} context={context} />
-            {/* </ThemeProvider> */}
-          </Provider>
-        </>
-      )
+      <Provider store={store}>
+        <App />
+      </Provider>
     )
-    const styleTags = sheet.getStyleTags()
-
     const helmet = Helmet.renderStatic()
 
     return {
       html,
       helmet,
-      styleTags,
+      styleCache,
       initialState: store.getState(),
     }
   } catch (error) {
     console.error('Render error:', error)
     throw error
-  } finally {
-    sheet.seal()
   }
 }
