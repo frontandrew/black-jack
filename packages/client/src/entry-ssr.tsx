@@ -18,7 +18,7 @@ import { renderToString } from 'react-dom/server'
 import { routes } from './routes'
 import { setPageHasBeenInitializedOnServer } from './shared/store/ssr/ssrSlice'
 import { Helmet } from 'react-helmet'
-import { FC, useMemo } from 'react'
+import { FC } from 'react'
 import { CacheProvider } from '@emotion/react'
 import { ThemeProvider } from '@mui/material'
 import { createEmotionCache, themes } from 'themes'
@@ -70,11 +70,10 @@ export async function render(req: ExpressRequest) {
 
   const App: FC = () => {
     const { current } = useSelector((state: TRootState) => state.theme)
-    const currentTheme = useMemo(() => themes[current], [current])
 
     return (
       <CacheProvider value={styleCache}>
-        <ThemeProvider theme={currentTheme}>
+        <ThemeProvider theme={themes[current]}>
           <CssBaseline />
           <StaticRouterProvider router={router} context={context} />
         </ThemeProvider>

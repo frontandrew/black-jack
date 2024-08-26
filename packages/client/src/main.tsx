@@ -4,7 +4,7 @@ import { Provider, useSelector } from 'react-redux'
 import { CssBaseline } from '@mui/material'
 import { store, TRootState } from './shared/store/store'
 import { routes } from './routes'
-import { FC, useMemo } from 'react'
+import { FC } from 'react'
 import { ThemeProvider } from '@mui/material'
 import { CacheProvider } from '@emotion/react'
 import { createEmotionCache, themes } from 'themes'
@@ -36,11 +36,10 @@ const styleCache = createEmotionCache()
 const appContainer = document.querySelector('main')
 const App: FC = () => {
   const { current } = useSelector((state: TRootState) => state.theme)
-  const currentTheme = useMemo(() => themes[current], [current])
 
   return (
     <CacheProvider value={styleCache}>
-      <ThemeProvider theme={currentTheme}>
+      <ThemeProvider theme={themes[current]}>
         <CssBaseline />
         <RouterProvider router={router} />
       </ThemeProvider>
