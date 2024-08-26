@@ -16,6 +16,24 @@ export class Comment extends Model {
   })
   content!: string
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  userId!: string
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  userName!: string
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  userEmail?: string
+
   @ForeignKey(() => Topic)
   @Column
   topicId!: number

@@ -15,6 +15,24 @@ export class Topic extends Model {
   })
   content!: string
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  userId!: string
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  userName!: string
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  userEmail?: string
+
   @HasMany(() => Comment)
   comments!: Comment[]
 }
