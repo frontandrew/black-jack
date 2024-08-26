@@ -1,4 +1,4 @@
-import { Button, Grid, Link, Typography, useTheme } from '@mui/material'
+import { Button, Grid, Typography, useTheme } from '@mui/material'
 import { useNavigate } from 'react-router'
 import { FC } from 'react'
 
@@ -18,11 +18,19 @@ export const AppHeader: FC = () => {
       padding={spacing(4, 2)}
       borderBottom={1}
       borderColor={palette.divider}>
-      <Typography variant={'h4'} fontWeight={600} flexGrow={1}>
-        <Link href="/" sx={{ color: 'inherit', textDecoration: 'unset' }}>
+      <Grid flexGrow={1}>
+        <Typography
+          sx={{ cursor: 'pointer' }}
+          onClick={() => {
+            navigate('/')
+          }}
+          width={'min-content'}
+          variant={'h4'}
+          fontWeight={600}
+          noWrap>
           🃏 Black Jack
-        </Link>
-      </Typography>
+        </Typography>
+      </Grid>
       <ThemeSwitch />
       <Button
         variant={'outlined'}
