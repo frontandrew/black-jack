@@ -1,7 +1,8 @@
-import { FC, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../shared/store/store'
+import { Helmet } from 'react-helmet'
+import { TRootState } from '../../shared/store/store'
 import {
   Typography,
   List,
@@ -12,16 +13,21 @@ import {
   Box,
 } from '@mui/material'
 import { AddTopicModal } from 'pages'
-import { LandingHeader } from '../landing/components'
+import { AppHeader } from 'features/app-header'
 
-export const ForumPage: FC = () => {
+export const ForumPage: React.FC = () => {
   const navigate = useNavigate()
   const [isModalOpen, setModalOpen] = useState(false)
-  const topics = useSelector((state: RootState) => state.topics.topics)
+  const topics = useSelector((state: TRootState) => state.topics.topics)
 
   return (
     <>
-      <LandingHeader />
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Forum</title>
+        <meta name="description" content="Forum" />
+      </Helmet>
+      <AppHeader />
       <Container maxWidth="md" sx={{ my: 5 }}>
         <Box>
           <Box

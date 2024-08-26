@@ -1,9 +1,9 @@
-import { DrawSprite } from './DrawSprite'
-import { ICard } from './types'
-import * as sprites from 'images'
+import { ICard, TCardSuit, TCardValue } from './types'
+// import { DrawSprite } from './DrawSprite'
+// import * as sprites from 'images'
 
-const cardSuits: string[] = ['♥️', '♦️', '♠️', '♣️']
-const cardValues: string[] = [
+const cardSuits: TCardSuit[] = ['♥️', '♦️', '♠️', '♣️']
+const cardValues: TCardValue[] = [
   '2',
   '3',
   '4',
@@ -23,15 +23,14 @@ const cardValues: string[] = [
  * Создание колоды карт
  */
 export function createDeck(): ICard[] {
-  const deck: ICard[] = []
-
   // для каждой игры замешиваем 6 колод
+  const deck: ICard[] = []
   for (let i = 0; i < 6; i++) {
-    cardSuits.forEach(suit => {
-      cardValues.forEach(value => {
+    for (const suit of cardSuits) {
+      for (const value of cardValues) {
         deck.push({ suit, value })
-      })
-    })
+      }
+    }
   }
 
   return deck
@@ -77,242 +76,67 @@ export function calcHand(hand: ICard[]): number {
   return value
 }
 
-//Создание карт, масти и номера карты
+/**
+ * Draw cards with sprites
+ */
+export function drawCard(
+  ctx: CanvasRenderingContext2D,
+  card: ICard,
+  x: number,
+  y: number
+) {
+  if (card.hidden) {
+    ctx.fillStyle = 'gray'
+    ctx.fillRect(x, y, 50, 70)
+    ctx.strokeRect(x, y, 50, 70)
+  } else {
+    ctx.fillStyle = 'white'
+    ctx.fillRect(x, y, 50, 70)
+    ctx.strokeRect(x, y, 50, 70)
+    if (card.suit === '♥️' || card.suit === '♦️') {
+      ctx.fillStyle = 'red'
+    }
+    if (card.suit === '♠️' || card.suit === '♣️') {
+      ctx.fillStyle = 'black'
+    }
+    ctx.font = '18px Arial'
+    ctx.fillText(`${card.value}${card.suit}`, x + 5, y + 45)
+  }
+}
 
-// export function drawCard(
-//   card: Card,
-//   x: number,
-//   y: number
-// ) {
-
-//   const textSuits: string[] = ['Hearts', 'Diamonds', 'Spades', 'Clubs']
-//   const textValues: string[] = [
-//     'two',
-//     'tree',
-//     'four',
-//     'five',
-//     'six',
-//     'seven',
-//     'eight',
-//     'nine',
-//     'ten',
-//     'jack',
-//     'queen',
-//     'king',
-//     'ace',
-//   ]
-
-//   const valueIndex: number = cardValues.indexOf(card.value)
-//   const suitIndex: number = cardSuits.indexOf(card.suit)
-
-//   const sprite: string =
-//     sprites[`${textValues[valueIndex]}${textSuits[suitIndex]}`] //ToDo типизировать импорт
-
-//     if(card.hidden) {
-//       return new DrawSprite(sprites.backBlue, x, y)
-//     }
-//   return new DrawSprite(sprite, x, y)
+/**
+ * Draw cards with sprites
+ */
+// const cards: Record<TCardSuit | TCardValue, string> = {
+//   '♥️': 'Hearts',
+//   '♦️': 'Diamonds',
+//   '♠️': 'Spades',
+//   '♣️': 'Clubs',
+//   '2': 'two',
+//   '3': 'three',
+//   '4': 'four',
+//   '5': 'five',
+//   '6': 'six',
+//   '7': 'seven',
+//   '8': 'eight',
+//   '9': 'nine',
+//   '10': 'ten',
+//   J: 'jack',
+//   Q: 'queen',
+//   K: 'king',
+//   A: 'ace',
 // }
 
-export function drawCard(card: ICard, x: number, y: number): DrawSprite {
-  if (card.hidden) {
-    return new DrawSprite(sprites.backRed, x, y)
-  }
-  switch (card.value) {
-    case '2':
-      if (card.suit === '♥️') {
-        return new DrawSprite(sprites.twoHearts, x, y)
-      }
-      if (card.suit === '♦️') {
-        return new DrawSprite(sprites.twoDiamonds, x, y)
-      }
-      if (card.suit === '♠️') {
-        return new DrawSprite(sprites.twoSpades, x, y)
-      }
-      if (card.suit === '♣️') {
-        return new DrawSprite(sprites.twoClubs, x, y)
-      }
-      break
+// export function drawSpriteCard(card: ICard, x: number, y: number): DrawSprite {
+//   if (card.hidden) {
+//     return new DrawSprite(sprites.backRed, x, y)
+//   }
 
-    case '3':
-      if (card.suit === '♥️') {
-        return new DrawSprite(sprites.threeHearts, x, y)
-      }
-      if (card.suit === '♦️') {
-        return new DrawSprite(sprites.threeDiamonds, x, y)
-      }
-      if (card.suit === '♠️') {
-        return new DrawSprite(sprites.threeSpades, x, y)
-      }
-      if (card.suit === '♣️') {
-        return new DrawSprite(sprites.threeClubs, x, y)
-      }
-      break
+//   const spriteName = `${cards[card.value]}${cards[card.suit]}`
 
-    case '4':
-      if (card.suit === '♥️') {
-        return new DrawSprite(sprites.fourHearts, x, y)
-      }
-      if (card.suit === '♦️') {
-        return new DrawSprite(sprites.fourDiamonds, x, y)
-      }
-      if (card.suit === '♠️') {
-        return new DrawSprite(sprites.fourSpades, x, y)
-      }
-      if (card.suit === '♣️') {
-        return new DrawSprite(sprites.fourClubs, x, y)
-      }
-      break
-
-    case '5':
-      if (card.suit === '♥️') {
-        return new DrawSprite(sprites.fiveHearts, x, y)
-      }
-      if (card.suit === '♦️') {
-        return new DrawSprite(sprites.fiveDiamonds, x, y)
-      }
-      if (card.suit === '♠️') {
-        return new DrawSprite(sprites.fiveSpades, x, y)
-      }
-      if (card.suit === '♣️') {
-        return new DrawSprite(sprites.fiveClubs, x, y)
-      }
-      break
-
-    case '6':
-      if (card.suit === '♥️') {
-        return new DrawSprite(sprites.sixHearts, x, y)
-      }
-      if (card.suit === '♦️') {
-        return new DrawSprite(sprites.sixDiamonds, x, y)
-      }
-      if (card.suit === '♠️') {
-        return new DrawSprite(sprites.sixSpades, x, y)
-      }
-      if (card.suit === '♣️') {
-        return new DrawSprite(sprites.sixClubs, x, y)
-      }
-      break
-
-    case '7':
-      if (card.suit === '♥️') {
-        return new DrawSprite(sprites.sevenHearts, x, y)
-      }
-      if (card.suit === '♦️') {
-        return new DrawSprite(sprites.sevenDiamonds, x, y)
-      }
-      if (card.suit === '♠️') {
-        return new DrawSprite(sprites.sevenSpades, x, y)
-      }
-      if (card.suit === '♣️') {
-        return new DrawSprite(sprites.sevenClubs, x, y)
-      }
-      break
-
-    case '8':
-      if (card.suit === '♥️') {
-        return new DrawSprite(sprites.eightHearts, x, y)
-      }
-      if (card.suit === '♦️') {
-        return new DrawSprite(sprites.eightDiamonds, x, y)
-      }
-      if (card.suit === '♠️') {
-        return new DrawSprite(sprites.eightSpades, x, y)
-      }
-      if (card.suit === '♣️') {
-        return new DrawSprite(sprites.eightClubs, x, y)
-      }
-      break
-
-    case '9':
-      if (card.suit === '♥️') {
-        return new DrawSprite(sprites.nineHearts, x, y)
-      }
-      if (card.suit === '♦️') {
-        return new DrawSprite(sprites.nineDiamonds, x, y)
-      }
-      if (card.suit === '♠️') {
-        return new DrawSprite(sprites.nineSpades, x, y)
-      }
-      if (card.suit === '♣️') {
-        return new DrawSprite(sprites.nineClubs, x, y)
-      }
-      break
-
-    case '10':
-      if (card.suit === '♥️') {
-        return new DrawSprite(sprites.tenHearts, x, y)
-      }
-      if (card.suit === '♦️') {
-        return new DrawSprite(sprites.tenDiamonds, x, y)
-      }
-      if (card.suit === '♠️') {
-        return new DrawSprite(sprites.tenSpades, x, y)
-      }
-      if (card.suit === '♣️') {
-        return new DrawSprite(sprites.tenClubs, x, y)
-      }
-      break
-
-    case 'A':
-      if (card.suit === '♥️') {
-        return new DrawSprite(sprites.aceHearts, x, y)
-      }
-      if (card.suit === '♦️') {
-        return new DrawSprite(sprites.aceDiamonds, x, y)
-      }
-      if (card.suit === '♠️') {
-        return new DrawSprite(sprites.aceSpades, x, y)
-      }
-      if (card.suit === '♣️') {
-        return new DrawSprite(sprites.aceClubs, x, y)
-      }
-      break
-
-    case 'J':
-      if (card.suit === '♥️') {
-        return new DrawSprite(sprites.jackHearts, x, y)
-      }
-      if (card.suit === '♦️') {
-        return new DrawSprite(sprites.jackDiamonds, x, y)
-      }
-      if (card.suit === '♠️') {
-        return new DrawSprite(sprites.jackSpades, x, y)
-      }
-      if (card.suit === '♣️') {
-        return new DrawSprite(sprites.jackClubs, x, y)
-      }
-      break
-
-    case 'Q':
-      if (card.suit === '♥️') {
-        return new DrawSprite(sprites.queenHearts, x, y)
-      }
-      if (card.suit === '♦️') {
-        return new DrawSprite(sprites.queenDiamonds, x, y)
-      }
-      if (card.suit === '♠️') {
-        return new DrawSprite(sprites.queenSpades, x, y)
-      }
-      if (card.suit === '♣️') {
-        return new DrawSprite(sprites.queenClubs, x, y)
-      }
-      break
-
-    case 'K':
-      if (card.suit === '♥️') {
-        return new DrawSprite(sprites.kingHearts, x, y)
-      }
-      if (card.suit === '♦️') {
-        return new DrawSprite(sprites.kingDiamonds, x, y)
-      }
-      if (card.suit === '♠️') {
-        return new DrawSprite(sprites.kingSpades, x, y)
-      }
-      if (card.suit === '♣️') {
-        return new DrawSprite(sprites.kingClubs, x, y)
-      }
-      break
-  }
-  return new DrawSprite(sprites.backBlue, x, y)
-}
+//   return new DrawSprite(
+//     sprites[spriteName as keyof typeof sprites] || sprites.backBlue,
+//     x,
+//     y
+//   )
+// }

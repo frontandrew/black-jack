@@ -18,17 +18,21 @@
     "sourceMap": true,
     "baseUrl": "./src",
     "paths": {
-      "images": ["./assets/imgs/index"],
+      "apis": ["./shared/apis/index"],
+      "images": ["./assets/img/index"],
       "sounds": ["./assets/sounds/index"],
       "features": ["./features/*"],
       "pages": ["./pages/index"],
       "components": ["./shared/components/index"],
-      "theme": ["./shared/theme/index"],
+      "themes": ["./shared/themes/index"],
       "utils": ["./shared/utils/index"],
-      "validators": ["./shared/validation/index"]
-
+      "validators": ["./shared/validation/index"],
+      "constant": ["./shared/constant/index"]
     }
   },
-  "include": ["src", "public/sw.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src", "public/sw.ts", "server"],
+  "references": [
+    { "path": "./tsconfig.node.json" },
+    { "path": "./tsconfig.server.json" }
+  ]
 }

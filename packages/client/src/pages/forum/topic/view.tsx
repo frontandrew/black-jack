@@ -1,16 +1,17 @@
-import { useState, FC } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../../shared/store/store'
+import { Helmet } from 'react-helmet'
+import { TRootState } from '../../../shared/store/store'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Box, TextField, Button, Typography, Container } from '@mui/material'
-import { addComment } from '../../../features/forum/model'
-import { LandingHeader } from '../../landing/components'
+import { addComment } from '../../../shared/store/forum/topicsSlice'
+import { AppHeader } from 'features/app-header'
 
-export const TopicPage: FC = () => {
+export const TopicPage: React.FC = () => {
   const [comment, setComment] = useState('')
   const { id } = useParams<{ id: string }>()
   const dispatch = useDispatch()
-  const topic = useSelector((state: RootState) => {
+  const topic = useSelector((state: TRootState) => {
     if (id) return state.topics.topics.find(t => t.id === id) // ToDo move in createSlice
   })
   const navigate = useNavigate()
@@ -18,7 +19,12 @@ export const TopicPage: FC = () => {
   if (!topic)
     return (
       <>
-        <LandingHeader />
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Topic</title>
+          <meta name="description" content="Topic" />
+        </Helmet>
+        <AppHeader />
         <Container maxWidth="md" sx={{ my: 5 }}>
           <Box
             sx={{
@@ -48,7 +54,7 @@ export const TopicPage: FC = () => {
 
   return (
     <>
-      <LandingHeader />
+      <AppHeader />
       <Container maxWidth="md" sx={{ my: 5 }}>
         <Box
           sx={{

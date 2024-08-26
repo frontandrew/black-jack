@@ -1,5 +1,4 @@
 import { Grid, Typography, useTheme } from '@mui/material'
-import { FC } from 'react'
 import { LandingSpacer } from '../spacer'
 
 export const LandingAbout: React.FC = () => {
