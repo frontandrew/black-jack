@@ -1,1 +1,1 @@
-export * from './view'
+export * from './theme-switch'

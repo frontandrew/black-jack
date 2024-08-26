@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FC, MouseEvent } from 'react'
 
 import { TRootState } from 'shared/store/store'
-import { Themes, themeSlice } from '../../../shared/store/theme'
+import { Themes, themeSlice } from '../../../../shared/store/theme'
 
 export const ThemeSwitch: FC = () => {
   const dispatch = useDispatch()
