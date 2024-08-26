@@ -6,7 +6,6 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import { SomeAvatar } from 'images'
 
 export const CardUser: React.FC = () => {
   const { palette, spacing } = useTheme()
@@ -23,7 +22,7 @@ export const CardUser: React.FC = () => {
       flexDirection={'column'}
       alignItems={'center'}
       gap={spacing(6)}>
-      <Avatar src={SomeAvatar} sx={{ width: 200, height: 200 }} />
+      <Avatar src={''} sx={{ width: 200, height: 200 }} />
       <Grid container flexDirection={'column'} alignItems={'center'}>
         <Typography variant={'h4'} fontWeight={800}>
           Nickname
