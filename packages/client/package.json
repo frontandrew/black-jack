@@ -40,8 +40,7 @@
     "react-router": "6.23.1",
     "react-router-dom": "6.23.1",
     "serialize-javascript": "^6.0.2",
-    "sirv": "2.0.4",
-    "styled-components": "^6.1.0"
+    "sirv": "2.0.4"
   },
   "devDependencies": {
     "@testing-library/react": "^13.3.0",
