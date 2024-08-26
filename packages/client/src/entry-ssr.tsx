@@ -1,5 +1,4 @@
 import { CssBaseline } from '@mui/material'
-import { StrictMode } from 'react'
 import { Request as ExpressRequest } from 'express'
 import {
   createStaticHandler,
