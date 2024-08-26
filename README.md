@@ -10,9 +10,15 @@
 Добро пожаловать в игру Blackjack на JavaScript с использованием React и TypeScript! Игра позволяет сыграть против дилера, используя базовые правила Blackjack.
 
 ## Демонcтрация:
+
+[Demo на netlify](https://blackjack-cheaters.netlify.app/)
+
+[Видео с демонстрацией 7 и 8 спринтов на Яндекс.Диск](https://disk.yandex.ru/i/gJAeKl9KdECRHQ)
+
+Видео с демонстрацией 5 и 6 спринтов:
 ![msedge_ViURtHeheB](https://github.com/user-attachments/assets/8d9f703d-2962-48e5-a51d-917e87ba1ce2)
 
-[Документация](./docs/README.md) [LiveDemo](https://blackjack-cheaters.netlify.app/)
+[Документация](./docs/README.md)
 
 ![Black Jack](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Blackjack.svg/512px-Blackjack.svg.png)
 
