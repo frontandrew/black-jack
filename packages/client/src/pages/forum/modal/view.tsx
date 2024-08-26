@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { useForm } from 'react-final-form-hooks'
 import { Modal, Box, Button, Typography, Grid } from '@mui/material'
-import { addTopic } from '../../../features/forum/model'
+import { addTopic } from '../../../shared/store/forum/topicsSlice'
 import { FieldText } from 'components'
 
 interface AddTopicModalProps {
@@ -24,7 +24,7 @@ export const AddTopicModal: React.FC<AddTopicModalProps> = ({
   const config = {
     // validate: false,
     onSubmit: (values: newTopicType) => {
-      //@ts-ignore
+      // @ts-ignore
       dispatch(addTopic(values.title, values.content))
       form.reset()
       onClose()

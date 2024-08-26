@@ -7,10 +7,7 @@ import {
   useTheme,
 } from '@mui/material'
 
-import type { FC } from 'react'
-import { SomeAvatar } from 'images'
-
-export const CardUser: FC = () => {
+export const CardUser: React.FC = () => {
   const { palette, spacing } = useTheme()
   const isLandscape = useMediaQuery('(min-width:900px)')
 
@@ -25,7 +22,7 @@ export const CardUser: FC = () => {
       flexDirection={'column'}
       alignItems={'center'}
       gap={spacing(6)}>
-      <Avatar src={SomeAvatar} sx={{ width: 200, height: 200 }} />
+      <Avatar src={''} sx={{ width: 200, height: 200 }} />
       <Grid container flexDirection={'column'} alignItems={'center'}>
         <Typography variant={'h4'} fontWeight={800}>
           Nickname

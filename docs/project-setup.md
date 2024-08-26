@@ -37,7 +37,7 @@
 ```src/features/game/view.tsx```
 
 Логика управления состоянием игры с использованием Redux
-```src/features/game/model.ts```
+```src/shared/store/game/gameSlice.ts```
 
 Основные типы данных, используемые в механике игры
 ```src/features/game/types.ts```

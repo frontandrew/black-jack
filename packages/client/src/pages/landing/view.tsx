@@ -1,31 +1,37 @@
+import { Helmet } from 'react-helmet'
 import { Grid } from '@mui/material'
-import { FC } from 'react'
+import { AppHeader } from 'features/app-header'
 
 import {
   LandingAbout,
   LandingBanner,
   LandingFooter,
   LandingGameFlow,
-  LandingHeader,
 } from './components'
 
-export const LandingPage: FC = () => {
+export const LandingPage: React.FC = () => {
   return (
-    <Grid
-      container
-      display={'flex'}
-      flexDirection={'column'}
-      flexWrap={'nowrap'}
-      width={'100%'}
-      height={'100%'}>
-      <LandingHeader />
-
-      <Grid item overflow={'hidden auto'}>
-        <LandingBanner />
-        <LandingAbout />
-        <LandingGameFlow />
-        <LandingFooter />
+    <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Black Jack</title>
+        <meta name="description" content="Landing" />
+      </Helmet>
+      <Grid
+        container
+        display={'flex'}
+        flexDirection={'column'}
+        flexWrap={'nowrap'}
+        width={'100%'}
+        height={'100%'}>
+        <AppHeader />
+        <Grid item overflow={'hidden auto'}>
+          <LandingBanner />
+          <LandingAbout />
+          <LandingGameFlow />
+          <LandingFooter />
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   )
 }

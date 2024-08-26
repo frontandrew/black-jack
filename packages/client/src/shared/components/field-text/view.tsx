@@ -1,9 +1,9 @@
-import React from 'react'
+import { FC } from 'react'
 import { useField } from 'react-final-form-hooks'
 import { Grid, TextField } from '@mui/material'
 import { FieldTextProps } from './type'
 
-export const FieldText: React.FC<FieldTextProps> = props => {
+export const FieldText: FC<FieldTextProps> = props => {
   const { name, label, form, validator, ...rest } = props
   const { input, meta } = useField(name, form, validator)
 
@@ -17,17 +17,7 @@ export const FieldText: React.FC<FieldTextProps> = props => {
     <Grid container flexDirection={'column'} height={fieldHeight}>
       <TextField
         error={fieldError}
-        helperText={
-          Array.isArray(fieldHelp) &&
-          fieldHelp?.map((elem: string, index: number) => {
-            return (
-              <React.Fragment key={elem + index}>
-                {index + 1}. {elem}
-                <br />
-              </React.Fragment>
-            )
-          })
-        }
+        helperText={fieldHelp}
         label={fieldLabel}
         {...{ ...rest, ...input }}
       />

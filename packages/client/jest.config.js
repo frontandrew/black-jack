@@ -11,7 +11,7 @@ export default {
       "<rootDir>/file.parser.cjs",
   },
   moduleNameMapper: {
-    '^images': '<rootDir>/src/assets/imgs',
+    '^images': '<rootDir>/src/assets/img',
     '^sounds': '<rootDir>/src/assets/sounds',
     '^features/(.*)': [
       '<rootDir>/src/features/game/model',
@@ -20,7 +20,7 @@ export default {
     ],
     '^pages': '<rootDir>/src/pages',
     '^components': '<rootDir>/src/shared/components',
-    '^theme': '<rootDir>/src/shared/theme',
+    '^themes': '<rootDir>/src/shared/themes',
     '^utils': '<rootDir>/src/shared/utils',
     '^validators': '<rootDir>/src/shared/validation'
   },

@@ -1,15 +1,11 @@
 import { Avatar, Divider, Grid, Typography, useTheme } from '@mui/material'
-
-import { LandBack } from 'images'
-
-import type { FC } from 'react'
 import type { LeaderItemProps } from './type'
 
-export const LeaderItem: FC<LeaderItemProps> = ({
+export const LeaderItem: React.FC<LeaderItemProps> = ({
   id,
   cash,
   games,
-  avatar = LandBack,
+  avatar,
   nickName = 'unknown',
 }) => {
   const { spacing } = useTheme()
@@ -22,18 +18,10 @@ export const LeaderItem: FC<LeaderItemProps> = ({
         padding={spacing(4, 0)}
         gap={spacing(8)}>
         <Avatar src={avatar} sx={{ width: 80, height: 80 }} />
-        <Typography
-          variant={'h4'}
-          // fontWeight={600}
-          flexGrow={1}>
+        <Typography variant={'h4'} flexGrow={1}>
           {nickName}
         </Typography>
-        <Typography
-          variant={'h4'}
-          // fontWeight={600}
-        >
-          {games}
-        </Typography>
+        <Typography variant={'h4'}>{games}</Typography>
         <Typography variant={'h4'} fontWeight={600}>
           $ {cash}
         </Typography>
