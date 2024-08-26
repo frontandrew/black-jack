@@ -18,7 +18,7 @@
 Видео с демонстрацией 5 и 6 спринтов:
 ![msedge_ViURtHeheB](https://github.com/user-attachments/assets/8d9f703d-2962-48e5-a51d-917e87ba1ce2)
 
-[Документация](./docs/README.md) 
+[Документация](./docs/README.md)
 
 ![Black Jack](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Blackjack.svg/512px-Blackjack.svg.png)
 
