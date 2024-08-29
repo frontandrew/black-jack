@@ -5,7 +5,7 @@ import cors from 'cors'
 import createEmotionServer from '@emotion/server/create-instance'
 
 const isProduction = process.env.NODE_ENV === 'production'
-const port = process.env.PORT || 80
+const port = process.env.CLIENT_PORT
 const base = process.env.BASE || '/'
 
 async function createServer() {
@@ -103,7 +103,8 @@ async function createServer() {
 
   // Start http server
   app.listen(port, () => {
-    console.log(`Server started at http://localhost:${port}`)
+    console.log(`🍋 SSR server started at ${port} port`)
+    console.log(`🛠️ APP started in ${process.env.NODE_ENV} mode`)
   })
 }
 
