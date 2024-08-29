@@ -2,7 +2,7 @@ import { Request as ExpressRequest } from 'express'
 import { PageInitContext } from './routes'
 
 export const createContext = (req: ExpressRequest): PageInitContext => ({
-  clientToken: req.cookies.token,
+  clientToken: req.cookies.token as string,
 })
 
 export const createUrl = (req: ExpressRequest) => {
