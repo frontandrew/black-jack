@@ -23,16 +23,15 @@ export const EmojiChoice: FC = () => {
     if (index === undefined) {
       return setAnchorEl(anchorEl ? null : event.currentTarget)
     }
-    const emoji = emojiPack[index]
+    const emoji: string = emojiPack[index]
     const emojiArr = emojis
-
-    if (emojiArr.includes(emoji)) {
-      return
+    // @ts-ignore
+    if (!emojiArr.includes(emoji)) {
+      // @ts-ignore
+      emojiArr.push(emoji)
+      setEmoji(emojiArr)
+      setAnchorEl(anchorEl ? null : event.currentTarget)
     }
-
-    emojiArr.push(emoji)
-    setEmoji(emojiArr)
-    setAnchorEl(anchorEl ? null : event.currentTarget)
   }
 
   return (
