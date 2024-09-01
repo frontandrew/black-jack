@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Box, TextField, Button, Typography, Container } from '@mui/material'
 import { addComment } from '../../../shared/store/forum/topicsSlice'
 import { AppHeader } from 'features/app-header'
+import { EmojiChoice } from '../emoji'
 
 export const TopicPage: React.FC = () => {
   const [comment, setComment] = useState('')
@@ -77,6 +78,7 @@ export const TopicPage: React.FC = () => {
         <Typography sx={{ py: 2, pl: 2, mb: 5, border: '1px dashed' }}>
           {topic.content}
         </Typography>
+        <EmojiChoice />
         <Box
           sx={{
             display: 'flex',
@@ -105,9 +107,12 @@ export const TopicPage: React.FC = () => {
             <Typography variant="h6">User comments:</Typography>
           )}
           {topic.comments.map((cmt, index) => (
-            <Typography key={cmt.id} sx={{ pt: 1, pl: 2 }}>
-              {index + 1}: {cmt.content}
-            </Typography>
+            <Box>
+              <Typography key={cmt.id} sx={{ pt: 1, pl: 2 }}>
+                {index + 1}: {cmt.content}
+              </Typography>
+              <EmojiChoice />
+            </Box>
           ))}
         </Box>
       </Container>
