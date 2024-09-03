@@ -24,4 +24,14 @@ export const SERVER_HOST =
     ? __INTERNAL_SERVER_URL__
     : __EXTERNAL_SERVER_URL__
 
-export const EMOJI_PACK = ['😀', '🧐', '🤮', '😑', '🤬', '😁', '😌', '👆', '👇']
+export const EMOJIS_PACK = [
+  '😀',
+  '🧐',
+  '🤮',
+  '😑',
+  '🤬',
+  '😁',
+  '😌',
+  '👆',
+  '👇',
+]

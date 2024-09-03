@@ -1,13 +1,13 @@
 import React, { useState, FC } from 'react'
 import { Box, Typography, IconButton, Grid, Popover } from '@mui/material'
 import AddReactionIcon from '@mui/icons-material/AddReaction'
-import { EMOJI_PACK } from 'constant'
+import { EMOJIS_PACK } from 'constant'
 
 export const EmojiChoice: FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const idEmoji = open ? 'simple-popper' : undefined
-  const [emojis, setEmoji] = useState([])
+  const [emojis, setEmoji] = useState<string[]>([])
 
   const handleDestroyEmoji = (index: number) => {
     const emojiArr = emojis
@@ -27,7 +27,7 @@ export const EmojiChoice: FC = () => {
     if (index === undefined) {
       return setAnchorEl(anchorEl ? null : event.currentTarget)
     }
-    const emoji: string = EMOJI_PACK[index]
+    const emoji = EMOJIS_PACK[index]
     const emojiArr = emojis
     if (!emojiArr.includes(emoji)) {
       emojiArr.push(emoji)
@@ -59,12 +59,10 @@ export const EmojiChoice: FC = () => {
         }}>
         <Box
           sx={{
-            border: 1,
-            borderRadius: 1,
             p: 1,
             bgcolor: 'background.paper',
           }}>
-          {EMOJI_PACK.map((emoji, index) => {
+          {EMOJIS_PACK.map((emoji, index) => {
             return (
               <IconButton
                 key={index}
