@@ -1,12 +1,12 @@
 import React, { useState, FC } from 'react'
-import { Box, Typography, IconButton, Popper, Grid } from '@mui/material'
+import { Box, Typography, IconButton, Grid, Popover } from '@mui/material'
 import AddReactionIcon from '@mui/icons-material/AddReaction'
+import { EMOJI_PACK } from 'constant'
 
 export const EmojiChoice: FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const idEmoji = open ? 'simple-popper' : undefined
-  const emojiPack = ['😀', '🧐', '🤮', '😑', '🤬', '😁', '😌', '👆', '👇']
   const [emojis, setEmoji] = useState([])
 
   const handleDestroyEmoji = (index: number) => {
@@ -16,6 +16,10 @@ export const EmojiChoice: FC = () => {
     setEmoji(filteredEmojis)
   }
 
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   const handleClick = (
     event: React.MouseEvent<HTMLElement>,
     index: number | undefined
@@ -23,15 +27,13 @@ export const EmojiChoice: FC = () => {
     if (index === undefined) {
       return setAnchorEl(anchorEl ? null : event.currentTarget)
     }
-    const emoji: string = emojiPack[index]
+    const emoji: string = EMOJI_PACK[index]
     const emojiArr = emojis
-    // @ts-ignore
     if (!emojiArr.includes(emoji)) {
-      // @ts-ignore
       emojiArr.push(emoji)
       setEmoji(emojiArr)
-      setAnchorEl(anchorEl ? null : event.currentTarget)
     }
+    setAnchorEl(anchorEl ? null : event.currentTarget)
   }
 
   return (
@@ -42,7 +44,19 @@ export const EmojiChoice: FC = () => {
         onClick={event => handleClick(event, undefined)}>
         <AddReactionIcon />
       </IconButton>
-      <Popper id={idEmoji} open={open} anchorEl={anchorEl}>
+      <Popover
+        id={idEmoji}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}>
         <Box
           sx={{
             border: 1,
@@ -50,7 +64,7 @@ export const EmojiChoice: FC = () => {
             p: 1,
             bgcolor: 'background.paper',
           }}>
-          {emojiPack.map((emoji, index) => {
+          {EMOJI_PACK.map((emoji, index) => {
             return (
               <IconButton
                 key={index}
@@ -63,7 +77,7 @@ export const EmojiChoice: FC = () => {
             )
           })}
         </Box>
-      </Popper>
+      </Popover>
       {emojis.length !== 0 ? (
         emojis.map((emoji, index) => {
           return (
@@ -72,6 +86,7 @@ export const EmojiChoice: FC = () => {
               display={'flex'}
               alignItems={'center'}
               sx={{
+                height: '40px',
                 width: '70px',
                 borderRadius: 20,
                 bgcolor: 'primary.main',
