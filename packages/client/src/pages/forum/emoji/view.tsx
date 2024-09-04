@@ -1,5 +1,5 @@
 import React, { useState, FC } from 'react'
-import { Box, Typography, IconButton, Grid, Popover } from '@mui/material'
+import { Box, Typography, IconButton, Grid, Popover, Chip } from '@mui/material'
 import AddReactionIcon from '@mui/icons-material/AddReaction'
 import { EMOJIS_PACK } from 'constant'
 
@@ -37,7 +37,7 @@ export const EmojiChoice: FC = () => {
   }
 
   return (
-    <Grid display={'flex'} gap={2} margin={2}>
+    <Grid display={'flex'} alignItems={'center'} gap={1} margin={2}>
       <IconButton
         aria-describedby={idEmoji}
         aria-label="addreactionicon"
@@ -79,30 +79,17 @@ export const EmojiChoice: FC = () => {
       {emojis.length !== 0 ? (
         emojis.map((emoji, index) => {
           return (
-            <Box
+            <Chip
               key={index}
-              display={'flex'}
-              alignItems={'center'}
-              sx={{
-                height: '40px',
-                width: '70px',
-                borderRadius: 20,
-                bgcolor: 'primary.main',
-              }}>
-              <IconButton
-                aria-describedby={idEmoji}
-                aria-label="addreactionicon"
-                onClick={() => handleDestroyEmoji(index)}>
-                {emoji}
-              </IconButton>
-              <Typography gutterBottom variant="h6" component="div">
-                1
-              </Typography>
-            </Box>
+              variant="outlined"
+              label={`${emoji} 1`}
+              color="primary"
+              onClick={() => handleDestroyEmoji(index)}
+            />
           )
         })
       ) : (
-        <Box maxWidth={70} display={'flex'} alignItems={'center'}></Box>
+        <></>
       )}
     </Grid>
   )
