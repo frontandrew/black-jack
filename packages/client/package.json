@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "yarn open && cross-env NODE_ENV=development EXTERNAL_SERVER_URL='http://localhost:3001' INTERNAL_SERVER_URL='http://localhost:3001' node ssr-server",
+    "dev": "yarn open && cross-env NODE_ENV=development CLIENT_PORT=3000 EXTERNAL_SERVER_URL='http://localhost:3001' INTERNAL_SERVER_URL='http://localhost:3001' node ssr-server",
     "build": "rm -rf dist && yarn build:client && yarn build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "vite build --ssr src/entry-ssr.tsx --outDir dist/server",
     "preview": "yarn open && cross-env NODE_ENV=production node ssr-server",
-    "open": "start http://localhost",
+    "open": "start http://localhost:3000",
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "jest ./ --passWithNoTests"
