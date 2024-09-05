@@ -1,59 +1,89 @@
-import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Helmet } from 'react-helmet'
-import { TRootState } from '../../../shared/store/store'
+import React, { useEffect, useState } from 'react'
+import {
+  useDispatch,
+  useSelector,
+  TRootState,
+} from '../../../shared/store/store'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Box, TextField, Button, Typography, Container } from '@mui/material'
-import { addComment } from '../../../shared/store/forum/topicsSlice'
+import { Helmet } from 'react-helmet'
+import {
+  Typography,
+  Button,
+  Container,
+  Box,
+  CircularProgress,
+  TextField,
+} from '@mui/material'
 import { AppHeader } from 'features/app-header'
+import { fetchTopic, addComment } from '../../../shared/store/forum/topicsSlice'
+import { Comment } from '../../../shared/api'
 
 export const TopicPage: React.FC = () => {
   const [comment, setComment] = useState('')
   const { id } = useParams<{ id: string }>()
   const dispatch = useDispatch()
-  const topic = useSelector((state: TRootState) => {
-    if (id) return state.topics.topics.find(t => t.id === id) // ToDo move in createSlice
-  })
   const navigate = useNavigate()
+  const { currentTopic, loading, error } = useSelector(
+    (state: TRootState) => state.topics
+  )
 
-  if (!topic)
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchTopic(parseInt(id, 10)))
+    }
+  }, [dispatch, id])
+
+  const handleAddComment = async () => {
+    if (!comment.length || !currentTopic) return
+    try {
+      const newComment: Omit<Comment, 'id'> = {
+        content: comment,
+        topicId: currentTopic.id,
+        userId: 'test-user-id',
+        userName: 'Test User',
+        userEmail: 'testuser@test.com',
+      }
+      await dispatch(addComment(newComment))
+      setComment('')
+      dispatch(fetchTopic(currentTopic.id))
+    } catch (error) {
+      console.error('Failed to add comment:', error)
+    }
+  }
+
+  if (loading) {
     return (
-      <>
-        <Helmet>
-          <meta charSet="utf-8" />
-          <title>Topic</title>
-          <meta name="description" content="Topic" />
-        </Helmet>
-        <AppHeader />
-        <Container maxWidth="md" sx={{ my: 5 }}>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <Typography variant="h5">Topic not found</Typography>
-            <Button
-              onClick={() => navigate('/forum')}
-              variant="contained"
-              color="primary"
-              sx={{ minWidth: '180px', height: 'fit-content' }}>
-              Back to forum
-            </Button>
-          </Box>
-        </Container>
-      </>
+      <Container maxWidth="md" sx={{ my: 5 }}>
+        <Box display="flex" justifyContent="center">
+          <CircularProgress />
+        </Box>
+      </Container>
     )
+  }
 
-  const handleAddComment = () => {
-    if (!comment.length) return
-    const newComment = { id: Date.now(), content: comment }
-    dispatch(addComment({ topicId: topic.id, comment: newComment }))
-    setComment('')
+  if (error) {
+    return (
+      <Container maxWidth="md" sx={{ my: 5 }}>
+        <Typography color="error">{error}</Typography>
+      </Container>
+    )
+  }
+
+  if (!currentTopic) {
+    return (
+      <Container maxWidth="md" sx={{ my: 5 }}>
+        <Typography>Topic not found</Typography>
+      </Container>
+    )
   }
 
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{currentTopic.title}</title>
+        <meta name="description" content={currentTopic.content} />
+      </Helmet>
       <AppHeader />
       <Container maxWidth="md" sx={{ my: 5 }}>
         <Box
@@ -64,7 +94,7 @@ export const TopicPage: React.FC = () => {
             mb: 3,
           }}>
           <Typography variant="h5" sx={{ fontWeight: 700 }}>
-            {topic.title}
+            {currentTopic.title}
           </Typography>
           <Button
             onClick={() => navigate('/forum')}
@@ -75,7 +105,7 @@ export const TopicPage: React.FC = () => {
           </Button>
         </Box>
         <Typography sx={{ py: 2, pl: 2, mb: 5, border: '1px dashed' }}>
-          {topic.content}
+          {currentTopic.content}
         </Typography>
         <Box
           sx={{
@@ -101,10 +131,10 @@ export const TopicPage: React.FC = () => {
           </Button>
         </Box>
         <Box>
-          {topic.comments.length > 0 && (
+          {currentTopic.comments.length > 0 && (
             <Typography variant="h6">User comments:</Typography>
           )}
-          {topic.comments.map((cmt, index) => (
+          {currentTopic.comments.map((cmt, index) => (
             <Typography key={cmt.id} sx={{ pt: 1, pl: 2 }}>
               {index + 1}: {cmt.content}
             </Typography>

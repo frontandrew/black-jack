@@ -1,1 +1,1 @@
-export { ForumPage } from './view'
+export { ForumPage } from './forum/view'
