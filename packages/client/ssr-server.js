@@ -5,8 +5,7 @@ import cors from 'cors'
 import createEmotionServer from '@emotion/server/create-instance'
 
 const isProduction = process.env.NODE_ENV === 'production'
-const port = process.env.PORT || 80
-const base = process.env.BASE || '/'
+const port = process.env.CLIENT_PORT
 
 async function createServer() {
   // Cached production assets
@@ -34,20 +33,19 @@ async function createServer() {
     vite = await createServer({
       server: { middlewareMode: true },
       appType: 'custom',
-      base,
     })
     app.use(vite.middlewares)
   } else {
     const compression = (await import('compression')).default
     const sirv = (await import('sirv')).default
     app.use(compression())
-    app.use(base, sirv('./dist/client', { extensions: [] }))
+    app.use(sirv('./dist/client', { extensions: [] }))
   }
 
   // Serve HTML
   app.use('*', async (req, res) => {
     try {
-      const url = req.originalUrl.replace(base, '')
+      const url = req.originalUrl
 
       let template
       let render = function (req) {
@@ -68,6 +66,8 @@ async function createServer() {
         render = (await vite.ssrLoadModule('/src/entry-ssr.tsx')).render
       } else {
         template = templateHtml
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         render = (await import('./dist/server/entry-ssr.js')).render
       }
 
@@ -103,7 +103,8 @@ async function createServer() {
 
   // Start http server
   app.listen(port, () => {
-    console.log(`Server started at http://localhost:${port}`)
+    console.log(`🍋 SSR server started at ${port} port`)
+    console.log(`🛠️ APP started in ${process.env.NODE_ENV} mode`)
   })
 }
 

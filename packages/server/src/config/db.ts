@@ -2,17 +2,20 @@ import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import { Topic } from '../models/Topic'
 import { Comment } from '../models/Comment'
 
-// const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
-//   process.env
-
-const { POSTGRES_DB, POSTGRES_PORT } = process.env
+const {
+  POSTGRES_DB,
+  POSTGRES_PORT,
+  POSTGRES_USER,
+  POSTGRES_PASSWORD,
+  POSTGRES_HOST,
+} = process.env
 
 const sequelizeOptions: SequelizeOptions = {
-  host: 'localhost',
+  host: POSTGRES_HOST,
   port: Number(POSTGRES_PORT),
-  username: 'postgres',
-  password: 'postgres',
   database: POSTGRES_DB,
+  username: POSTGRES_USER,
+  password: POSTGRES_PASSWORD,
   dialect: 'postgres',
 }
 
