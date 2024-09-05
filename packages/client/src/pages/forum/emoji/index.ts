@@ -1,0 +1,1 @@
+export { EmojiChoice } from './view'
