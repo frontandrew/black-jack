@@ -15,6 +15,7 @@ import {
   TextField,
 } from '@mui/material'
 import { AppHeader } from 'features/app-header'
+import { EmojiChoice } from '../emoji'
 import { fetchTopic, addComment } from '../../../shared/store/forum/topicsSlice'
 import { Comment } from '../../../shared/api'
 
@@ -107,6 +108,7 @@ export const TopicPage: React.FC = () => {
         <Typography sx={{ py: 2, pl: 2, mb: 5, border: '1px dashed' }}>
           {currentTopic.content}
         </Typography>
+        <EmojiChoice />
         <Box
           sx={{
             display: 'flex',
@@ -135,9 +137,12 @@ export const TopicPage: React.FC = () => {
             <Typography variant="h6">User comments:</Typography>
           )}
           {currentTopic.comments.map((cmt, index) => (
-            <Typography key={cmt.id} sx={{ pt: 1, pl: 2 }}>
-              {index + 1}: {cmt.content}
-            </Typography>
+            <Box>
+              <Typography key={cmt.id} sx={{ pt: 1, pl: 2 }}>
+                {index + 1}: {cmt.content}
+              </Typography>
+              <EmojiChoice />
+            </Box>
           ))}
         </Box>
       </Container>
