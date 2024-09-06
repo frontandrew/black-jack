@@ -27,7 +27,8 @@
       "themes": ["./shared/themes/index"],
       "utils": ["./shared/utils/index"],
       "validators": ["./shared/validation/index"],
-      "constant": ["./shared/constant/index"]
+      "constant": ["./shared/constant/index"],
+      "transport": ["./shared/transport/index"]
     }
   },
   "include": ["src", "public/sw.ts", "server"],

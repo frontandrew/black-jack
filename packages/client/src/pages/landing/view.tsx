@@ -8,8 +8,21 @@ import {
   LandingFooter,
   LandingGameFlow,
 } from './components'
+import { HTTPTransport } from 'transport'
+
+const http = new HTTPTransport('https://swapi.dev/api')
 
 export const LandingPage: React.FC = () => {
+  const handle = async () => {
+    try {
+      const result = await http.get('people/2')
+
+      console.log(result)
+    } catch (error) {
+      console.log('error GET')
+    }
+  }
+
   return (
     <>
       <Helmet>
@@ -26,6 +39,8 @@ export const LandingPage: React.FC = () => {
         height={'100%'}>
         <AppHeader />
         <Grid item overflow={'hidden auto'}>
+          <button onClick={handle}>GET</button>
+
           <LandingBanner />
           <LandingAbout />
           <LandingGameFlow />
