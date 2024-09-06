@@ -18,7 +18,7 @@
     "sourceMap": true,
     "baseUrl": "./src",
     "paths": {
-      "apis": ["./shared/apis/index"],
+      "api": ["./shared/api/index"],
       "images": ["./assets/img/index"],
       "sounds": ["./assets/sounds/index"],
       "features": ["./features/*"],

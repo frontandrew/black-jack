@@ -1,4 +1,4 @@
-import { AuthApi } from 'shared/api'
+import { AuthApi } from 'api'
 
 class AuthService {
   private api = new AuthApi()

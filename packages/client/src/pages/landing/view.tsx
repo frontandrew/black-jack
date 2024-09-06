@@ -8,7 +8,7 @@ import {
   LandingFooter,
   LandingGameFlow,
 } from './components'
-import { loginInOAuth } from 'shared/api'
+import { loginInOAuth } from 'api'
 import { useEffect } from 'react'
 import { userService } from 'services'
 
