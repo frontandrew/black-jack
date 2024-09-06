@@ -1,3 +1,2 @@
-export { default as music } from './music.mp3'
-export { default as sound } from './sound.mp3'
-export { default as rrest } from './rrest.mp3'
+export { default as hitSound } from './hitSound.mp3'
+export { default as betSound } from './betSound.mp3'

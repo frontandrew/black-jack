@@ -5,7 +5,7 @@
  * handleNewBet запускает новую раздачу после завершения текущей
  */
 
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { TRootState } from '../../shared/store/store'
 import { useDispatch, useSelector } from 'react-redux'
@@ -22,7 +22,8 @@ import { calcHand } from 'features/game/utils'
 import { Button, TextField, Box } from '@mui/material'
 import { FullscreenButton } from 'features/fullscreen'
 import './style.css'
-import { sound } from 'sounds'
+import { hitSound, betSound } from 'sounds'
+import { playMusicSound } from 'utils'
 
 export const GamePage: React.FC = () => {
   const dispatch = useDispatch()
@@ -30,11 +31,6 @@ export const GamePage: React.FC = () => {
   const game = useSelector((state: TRootState) => state.game)
   const [bet, setBet] = useState(game.playerBet)
   const maxbet = game.playerMoney
-
-  const playMusicSound = () => {
-    const audio = new Audio(sound)
-    audio.play()
-  }
 
   useEffect(() => {
     dispatch(newGame())
@@ -52,6 +48,7 @@ export const GamePage: React.FC = () => {
 
   const onHit = () => {
     if (game.status === 'playing' && calcHand(game.playerHand) < 21) {
+      playMusicSound(hitSound)
       dispatch(drawPlayerCard())
     }
   }
@@ -63,6 +60,7 @@ export const GamePage: React.FC = () => {
   }
 
   const onBet = () => {
+    playMusicSound(betSound)
     dispatch(startGame(bet))
   }
 
@@ -97,27 +95,6 @@ export const GamePage: React.FC = () => {
               flexDirection: 'column',
               my: 1,
             }}>
-            <Button
-              variant="contained"
-              onClick={playMusicSound}
-              size="large"
-              sx={{ m: 1, minWidth: '105px' }}>
-              Sound
-            </Button>
-            {/* <Button
-              variant="contained"
-              onClick={() => }
-              size="large"
-              sx={{ m: 1, minWidth: '105px' }}>
-              Music
-            </Button>
-            <Button
-              variant="contained"
-              onClick={onRrest}
-              size="large"
-              sx={{ m: 1, minWidth: '105px' }}>
-              Rrest
-            </Button> */}
             {game.status === 'init' && game.playerMoney > 0 && (
               <Box>
                 <TextField
