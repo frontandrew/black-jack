@@ -1,9 +1,10 @@
-import { FC } from 'react'
 import { useField } from 'react-final-form-hooks'
 import { Grid, TextField } from '@mui/material'
 import { FieldTextProps } from './type'
 
-export const FieldText: FC<FieldTextProps> = props => {
+export const FieldText = <T = Record<string, unknown>,>(
+  props: FieldTextProps<T>
+) => {
   const { name, label, form, validator, ...rest } = props
   const { input, meta } = useField(name, form, validator)
 
