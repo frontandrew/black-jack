@@ -6,12 +6,17 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
+import { authService } from 'services'
 
 export const CardUser: React.FC = () => {
   const { palette, spacing } = useTheme()
   const isLandscape = useMediaQuery('(min-width:900px)')
 
   const actionsAlign = isLandscape ? 'center' : 'flex-end'
+
+  const logout = () => {
+    authService.signOut()
+  }
 
   return (
     <Grid
@@ -66,7 +71,7 @@ export const CardUser: React.FC = () => {
         alignSelf={actionsAlign}
         gap={spacing(2)}>
         <Button variant={'outlined'}>change avatar</Button>
-        <Button variant={'contained'} color={'error'}>
+        <Button variant={'contained'} color={'error'} onClick={logout}>
           sign out
         </Button>
       </Grid>

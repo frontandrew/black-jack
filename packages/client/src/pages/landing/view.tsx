@@ -8,20 +8,20 @@ import {
   LandingFooter,
   LandingGameFlow,
 } from './components'
-import { HTTPTransport } from 'transport'
+import { loginInOAuth } from 'apis'
+import { useEffect } from 'react'
+import { userService } from 'services'
 
-const http = new HTTPTransport('https://swapi.dev/api')
+const loginWithYandex = async () => {
+  await loginInOAuth()
+  const result = await userService.getUser()
+  console.log(result)
+}
 
 export const LandingPage: React.FC = () => {
-  const handle = async () => {
-    try {
-      const result = await http.get('people/2')
-
-      console.log(result)
-    } catch (error) {
-      console.log('error GET')
-    }
-  }
+  useEffect(() => {
+    loginWithYandex()
+  }, [])
 
   return (
     <>
@@ -39,8 +39,6 @@ export const LandingPage: React.FC = () => {
         height={'100%'}>
         <AppHeader />
         <Grid item overflow={'hidden auto'}>
-          <button onClick={handle}>GET</button>
-
           <LandingBanner />
           <LandingAbout />
           <LandingGameFlow />
