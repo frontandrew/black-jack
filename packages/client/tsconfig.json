@@ -18,7 +18,7 @@
     "sourceMap": true,
     "baseUrl": "./src",
     "paths": {
-      "apis": ["./shared/apis/index"],
+      "api": ["./shared/api/index"],
       "images": ["./assets/img/index"],
       "sounds": ["./assets/sounds/index"],
       "features": ["./features/*"],
@@ -27,7 +27,9 @@
       "themes": ["./shared/themes/index"],
       "utils": ["./shared/utils/index"],
       "validators": ["./shared/validation/index"],
-      "constant": ["./shared/constant/index"]
+      "constant": ["./shared/constant/index"],
+      "transport": ["./shared/transport/index"],
+      "services": ["./shared/services/index"],
     }
   },
   "include": ["src", "public/sw.ts", "server"],

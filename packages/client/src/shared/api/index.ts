@@ -1,3 +1,6 @@
 export { oAuth } from './oauth'
 export { apiForum } from './forum'
 export type { Topic, Comment } from './forum'
+export { loginInOAuth } from './oauth'
+export { AuthApi } from './auth'
+export { UserApi } from './user'
