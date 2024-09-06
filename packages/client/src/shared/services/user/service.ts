@@ -1,4 +1,4 @@
-import { UserApi } from 'apis'
+import { UserApi } from 'shared/api'
 
 class UserService {
   private api = new UserApi()

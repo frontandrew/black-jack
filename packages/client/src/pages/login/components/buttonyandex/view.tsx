@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Grid } from '@mui/material'
-import { oAuth } from 'apis'
+import { oAuth } from 'shared/api'
 
 export const ButtonYandex: React.FC = () => {
   const onAuthYnadex = () => {
