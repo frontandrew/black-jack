@@ -5,7 +5,7 @@
  * handleNewBet запускает новую раздачу после завершения текущей
  */
 
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { TRootState } from '../../shared/store/store'
 import { useDispatch, useSelector } from 'react-redux'
@@ -22,6 +22,21 @@ import { calcHand } from 'features/game/utils'
 import { Button, TextField, Box } from '@mui/material'
 import { FullscreenButton } from 'features/fullscreen'
 import './style.css'
+import { music, rrest, sound } from 'sounds'
+
+export const useWithSound = (audioSource: string) => {
+  const soundRef = useRef()
+
+  useEffect(() => {
+    soundRef.current = new Audio(audioSource)
+  }, [])
+
+  const playSound = () => {
+    soundRef.current.play()
+  }
+
+  return playSound
+}
 
 export const GamePage: React.FC = () => {
   const dispatch = useDispatch()
@@ -29,6 +44,8 @@ export const GamePage: React.FC = () => {
   const game = useSelector((state: TRootState) => state.game)
   const [bet, setBet] = useState(game.playerBet)
   const maxbet = game.playerMoney
+
+  const playSound = useWithSound(rrest)
 
   useEffect(() => {
     dispatch(newGame())
@@ -57,6 +74,8 @@ export const GamePage: React.FC = () => {
   }
 
   const onBet = () => {
+    console.log('work')
+    playSound()
     dispatch(startGame(bet))
   }
 
