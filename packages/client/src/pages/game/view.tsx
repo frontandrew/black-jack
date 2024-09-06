@@ -45,7 +45,19 @@ export const GamePage: React.FC = () => {
   const [bet, setBet] = useState(game.playerBet)
   const maxbet = game.playerMoney
 
-  const playSound = useWithSound(rrest)
+  const playSound = useWithSound(sound)
+  const playRrest = useWithSound(rrest)
+  const playMusic = useWithSound(music)
+
+  const onMusic = () => {
+    playMusic()
+  }
+  const onSound = () => {
+    playSound()
+  }
+  const onRrest = () => {
+    playRrest()
+  }
 
   useEffect(() => {
     dispatch(newGame())
@@ -74,8 +86,6 @@ export const GamePage: React.FC = () => {
   }
 
   const onBet = () => {
-    console.log('work')
-    playSound()
     dispatch(startGame(bet))
   }
 
@@ -110,6 +120,27 @@ export const GamePage: React.FC = () => {
               flexDirection: 'column',
               my: 1,
             }}>
+            <Button
+              variant="contained"
+              onClick={onSound}
+              size="large"
+              sx={{ m: 1, minWidth: '105px' }}>
+              Sound
+            </Button>
+            <Button
+              variant="contained"
+              onClick={onMusic}
+              size="large"
+              sx={{ m: 1, minWidth: '105px' }}>
+              Music
+            </Button>
+            <Button
+              variant="contained"
+              onClick={onRrest}
+              size="large"
+              sx={{ m: 1, minWidth: '105px' }}>
+              Rrest
+            </Button>
             {game.status === 'init' && game.playerMoney > 0 && (
               <Box>
                 <TextField
