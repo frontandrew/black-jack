@@ -22,21 +22,7 @@ import { calcHand } from 'features/game/utils'
 import { Button, TextField, Box } from '@mui/material'
 import { FullscreenButton } from 'features/fullscreen'
 import './style.css'
-import { music, rrest, sound } from 'sounds'
-
-export const useWithSound = (audioSource: string) => {
-  const soundRef = useRef()
-
-  useEffect(() => {
-    soundRef.current = new Audio(audioSource)
-  }, [])
-
-  const playSound = () => {
-    soundRef.current.play()
-  }
-
-  return playSound
-}
+import { sound } from 'sounds'
 
 export const GamePage: React.FC = () => {
   const dispatch = useDispatch()
@@ -45,18 +31,9 @@ export const GamePage: React.FC = () => {
   const [bet, setBet] = useState(game.playerBet)
   const maxbet = game.playerMoney
 
-  const playSound = useWithSound(sound)
-  const playRrest = useWithSound(rrest)
-  const playMusic = useWithSound(music)
-
-  const onMusic = () => {
-    playMusic()
-  }
-  const onSound = () => {
-    playSound()
-  }
-  const onRrest = () => {
-    playRrest()
+  const playMusicSound = () => {
+    const audio = new Audio(sound)
+    audio.play()
   }
 
   useEffect(() => {
@@ -122,14 +99,14 @@ export const GamePage: React.FC = () => {
             }}>
             <Button
               variant="contained"
-              onClick={onSound}
+              onClick={playMusicSound}
               size="large"
               sx={{ m: 1, minWidth: '105px' }}>
               Sound
             </Button>
-            <Button
+            {/* <Button
               variant="contained"
-              onClick={onMusic}
+              onClick={() => }
               size="large"
               sx={{ m: 1, minWidth: '105px' }}>
               Music
@@ -140,7 +117,7 @@ export const GamePage: React.FC = () => {
               size="large"
               sx={{ m: 1, minWidth: '105px' }}>
               Rrest
-            </Button>
+            </Button> */}
             {game.status === 'init' && game.playerMoney > 0 && (
               <Box>
                 <TextField
