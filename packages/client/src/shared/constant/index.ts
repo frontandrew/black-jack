@@ -1,5 +1,7 @@
-export const BASE = 'https://ya-praktikum.tech/api/v2'
 import './client.d'
+
+export const BASE = 'https://ya-praktikum.tech/api/v2'
+export const LOCAL_BASE = 'http://localhost:3001'
 
 export enum METHODS {
   GET = 'GET',

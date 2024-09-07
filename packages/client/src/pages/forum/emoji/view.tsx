@@ -1,5 +1,5 @@
 import React, { useState, FC } from 'react'
-import { Box, Typography, IconButton, Grid, Popover, Chip } from '@mui/material'
+import { Box, IconButton, Grid, Popover, Chip } from '@mui/material'
 import AddReactionIcon from '@mui/icons-material/AddReaction'
 import { EMOJIS_PACK } from 'constant'
 

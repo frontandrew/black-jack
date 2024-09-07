@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { apiForum, Topic, Comment } from '../../api'
+import { apiForum, Topic, Comment, emojiApi } from '../../api'
 
 interface TopicsState {
   topics: Topic[]
@@ -63,6 +63,18 @@ export const addComment = createAsyncThunk(
       const newComment = await apiForum.createComment(comment)
       dispatch(addCommentToTopic(newComment))
       return newComment
+    } catch (error) {
+      return rejectWithValue((error as Error).message)
+    }
+  }
+)
+
+export const fetchEmoji = createAsyncThunk(
+  'emoji/fetchEmoji',
+  async (_, { rejectWithValue }) => {
+    try {
+      const emoji = await emojiApi.getEmoji()
+      return emoji
     } catch (error) {
       return rejectWithValue((error as Error).message)
     }
