@@ -69,18 +69,6 @@ export const addComment = createAsyncThunk(
   }
 )
 
-export const fetchEmoji = createAsyncThunk(
-  'emoji/fetchEmoji',
-  async (_, { rejectWithValue }) => {
-    try {
-      const emoji = await emojiApi.getEmoji()
-      return emoji
-    } catch (error) {
-      return rejectWithValue((error as Error).message)
-    }
-  }
-)
-
 const topicsSlice = createSlice({
   name: 'topics',
   initialState,
