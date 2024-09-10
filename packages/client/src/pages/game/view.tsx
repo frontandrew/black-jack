@@ -22,6 +22,8 @@ import { calcHand } from 'features/game/utils'
 import { Button, TextField, Box } from '@mui/material'
 import { FullscreenButton } from 'features/fullscreen'
 import './style.css'
+import { hitSound, betSound } from 'sounds'
+import { playMusicSound } from 'utils'
 
 export const GamePage: React.FC = () => {
   const dispatch = useDispatch()
@@ -46,6 +48,7 @@ export const GamePage: React.FC = () => {
 
   const onHit = () => {
     if (game.status === 'playing' && calcHand(game.playerHand) < 21) {
+      playMusicSound(hitSound)
       dispatch(drawPlayerCard())
     }
   }
@@ -57,6 +60,7 @@ export const GamePage: React.FC = () => {
   }
 
   const onBet = () => {
+    playMusicSound(betSound)
     dispatch(startGame(bet))
   }
 
