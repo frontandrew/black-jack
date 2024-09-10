@@ -45,10 +45,7 @@ services:
     volumes:
       - ./tmp/pgdata:/var/lib/postgresql/data
     healthcheck:
-      # Update healthcheck comand solving "POSTGRESS | FATAL: role root does not exist"
-      # issue: https://github.com/frontandrew/black-jack/pull/135#issuecomment-2319450220
-      # solve: https://github.com/docker-library/postgres/issues/838
-      test: [ "CMD", "sh", "-c", "pg_isready -U $$POSTGRES_USER -h $$(hostname -i)" ]
+      test: [ "CMD", "sh", "-c", "pg_isready -U $$POSTGRES_USER -d ${POSTGRES_DB}" ]
       interval: 10s
       timeout: 5s
       retries: 5
