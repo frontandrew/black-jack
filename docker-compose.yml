@@ -6,9 +6,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.client
-      args:
-        NODE_VERSION: ${NODE_VERSION}
-        CLIENT_PORT: ${CLIENT_PORT}
+      # args:
+      #   NODE_VERSION: ${NODE_VERSION}
+      #   CLIENT_PORT: ${CLIENT_PORT}
     restart: always
     ports:
       - '${EXTERNAL_CLIENT_PORT}:${CLIENT_PORT}'
@@ -24,9 +24,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.server
-      args:
-        NODE_VERSION: ${NODE_VERSION}
-        SERVER_PORT: ${SERVER_PORT}
+      # args:
+      #   NODE_VERSION: ${NODE_VERSION}
+      #   SERVER_PORT: ${SERVER_PORT}
     restart: always
     ports:
       - '${SERVER_PORT}:${SERVER_PORT}'
