@@ -25,7 +25,7 @@ export const FinishPage: React.FC = () => {
       <AppHeader />
       <Box className="finish">
         <Typography variant="h3">End Game</Typography>
-        <Typography variant="h4" sx={{ my: 3 }}>
+        <Typography variant="h4" sx={{ marginTop: 3, marginBottom: 1 }}>
           {game.playerMoney > 0
             ? `You won $${game.playerMoney}`
             : 'You have lost all the money'}

@@ -14,8 +14,8 @@ const sequelizeOptions: SequelizeOptions = {
   host: POSTGRES_HOST,
   port: Number(POSTGRES_PORT),
   database: POSTGRES_DB,
-  username: POSTGRES_USER,
-  password: POSTGRES_PASSWORD,
+  username: POSTGRES_USER ?? 'postgres',
+  password: POSTGRES_PASSWORD ?? 'postgres',
   dialect: 'postgres',
 }
 
