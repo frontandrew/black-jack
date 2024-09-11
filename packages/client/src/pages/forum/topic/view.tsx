@@ -16,7 +16,12 @@ import {
 } from '@mui/material'
 import { AppHeader } from 'features/app-header'
 import { EmojiChoice } from '../emoji'
-import { fetchTopic, addComment } from '../../../shared/store/forum/topicsSlice'
+import {
+  fetchTopic,
+  addComment,
+  deleteTopic,
+  deleteComment,
+} from '../../../shared/store/forum/topicsSlice'
 import { Comment } from '../../../shared/api'
 
 export const TopicPage: React.FC = () => {
@@ -34,6 +39,10 @@ export const TopicPage: React.FC = () => {
     }
   }, [dispatch, id])
 
+  const sortedComments = currentTopic
+    ? [...currentTopic.comments].sort((a, b) => b.id - a.id)
+    : []
+
   const handleAddComment = async () => {
     if (!comment.length || !currentTopic) return
     try {
@@ -49,6 +58,38 @@ export const TopicPage: React.FC = () => {
       dispatch(fetchTopic(currentTopic.id))
     } catch (error) {
       console.error('Failed to add comment:', error)
+    }
+  }
+
+  const handleDeleteTopic = async () => {
+    if (currentTopic) {
+      const isConfirmed = window.confirm(
+        'Are you sure you want to delete the topic?'
+      )
+      if (isConfirmed) {
+        try {
+          await dispatch(deleteTopic(currentTopic.id))
+          navigate('/forum')
+        } catch (error) {
+          console.error('Failed to delete topic:', error)
+        }
+      }
+    }
+  }
+
+  const handleDeleteComment = async (commentId: number) => {
+    if (currentTopic) {
+      const isConfirmed = window.confirm(
+        'Are you sure you want to delete the comment?'
+      )
+      if (isConfirmed) {
+        try {
+          await dispatch(deleteComment({ topicId: currentTopic.id, commentId }))
+          dispatch(fetchTopic(currentTopic.id))
+        } catch (error) {
+          console.error('Failed to delete comment:', error)
+        }
+      }
     }
   }
 
@@ -86,26 +127,33 @@ export const TopicPage: React.FC = () => {
         <meta name="description" content={currentTopic.content} />
       </Helmet>
       <AppHeader />
-      <Container maxWidth="md" sx={{ my: 5 }}>
+      <Container maxWidth="md" sx={{ my: 5, overflow: 'auto' }}>
+        <Button
+          onClick={() => navigate('/forum')}
+          variant="contained"
+          color="primary"
+          sx={{ minWidth: '180px', height: 'fit-content' }}>
+          Back to forum
+        </Button>
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            mb: 3,
+            my: 2,
           }}>
           <Typography variant="h5" sx={{ fontWeight: 700 }}>
             {currentTopic.title}
           </Typography>
           <Button
-            onClick={() => navigate('/forum')}
+            onClick={handleDeleteTopic}
             variant="contained"
-            color="primary"
+            color="error"
             sx={{ minWidth: '180px', height: 'fit-content' }}>
-            Back to forum
+            Delete Topic
           </Button>
         </Box>
-        <Typography sx={{ py: 2, pl: 2, mb: 5, border: '1px dashed' }}>
+        <Typography sx={{ py: 2, pl: 2, border: '1px dashed' }}>
           {currentTopic.content}
         </Typography>
         <EmojiChoice />
@@ -114,7 +162,7 @@ export const TopicPage: React.FC = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            mb: 2,
+            my: 3,
           }}>
           <TextField
             label="Add a comment"
@@ -133,14 +181,26 @@ export const TopicPage: React.FC = () => {
           </Button>
         </Box>
         <Box>
-          {currentTopic.comments.length > 0 && (
+          {sortedComments.length > 0 && (
             <Typography variant="h6">User comments:</Typography>
           )}
-          {currentTopic.comments.map((cmt, index) => (
-            <Box>
-              <Typography key={cmt.id} sx={{ pt: 1, pl: 2 }}>
-                {index + 1}: {cmt.content}
-              </Typography>
+          {sortedComments.map(cmt => (
+            <Box key={cmt.id}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                <Typography sx={{ pt: 1, pl: 2 }}>{cmt.content}</Typography>
+                <Button
+                  onClick={() => handleDeleteComment(cmt.id)}
+                  variant="contained"
+                  color="error"
+                  size="small">
+                  Delete
+                </Button>
+              </Box>
               <EmojiChoice />
             </Box>
           ))}

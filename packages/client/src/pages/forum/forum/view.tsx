@@ -18,7 +18,10 @@ import {
 } from '@mui/material'
 import { AppHeader } from 'features/app-header'
 import { AddTopicModal } from 'pages'
-import { fetchTopics } from '../../../shared/store/forum/topicsSlice'
+import {
+  deleteTopic,
+  fetchTopics,
+} from '../../../shared/store/forum/topicsSlice'
 
 export const ForumPage: React.FC = () => {
   const navigate = useNavigate()
@@ -38,6 +41,23 @@ export const ForumPage: React.FC = () => {
     }
   }, [isModalOpen, dispatch])
 
+  const sortedTopics = [...topics].sort((a, b) => b.id - a.id)
+
+  const handleDeleteTopic = async (id: number, event: React.MouseEvent) => {
+    event.stopPropagation()
+    const isConfirmed = window.confirm(
+      'Are you sure you want to delete the topic?'
+    )
+    if (isConfirmed) {
+      try {
+        await dispatch(deleteTopic(id))
+        dispatch(fetchTopics())
+      } catch (error) {
+        console.error('Failed to delete topic:', error)
+      }
+    }
+  }
+
   return (
     <>
       <Helmet>
@@ -46,7 +66,7 @@ export const ForumPage: React.FC = () => {
         <meta name="description" content="Forum" />
       </Helmet>
       <AppHeader />
-      <Container maxWidth="md" sx={{ my: 5 }}>
+      <Container maxWidth="md" sx={{ my: 5, overflow: 'auto' }}>
         {loading ? (
           <Box display="flex" justifyContent="center">
             <CircularProgress />
@@ -78,7 +98,7 @@ export const ForumPage: React.FC = () => {
               </Button>
             </Box>
             <List sx={{ p: 0 }}>
-              {topics.map(topic => (
+              {sortedTopics.map(topic => (
                 <ListItem
                   button
                   key={topic.id}
@@ -90,6 +110,13 @@ export const ForumPage: React.FC = () => {
                     border: '1px dashed',
                   }}>
                   <ListItemText primary={topic.title} />
+                  <Button
+                    onClick={event => handleDeleteTopic(topic.id, event)}
+                    variant="contained"
+                    color="error"
+                    size="small">
+                    Delete
+                  </Button>
                 </ListItem>
               ))}
             </List>

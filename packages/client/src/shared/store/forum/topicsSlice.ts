@@ -69,6 +69,35 @@ export const addComment = createAsyncThunk(
   }
 )
 
+export const deleteTopic = createAsyncThunk(
+  'topics/deleteTopic',
+  async (id: number, { rejectWithValue, dispatch }) => {
+    try {
+      await apiForum.deleteTopic(id)
+      dispatch(removeTopicFromList(id))
+      return id
+    } catch (error) {
+      return rejectWithValue((error as Error).message)
+    }
+  }
+)
+
+export const deleteComment = createAsyncThunk(
+  'topics/deleteComment',
+  async (
+    { topicId, commentId }: { topicId: number; commentId: number },
+    { rejectWithValue, dispatch }
+  ) => {
+    try {
+      await apiForum.deleteComment(commentId)
+      dispatch(removeCommentFromTopic({ topicId, commentId }))
+      return { topicId, commentId }
+    } catch (error) {
+      return rejectWithValue((error as Error).message)
+    }
+  }
+)
+
 const topicsSlice = createSlice({
   name: 'topics',
   initialState,
@@ -86,6 +115,29 @@ const topicsSlice = createSlice({
       const topic = state.topics.find(t => t.id === action.payload.topicId)
       if (topic) {
         topic.comments.push(action.payload)
+      }
+    },
+    removeTopicFromList: (state, action: PayloadAction<number>) => {
+      state.topics = state.topics.filter(topic => topic.id !== action.payload)
+      if (state.currentTopic && state.currentTopic.id === action.payload) {
+        state.currentTopic = null
+      }
+    },
+    removeCommentFromTopic: (
+      state,
+      action: PayloadAction<{ topicId: number; commentId: number }>
+    ) => {
+      const { topicId, commentId } = action.payload
+      if (state.currentTopic && state.currentTopic.id === topicId) {
+        state.currentTopic.comments = state.currentTopic.comments.filter(
+          comment => comment.id !== commentId
+        )
+      }
+      const topic = state.topics.find(t => t.id === topicId)
+      if (topic) {
+        topic.comments = topic.comments.filter(
+          comment => comment.id !== commentId
+        )
       }
     },
     setCurrentTopic: (state, action: PayloadAction<Topic>) => {
@@ -121,10 +173,37 @@ const topicsSlice = createSlice({
         state.loading = false
         state.error = action.payload as string
       })
+      .addCase(deleteTopic.pending, state => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(deleteTopic.fulfilled, state => {
+        state.loading = false
+      })
+      .addCase(deleteTopic.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload as string
+      })
+      .addCase(deleteComment.pending, state => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(deleteComment.fulfilled, state => {
+        state.loading = false
+      })
+      .addCase(deleteComment.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload as string
+      })
   },
 })
 
-export const { addTopicToList, addCommentToTopic, setCurrentTopic } =
-  topicsSlice.actions
+export const {
+  addTopicToList,
+  addCommentToTopic,
+  setCurrentTopic,
+  removeTopicFromList,
+  removeCommentFromTopic,
+} = topicsSlice.actions
 
 export default topicsSlice.reducer
