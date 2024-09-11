@@ -21,9 +21,9 @@ import CanvasGame from 'features/game/view'
 import { calcHand } from 'features/game/utils'
 import { Button, TextField, Box } from '@mui/material'
 import { FullscreenButton } from 'features/fullscreen'
-import './style.css'
 import { hitSound, betSound } from 'sounds'
 import { playMusicSound } from 'utils'
+import './style.css'
 
 export const GamePage: React.FC = () => {
   const dispatch = useDispatch()

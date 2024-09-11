@@ -23,7 +23,7 @@ export const StartPage: React.FC = () => {
           variant="contained"
           onClick={handleStart}
           size="large"
-          sx={{ marginTop: 1, marginBottom: 1 }}>
+          sx={{ margin: 3 }}>
           Play
         </Button>
       </Box>
