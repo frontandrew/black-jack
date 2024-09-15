@@ -11,7 +11,7 @@ services:
       #   CLIENT_PORT: ${CLIENT_PORT}
     restart: always
     ports:
-      - '${EXTERNAL_CLIENT_PORT}:${CLIENT_PORT}'
+      - '${CLIENT_PORT}:${CLIENT_PORT}'
     depends_on:
       server:
         condition: service_started
@@ -49,6 +49,26 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - connection
+
+  nginx:
+    container_name: webserver
+    image: nginx
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+      args:
+        NGINX_PORT: ${NGINX_PORT}
+    # volumes:
+    ports:
+      - '${NGINX_PORT}:${NGINX_PORT}'
+    depends_on:
+      client:
+        condition: service_started
+      server:
+        condition: service_started
     networks:
       - connection
 
