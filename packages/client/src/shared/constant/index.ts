@@ -1,5 +1,7 @@
-export const BASE = 'https://ya-praktikum.tech/api/v2'
 import './client.d'
+
+export const BASE = 'https://ya-praktikum.tech/api/v2'
+export const LOCAL_BASE = 'http://localhost:3001'
 
 export enum METHODS {
   GET = 'GET',
@@ -23,3 +25,15 @@ export const SERVER_HOST =
   typeof window === 'undefined'
     ? __INTERNAL_SERVER_URL__
     : __EXTERNAL_SERVER_URL__
+
+export const EMOJIS_PACK = [
+  '😀',
+  '🧐',
+  '🤮',
+  '😑',
+  '🤬',
+  '😁',
+  '😌',
+  '👆',
+  '👇',
+]

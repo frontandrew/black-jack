@@ -21,6 +21,8 @@ import CanvasGame from 'features/game/view'
 import { calcHand } from 'features/game/utils'
 import { Button, TextField, Box } from '@mui/material'
 import { FullscreenButton } from 'features/fullscreen'
+import { hitSound, betSound } from 'sounds'
+import { playMusicSound } from 'utils'
 import './style.css'
 
 export const GamePage: React.FC = () => {
@@ -46,6 +48,7 @@ export const GamePage: React.FC = () => {
 
   const onHit = () => {
     if (game.status === 'playing' && calcHand(game.playerHand) < 21) {
+      playMusicSound(hitSound)
       dispatch(drawPlayerCard())
     }
   }
@@ -57,6 +60,7 @@ export const GamePage: React.FC = () => {
   }
 
   const onBet = () => {
+    playMusicSound(betSound)
     dispatch(startGame(bet))
   }
 
@@ -91,66 +95,53 @@ export const GamePage: React.FC = () => {
               flexDirection: 'column',
               my: 1,
             }}>
-            {game.status === 'init' && game.playerMoney > 0 && (
-              <Box>
-                <TextField
-                  name="bet"
-                  label="$"
-                  size="small"
-                  value={bet}
-                  type="number"
-                  onChange={e => getInputBet(e)}
-                  inputProps={{ maxbet }}
-                  sx={{ m: 1, maxWidth: '105px' }}
-                />
-                <Button
-                  variant="contained"
-                  onClick={onBet}
-                  size="large"
-                  sx={{ m: 1, minWidth: '105px' }}>
-                  Bet
-                </Button>
-              </Box>
-            )}
-
-            {game.status === 'playing' && (
-              <Box>
-                <Button
-                  variant="contained"
-                  onClick={onHit}
-                  size="large"
-                  sx={{ m: 1, minWidth: '105px' }}>
-                  Hit
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={onStand}
-                  size="large"
-                  sx={{ m: 1, minWidth: '105px' }}>
-                  Stand
-                </Button>
-              </Box>
-            )}
+            <Box>
+              <TextField
+                name="bet"
+                label="$"
+                size="small"
+                value={bet}
+                type="number"
+                onChange={e => getInputBet(e)}
+                inputProps={{ maxbet }}
+                sx={{ m: 1, maxWidth: '105px' }}
+                disabled={game.status === 'playing' || game.playerMoney === 0}
+              />
+              <Button
+                variant="contained"
+                onClick={onBet}
+                size="large"
+                sx={{ m: 1, minWidth: '105px' }}
+                disabled={game.status === 'playing' || game.playerMoney === 0}>
+                Bet
+              </Button>
+              <Button
+                variant="contained"
+                onClick={onHit}
+                size="large"
+                sx={{ m: 1, minWidth: '105px' }}
+                disabled={game.status === 'init'}>
+                Hit
+              </Button>
+              <Button
+                variant="contained"
+                onClick={onStand}
+                size="large"
+                sx={{ m: 1, minWidth: '105px' }}
+                disabled={game.status === 'init'}>
+                Stand
+              </Button>
+            </Box>
 
             <Box sx={{ mt: 2 }}>
-              {game.status === 'init' && game.playerMoney > 0 && (
-                <Button
-                  variant="contained"
-                  onClick={() => navigate('/finish')}
-                  size="large"
-                  sx={{ m: 1 }}>
-                  Leave table
-                </Button>
-              )}
-              {game.status === 'init' && game.playerMoney <= 0 && (
-                <Button
-                  variant="contained"
-                  onClick={() => navigate('/finish')}
-                  size="large"
-                  sx={{ m: 1 }}>
-                  You have no money. Goodbye
-                </Button>
-              )}
+              <Button
+                variant="contained"
+                onClick={() => navigate('/finish')}
+                size="large"
+                sx={{ m: 1 }}
+                disabled={game.status === 'playing'}>
+                Leave table
+              </Button>
               <FullscreenButton />
             </Box>
           </Box>

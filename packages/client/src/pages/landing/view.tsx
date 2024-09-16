@@ -8,8 +8,21 @@ import {
   LandingFooter,
   LandingGameFlow,
 } from './components'
+import { loginInOAuth } from 'api'
+import { useEffect } from 'react'
+import { userService } from 'services'
+
+const loginWithYandex = async () => {
+  await loginInOAuth()
+  const result = await userService.getUser()
+  console.log(result)
+}
 
 export const LandingPage: React.FC = () => {
+  useEffect(() => {
+    loginWithYandex()
+  }, [])
+
   return (
     <>
       <Helmet>

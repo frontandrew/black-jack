@@ -2,8 +2,7 @@ import { colors, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { LightMode, DarkMode } from '@mui/icons-material'
 import { useDispatch, useSelector } from 'react-redux'
 import { FC, MouseEvent } from 'react'
-
-import { TRootState } from 'shared/store/store'
+import { TRootState } from '../../../../shared/store/store'
 import { Themes, themeSlice } from '../../../../shared/store/theme'
 
 export const ThemeSwitch: FC = () => {
