@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { apiForum, Topic, Comment } from '../../api'
+import { apiForum, Topic, Comment, emojiApi } from '../../api'
 
 interface TopicsState {
   topics: Topic[]

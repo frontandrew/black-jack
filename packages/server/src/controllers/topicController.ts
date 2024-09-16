@@ -21,7 +21,9 @@ export const getAllTopics = async (_: Request, res: Response) => {
 
 export const getTopic = async (req: Request, res: Response) => {
   try {
-    const topic = await Topic.findByPk(req.params.id, { include: ['comments'] })
+    const topic = await Topic.findByPk(req.params.id, {
+      include: ['comments', 'tapTopicEmoji'],
+    })
     if (topic) {
       return res.status(200).json(topic)
     }

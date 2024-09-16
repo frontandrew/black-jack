@@ -1,6 +1,8 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import { Topic } from '../models/Topic'
 import { Comment } from '../models/Comment'
+import { Emoji } from '../models/Emoji'
+import { TapTopicEmoji } from '../models/TapTopicEmoji'
 
 const {
   POSTGRES_DB,
@@ -21,7 +23,7 @@ const sequelizeOptions: SequelizeOptions = {
 
 export const sequelize = new Sequelize(sequelizeOptions)
 
-sequelize.addModels([Topic, Comment])
+sequelize.addModels([Topic, Comment, TapTopicEmoji, Emoji])
 
 export async function dbConnect() {
   try {

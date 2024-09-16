@@ -1,6 +1,7 @@
 import express from 'express'
 import { Topic } from '../models/Topic'
 import { Comment } from '../models/Comment'
+import { TapTopicEmoji } from '../models/TapTopicEmoji'
 
 const router = express.Router()
 
@@ -17,7 +18,9 @@ router.get('/', async (_, res) => {
 // Get a single topic by ID
 router.get('/:id', async (req, res) => {
   try {
-    const topic = await Topic.findByPk(req.params.id, { include: [Comment] })
+    const topic = await Topic.findByPk(req.params.id, {
+      include: [Comment, TapTopicEmoji],
+    })
     if (topic) {
       res.json(topic)
     } else {
