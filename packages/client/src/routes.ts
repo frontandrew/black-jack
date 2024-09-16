@@ -1,8 +1,7 @@
 import { initMainPage, MainPage } from './pages/demo/main' // demo
 import { initFriendsPage, FriendsPage } from './pages/demo/friend' // demo
 import { initNotFoundPage, NotFoundPage } from './pages/demo/notFound' // demo
-
-import { TAppDispatch, TRootState } from 'shared/store/store'
+import { TAppDispatch, TRootState } from './shared/store/store'
 
 export type PageInitContext = {
   clientToken?: string

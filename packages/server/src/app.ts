@@ -2,6 +2,8 @@ import express from 'express'
 import cors from 'cors'
 import topicRoutes from './routes/topicRoutes'
 import commentRoutes from './routes/commentRoutes'
+import tapTopicEmojiRoutes from './routes/tapTopicEmojiRoutes'
+import emojiRoutes from './routes/emojiRoutes'
 
 const app = express()
 
@@ -24,5 +26,7 @@ app.get('/user', (_, res) => {
 // Подключаем маршруты для topics и comments
 app.use('/topics', topicRoutes)
 app.use('/comments', commentRoutes)
+app.use('/tap', tapTopicEmojiRoutes)
+app.use('/emoji', emojiRoutes)
 
 export { app }

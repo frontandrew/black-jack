@@ -24,7 +24,7 @@ export default defineConfig({
   // },
   resolve: {
     alias: {
-      apis: path.resolve('src/shared/apis/index'),
+      api: path.resolve('src/shared/api/index'),
       images: path.resolve(__dirname, 'src/assets/img/index'),
       sounds: path.resolve('src/assets/sounds/index'),
       features: path.resolve('src/features/'),
@@ -34,6 +34,8 @@ export default defineConfig({
       utils: path.resolve('src/shared/utils/index'),
       validators: path.resolve('src/shared/validation/index'),
       constant: path.resolve('src/shared/constant/index'),
+      transport: path.resolve('src/shared/transport/index'),
+      services: path.resolve('src/shared/services/index'),
     },
   },
   // optimizeDeps: {

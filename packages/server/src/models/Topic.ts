@@ -1,5 +1,6 @@
 import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript'
 import { Comment } from './Comment'
+import { TapTopicEmoji } from './TapTopicEmoji'
 
 @Table
 export class Topic extends Model {
@@ -35,4 +36,7 @@ export class Topic extends Model {
 
   @HasMany(() => Comment)
   comments!: Comment[]
+
+  @HasMany(() => TapTopicEmoji)
+  tapTopicEmoji!: TapTopicEmoji[]
 }
