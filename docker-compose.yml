@@ -2,16 +2,16 @@ services:
 
   client:
     container_name: prakticum-client
-    image: prakticum-client
+    env_file: .env
     build:
       context: .
       dockerfile: Dockerfile.client
-      args:
-        CLIENT_PORT: ${CLIENT_PORT}
+      # args:
+      #   NODE_VERSION: ${NODE_VERSION}
+      #   CLIENT_PORT: ${CLIENT_PORT}
     restart: always
     ports:
-      - '${EXTERNAL_CLIENT_PORT}:${CLIENT_PORT}'
-    env_file: ./.env.sample
+      - '${CLIENT_PORT}:${CLIENT_PORT}'
     depends_on:
       server:
         condition: service_started
@@ -20,16 +20,16 @@ services:
 
   server:
     container_name: prakticum-server
-    image: prackicum-server
+    env_file: .env
     build:
       context: .
       dockerfile: Dockerfile.server
-      args:
-        SERVER_PORT: ${SERVER_PORT}
+      # args:
+      #   NODE_VERSION: ${NODE_VERSION}
+      #   SERVER_PORT: ${SERVER_PORT}
     restart: always
     ports:
       - '${SERVER_PORT}:${SERVER_PORT}'
-    env_file: ./.env.sample
     depends_on:
       postgres:
         condition: service_healthy
@@ -37,20 +37,38 @@ services:
       - connection
 
   postgres:
+    container_name: database
+    env_file: .env
     image: postgres:${POSTGRES_VERSION}
     ports:
       - '${POSTGRES_PORT}:${POSTGRES_PORT}'
-    env_file: ./.env.sample
     volumes:
       - ./tmp/pgdata:/var/lib/postgresql/data
     healthcheck:
-      # Update healthcheck comand solving "POSTGRESS | FATAL: role root does not exist"
-      # issue: https://github.com/frontandrew/black-jack/pull/135#issuecomment-2319450220
-      # solve: https://github.com/docker-library/postgres/issues/838
-      test: [ "CMD", "sh", "-c", "pg_isready -U $$POSTGRES_USER -h $$(hostname -i)" ]
+      test: [ "CMD", "sh", "-c", "pg_isready -U $$POSTGRES_USER -d ${POSTGRES_DB}" ]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - connection
+
+  nginx:
+    container_name: webserver
+    image: nginx
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+      args:
+        NGINX_PORT: ${NGINX_PORT}
+    # volumes:
+    ports:
+      - '${NGINX_PORT}:${NGINX_PORT}'
+    depends_on:
+      client:
+        condition: service_started
+      server:
+        condition: service_started
     networks:
       - connection
 

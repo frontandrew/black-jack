@@ -1,0 +1,10 @@
+FROM nginx
+
+ARG NGINX_PORT
+
+WORKDIR /app
+COPY packages/client/nginx.conf /app/config/nginx.conf
+
+EXPOSE $NGINX_PORT
+
+CMD [ "nginx", "-g", "daemon off;" ]
